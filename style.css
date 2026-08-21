@@ -1,5 +1,3 @@
-RONQA — style.css
-
 *{
 box-sizing:border-box;
 margin:0;
@@ -104,7 +102,8 @@ margin-bottom:22px;
 
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
@@ -187,14 +186,6 @@ border-radius:8px;
 background:white;
 }
 
-.loading{
-grid-column:1/-1;
-text-align:center;
-padding:40px;
-font-size:18px;
-color:#777;
-}
-
 .overlay{
 position:fixed;
 inset:0;
@@ -219,7 +210,6 @@ z-index:300;
 transition:.3s;
 display:flex;
 flex-direction:column;
-overflow:hidden;
 }
 
 .cart-panel.open{
@@ -301,9 +291,7 @@ margin-bottom:10px;
 
 .customer-form input,
 .customer-form select,
-.customer-form textarea,
-.delivery-box input,
-.delivery-box select{
+.customer-form textarea{
 width:100%;
 padding:10px;
 margin-bottom:8px;
@@ -318,33 +306,16 @@ height:55px;
 resize:none;
 }
 
-.delivery-box{
-padding:12px;
-border-top:1px solid #ddd;
-background:#fafafa;
-}
-
-.delivery-box h3{
-margin-bottom:10px;
-}
-
 .cart-bottom{
 padding:12px;
 border-top:1px solid #ddd;
 background:#fafafa;
 }
 
-.subtotal,
-.delivery-total{
-font-size:15px;
-margin-bottom:6px;
-}
-
 .total{
 font-size:21px;
 font-weight:bold;
 margin-bottom:10px;
-color:#111;
 }
 
 .whatsapp{
@@ -407,4 +378,4 @@ font-size:12px;
 max-width:100%;
 }
 
-  }
+}
