@@ -60,12 +60,10 @@
     }
 
     .product-image {
-        height: 180px;
+        width: 100%;
+        height: 220px;
         background: #eee;
         border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         overflow: hidden;
         margin-bottom: 15px;
     }
@@ -74,6 +72,16 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
+    }
+
+    .no-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 55px;
     }
 
     .product h3 {
@@ -211,7 +219,9 @@
     <h2 class="title">🛍️ منتجاتنا</h2>
 
     <div class="products" id="products">
-        <div class="loading">جاري تحميل المنتجات...</div>
+        <div class="loading">
+            جاري تحميل المنتجات...
+        </div>
     </div>
 </section>
 
@@ -338,18 +348,34 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
         const whatsappMessage =
             `السلام عليكم، أريد طلب ${name} بسعر ${price} دج`;
 
+        let imageHTML = "";
+
+        if (image && image.startsWith("http")) {
+
+            imageHTML = `
+                <img
+                    src="${image}"
+                    alt="${name}"
+                    loading="lazy"
+                    onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>🛍️</div>';"
+                >
+            `;
+
+        } else {
+
+            imageHTML = `
+                <div class="no-image">
+                    🛍️
+                </div>
+            `;
+        }
+
         productsContainer.innerHTML += `
 
             <div class="product">
 
                 <div class="product-image">
-
-                    ${
-                        image
-                        ? `<img src="${image}" alt="${name}">`
-                        : `<span style="font-size:55px;">🛍️</span>`
-                    }
-
+                    ${imageHTML}
                 </div>
 
                 <h3>${name}</h3>
@@ -381,11 +407,11 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
         <div class="error">
             حدث خطأ في تحميل المنتجات.
             <br>
-            رمز الخطأ: ${error.message}
+            ${error.message}
         </div>
     `;
 
 });
 
 </script></body>
-</html>
+    </html>
