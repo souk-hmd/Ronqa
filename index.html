@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>RONQA</title>
+<title>RONQA Store</title>
 
 <style>
 
@@ -20,7 +17,7 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#f5f5f5;
+background:#f6f6f6;
 color:#222;
 }
 
@@ -29,7 +26,10 @@ color:#222;
 header{
 background:#111;
 color:white;
-padding:18px 15px;
+padding:16px;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .header{
@@ -41,18 +41,19 @@ justify-content:space-between;
 }
 
 .logo{
-font-size:31px;
+font-size:30px;
 font-weight:bold;
 letter-spacing:5px;
 color:#d4af37;
 }
 
-.cart{
+.cart-button{
 background:#d4af37;
 border:0;
-padding:11px 16px;
 border-radius:8px;
+padding:11px 15px;
 font-weight:bold;
+cursor:pointer;
 }
 
 /* HERO */
@@ -61,21 +62,21 @@ font-weight:bold;
 background:#111;
 color:white;
 text-align:center;
-padding:45px 15px;
+padding:40px 15px;
 }
 
 .hero h1{
-font-size:42px;
+font-size:40px;
 color:#d4af37;
 letter-spacing:6px;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .hero p{
 color:#ddd;
 }
 
-/* CONTAINER */
+/* MAIN */
 
 .container{
 max-width:1100px;
@@ -86,7 +87,7 @@ padding:25px 15px;
 /* SEARCH */
 
 .search{
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .search input{
@@ -104,14 +105,14 @@ outline:none;
 display:flex;
 gap:10px;
 overflow-x:auto;
-padding-bottom:22px;
+padding:5px 0 20px;
 }
 
 .category{
 background:white;
 border:1px solid #ddd;
+padding:10px 18px;
 border-radius:25px;
-padding:11px 20px;
 font-weight:bold;
 white-space:nowrap;
 cursor:pointer;
@@ -123,38 +124,33 @@ color:#d4af37;
 border-color:#111;
 }
 
-/* TITLE */
+/* PRODUCTS */
 
 .title{
 text-align:center;
-font-size:28px;
-margin-bottom:25px;
+font-size:27px;
+margin-bottom:22px;
 }
-
-/* PRODUCTS */
 
 .products{
 display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
 .product{
 background:white;
 border-radius:15px;
-padding:15px;
-box-shadow:
-0 4px 15px rgba(0,0,0,.08);
+padding:14px;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .product-image{
-width:100%;
 height:220px;
 background:#eee;
 border-radius:12px;
 overflow:hidden;
-margin-bottom:15px;
+margin-bottom:13px;
 }
 
 .product-image img{
@@ -174,7 +170,7 @@ font-size:50px;
 
 .product h3{
 font-size:19px;
-margin-bottom:8px;
+margin-bottom:7px;
 }
 
 .description{
@@ -193,16 +189,224 @@ margin-bottom:7px;
 .stock{
 font-size:14px;
 color:#666;
+margin-bottom:10px;
+}
+
+/* SIZE */
+
+.size-box{
+margin-bottom:10px;
+}
+
+.size-box label{
+display:block;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.size-box select{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+background:white;
+}
+
+/* ADD */
+
+.add{
+width:100%;
+background:#111;
+color:white;
+border:0;
+padding:12px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.add:disabled{
+background:#aaa;
+cursor:not-allowed;
+}
+
+/* CART OVERLAY */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+display:none;
+z-index:200;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* CART */
+
+.cart{
+position:fixed;
+top:0;
+right:-100%;
+width:100%;
+max-width:440px;
+height:100vh;
+background:white;
+z-index:300;
+transition:.3s;
+display:flex;
+flex-direction:column;
+box-shadow:-5px 0 20px rgba(0,0,0,.2);
+}
+
+.cart.open{
+right:0;
+}
+
+.cart-header{
+background:#111;
+color:white;
+padding:16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.cart-header h2{
+color:#d4af37;
+}
+
+.close{
+background:none;
+border:0;
+color:white;
+font-size:28px;
+cursor:pointer;
+}
+
+.cart-list{
+flex:1;
+overflow-y:auto;
+padding:15px;
+}
+
+.cart-item{
+border-bottom:1px solid #ddd;
+padding:13px 0;
+}
+
+.cart-name{
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.cart-size{
+color:#555;
+margin-bottom:7px;
+}
+
+.cart-price{
+color:#b08b00;
+font-weight:bold;
+margin-bottom:9px;
+}
+
+.quantity{
+display:flex;
+align-items:center;
+gap:9px;
+}
+
+.quantity button{
+width:32px;
+height:32px;
+border:0;
+border-radius:6px;
+background:#111;
+color:white;
+cursor:pointer;
+}
+
+.delete{
+margin-right:auto;
+background:#c00 !important;
+}
+
+/* CUSTOMER */
+
+.customer{
+border-top:1px solid #ddd;
+padding:13px;
+}
+
+.customer h3{
+margin-bottom:10px;
+}
+
+.customer input,
+.customer select,
+.customer textarea{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:7px;
+font-size:14px;
+outline:none;
+background:white;
+}
+
+.customer textarea{
+height:55px;
+resize:none;
+}
+
+/* BOTTOM */
+
+.cart-bottom{
+padding:13px;
+border-top:1px solid #ddd;
+background:#fafafa;
+}
+
+.total{
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.whatsapp{
+display:block;
+width:100%;
+border:0;
+background:#25D366;
+color:white;
+padding:14px;
+border-radius:9px;
+font-weight:bold;
+cursor:pointer;
+font-size:15px;
+}
+
+.clear{
+width:100%;
+margin-top:7px;
+padding:9px;
+border:0;
+border-radius:8px;
+cursor:pointer;
 }
 
 /* FOOTER */
 
 footer{
-margin-top:50px;
 background:#111;
 color:#aaa;
 text-align:center;
 padding:25px;
+margin-top:50px;
 }
 
 /* MOBILE */
@@ -210,9 +414,7 @@ padding:25px;
 @media(max-width:600px){
 
 .products{
-grid-template-columns:
-repeat(2,1fr);
-
+grid-template-columns:repeat(2,1fr);
 gap:12px;
 }
 
@@ -232,12 +434,19 @@ font-size:16px;
 font-size:18px;
 }
 
+.add{
+font-size:12px;
+}
+
+.cart{
+max-width:100%;
+}
+
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -252,8 +461,13 @@ font-size:18px;
 RONQA
 </div>
 
-<button class="cart">
+<button
+class="cart-button"
+onclick="openCart()">
+
 🛒 السلة
+(<span id="cartCount">0</span>)
+
 </button>
 
 </div>
@@ -265,12 +479,10 @@ RONQA
 
 <section class="hero">
 
-<h1>
-RONQA
-</h1>
+<h1>RONQA</h1>
 
 <p>
-متجر إلكتروني للمنتجات المميزة
+منتجات مميزة بأسعار مناسبة
 </p>
 
 </section>
@@ -298,61 +510,51 @@ placeholder="🔎 ابحث عن منتج..."
 
 <div class="categories">
 
-
 <button
 class="category active"
-onclick="chooseCategory('all',this)">
+onclick="setCategory('all',this)">
 
 الكل
 
 </button>
 
-
 <button
 class="category"
-onclick="chooseCategory('bags',this)">
+onclick="setCategory('bags',this)">
 
 👜 حقائب
 
 </button>
 
-
 <button
 class="category"
-onclick="chooseCategory('shoes',this)">
+onclick="setCategory('shoes',this)">
 
 👟 أحذية
 
 </button>
 
-
 <button
 class="category"
-onclick="chooseCategory('accessories',this)">
+onclick="setCategory('accessories',this)">
 
 ⌚ إكسسوارات
 
 </button>
 
-
 </div>
 
 
 <h2 class="title">
-
 🛍️ منتجاتنا
-
 </h2>
 
-
-<!-- PRODUCTS -->
 
 <div
 id="products"
 class="products">
 
-<div
-style="
+<div style="
 grid-column:1/-1;
 text-align:center;
 padding:40px;">
@@ -367,50 +569,165 @@ padding:40px;">
 </div>
 
 
+<!-- OVERLAY -->
+
+<div
+id="overlay"
+class="overlay"
+onclick="closeCart()">
+</div>
+
+
+<!-- CART -->
+
+<div
+id="cart"
+class="cart">
+
+
+<div class="cart-header">
+
+<h2>🛒 السلة</h2>
+
+<button
+class="close"
+onclick="closeCart()">
+
+×
+</button>
+
+</div>
+
+
+<div
+id="cartList"
+class="cart-list">
+</div>
+
+
+<!-- CUSTOMER -->
+
+<div class="customer">
+
+<h3>
+📋 معلومات الطلب
+</h3>
+
+
+<input
+id="customerName"
+type="text"
+placeholder="👤 اسم الزبون"
+>
+
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="📞 رقم هاتف الزبون"
+>
+
+
+<input
+id="customerWilaya"
+type="text"
+placeholder="📍 الولاية"
+>
+
+
+<input
+id="customerCity"
+type="text"
+placeholder="🏙️ المدينة / البلدية"
+>
+
+
+<input
+id="customerAddress"
+type="text"
+placeholder="🏠 العنوان"
+>
+
+
+<textarea
+id="customerNote"
+placeholder="📝 ملاحظة اختيارية">
+</textarea>
+
+
+</div>
+
+
+<!-- TOTAL -->
+
+<div class="cart-bottom">
+
+<div
+id="total"
+class="total">
+
+المجموع: 0 دج
+
+</div>
+
+
+<button
+class="whatsapp"
+onclick="sendOrder()">
+
+💬 إرسال الطلب عبر WhatsApp
+
+</button>
+
+
+<button
+class="clear"
+onclick="clearCart()">
+
+🗑️ تفريغ السلة
+
+</button>
+
+</div>
+
+
+</div>
+
+
 <footer>
 
-© 2026 RONQA
+© 2026 RONQA - جميع الحقوق محفوظة
 
 </footer>
 
 
 <script>
 
-
-/* ==================================
+/* =================================
 SUPABASE
-================================== */
-
+================================= */
 
 const SUPABASE_URL =
 "https://qpctjcaygybpanzyweso.supabase.co";
-
 
 const SUPABASE_KEY =
 "sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
 
 
-/* ==================================
-VARIABLES
-================================== */
-
+/* =================================
+DATA
+================================= */
 
 let products = [];
 
+let cart = [];
 
-let selectedCategory =
-"all";
-
-
-const productsBox =
-document.getElementById(
-"products"
-);
+let selectedCategory = "all";
 
 
-/* ==================================
+/* =================================
 NORMALIZE CATEGORY
-================================== */
+================================= */
 
 function normalizeCategory(value){
 
@@ -426,36 +743,9 @@ text =
 text.replace(/\s+/g,"");
 
 
-/* أحذية / احذية */
-
-if(
-text.includes("أحذ") ||
-text.includes("احذ")
-){
-
-return "shoes";
-
-}
-
-
-/* إكسسوارات / اكسسوارات */
-
-if(
-text.includes("إكسسو") ||
-text.includes("اكسسو") ||
-text.includes("كسسو")
-){
-
-return "accessories";
-
-}
-
-
 /* حقائب */
 
 if(
-text.includes("حقائب") ||
-text.includes("حقايب") ||
 text.includes("حق")
 ){
 
@@ -464,16 +754,39 @@ return "bags";
 }
 
 
-/* أي تصنيف آخر */
+/* أحذية */
 
-return text;
+if(
+text.includes("حذ") ||
+text.includes("احذ")
+){
+
+return "shoes";
 
 }
 
 
-/* ==================================
+/* إكسسوارات */
+
+if(
+text.includes("كسسو") ||
+text.includes("اكسسو") ||
+text.includes("إكسسو")
+){
+
+return "accessories";
+
+}
+
+
+return "other";
+
+}
+
+
+/* =================================
 LOAD PRODUCTS
-================================== */
+================================= */
 
 async function loadProducts(){
 
@@ -511,14 +824,14 @@ SUPABASE_KEY,
 
 if(!response.ok){
 
-const error =
+const errorText =
 await response.text();
 
 throw new Error(
 "HTTP " +
 response.status +
-" : " +
-error
+" - " +
+errorText
 );
 
 }
@@ -531,29 +844,25 @@ await response.json();
 if(!Array.isArray(products)){
 
 throw new Error(
-"البيانات غير صحيحة"
+"لم يتم استلام قائمة المنتجات"
 );
 
 }
 
 
-/* عرض المنتجات */
-
-displayProducts(products);
+renderProducts(products);
 
 
 }
 
 catch(error){
 
-
-console.error(
-"Supabase Error:",
-error
-);
+console.error(error);
 
 
-productsBox.innerHTML = `
+document
+.getElementById("products")
+.innerHTML = `
 
 <div style="
 grid-column:1/-1;
@@ -585,18 +894,22 @@ ${error.message}
 }
 
 
-/* ==================================
-DISPLAY PRODUCTS
-================================== */
+/* =================================
+RENDER PRODUCTS
+================================= */
 
-function displayProducts(list){
+function renderProducts(list){
 
-productsBox.innerHTML = "";
+const box =
+document.getElementById("products");
 
 
-if(list.length === 0){
+box.innerHTML = "";
 
-productsBox.innerHTML = `
+
+if(!list.length){
+
+box.innerHTML = `
 
 <div style="
 grid-column:1/-1;
@@ -615,9 +928,11 @@ return;
 }
 
 
-/* المنتجات */
-
 list.forEach(product=>{
+
+
+const id =
+product.id;
 
 
 const name =
@@ -637,12 +952,19 @@ Number(product.stock) || 0;
 
 
 const image =
-String(
-product.image_url || ""
-).trim();
+String(product.image_url || "")
+.trim();
 
 
-let imageHTML = "";
+const category =
+normalizeCategory(
+product.category
+);
+
+
+/* IMAGE */
+
+let imageHTML;
 
 
 if(image){
@@ -650,16 +972,13 @@ if(image){
 imageHTML = `
 
 <img
-
 src="${image}"
-
-alt="${escapeHTML(name)}"
-
+alt="${name}"
 loading="lazy"
-
-onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-
->
+onerror="
+this.style.display='none';
+this.nextElementSibling.style.display='flex';
+">
 
 <div
 class="no-image"
@@ -676,8 +995,48 @@ style="display:none">
 imageHTML = `
 
 <div class="no-image">
-
 🛍️
+</div>
+
+`;
+
+}
+
+
+/* SIZE */
+
+let sizeHTML = "";
+
+
+if(category === "shoes"){
+
+sizeHTML = `
+
+<div class="size-box">
+
+<label>
+📏 المقاس
+</label>
+
+<select
+id="size-${id}">
+
+<option value="">
+اختر المقاس
+</option>
+
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40">40</option>
+<option value="41">41</option>
+<option value="42">42</option>
+<option value="43">43</option>
+<option value="44">44</option>
+<option value="45">45</option>
+
+</select>
 
 </div>
 
@@ -686,9 +1045,9 @@ imageHTML = `
 }
 
 
-/* بطاقة المنتج */
+/* PRODUCT */
 
-productsBox.innerHTML += `
+box.innerHTML += `
 
 <div class="product">
 
@@ -701,16 +1060,12 @@ ${imageHTML}
 
 
 <h3>
-
 ${escapeHTML(name)}
-
 </h3>
 
 
 <p class="description">
-
 ${escapeHTML(description)}
-
 </p>
 
 
@@ -724,10 +1079,25 @@ ${price.toLocaleString("fr-DZ")}
 
 <div class="stock">
 
-📦 المخزون:
+📦 متوفر:
 ${stock}
 
 </div>
+
+
+${sizeHTML}
+
+
+<button
+class="add"
+onclick="addToCart(${id})"
+${stock <= 0 ? "disabled" : ""}>
+
+${stock <= 0
+? "غير متوفر"
+: "🛒 أضف إلى السلة"}
+
+</button>
 
 
 </div>
@@ -739,52 +1109,40 @@ ${stock}
 }
 
 
-/* ==================================
-CATEGORY FILTER
-================================== */
+/* =================================
+CATEGORY
+================================= */
 
-function chooseCategory(
-category,
-button
-){
+function setCategory(category,button){
 
 selectedCategory =
 category;
 
 
-/* الزر النشط */
-
 document
 .querySelectorAll(".category")
 .forEach(btn=>{
 
-btn.classList.remove(
-"active"
-);
+btn.classList.remove("active");
 
 });
 
 
-button.classList.add(
-"active"
-);
+button.classList.add("active");
 
-
-/* فلترة */
 
 filterProducts();
 
 }
 
 
-/* ==================================
-FILTER PRODUCTS
-================================== */
+/* =================================
+FILTER
+================================= */
 
 function filterProducts(){
 
-
-const searchText =
+const search =
 document
 .getElementById("search")
 .value
@@ -792,74 +1150,49 @@ document
 .toLowerCase();
 
 
-const filtered =
+const result =
 products.filter(product=>{
 
 
-/* تصنيف المنتج */
-
-const productCategory =
+const category =
 normalizeCategory(
 product.category
 );
 
 
-/* التصنيف */
-
-let categoryMatch =
-true;
-
-
-if(
-selectedCategory !== "all"
-){
-
-categoryMatch =
-productCategory ===
-selectedCategory;
-
-}
-
-
-/* البحث */
-
 const name =
-String(
-product.name || ""
-)
+String(product.name || "")
 .toLowerCase();
 
 
 const description =
-String(
-product.description || ""
-)
+String(product.description || "")
 .toLowerCase();
 
 
-const searchMatch =
-name.includes(searchText) ||
-description.includes(searchText);
+const categoryOK =
+selectedCategory === "all" ||
+category === selectedCategory;
 
 
-return (
-categoryMatch &&
-searchMatch
-);
+const searchOK =
+name.includes(search) ||
+description.includes(search);
+
+
+return categoryOK && searchOK;
 
 });
 
 
-displayProducts(
-filtered
-);
+renderProducts(result);
 
 }
 
 
-/* ==================================
+/* =================================
 SEARCH
-================================== */
+================================= */
 
 document
 .getElementById("search")
@@ -869,52 +1202,642 @@ filterProducts
 );
 
 
-/* ==================================
-HTML SECURITY
-================================== */
+/* =================================
+ADD TO CART
+================================= */
+
+function addToCart(id){
+
+const product =
+products.find(
+p => Number(p.id) === Number(id)
+);
+
+
+if(!product)return;
+
+
+const stock =
+Number(product.stock) || 0;
+
+
+if(stock <= 0){
+
+alert("هذا المنتج غير متوفر");
+
+return;
+
+}
+
+
+/* SIZE */
+
+const category =
+normalizeCategory(
+product.category
+);
+
+
+let size = "";
+
+
+if(category === "shoes"){
+
+const select =
+document.getElementById(
+"size-"+id
+);
+
+
+if(!select || !select.value){
+
+alert(
+"من فضلك اختر مقاس الحذاء"
+);
+
+return;
+
+}
+
+
+size =
+select.value;
+
+}
+
+
+/* EXISTING */
+
+const existing =
+cart.find(item=>
+
+Number(item.id) === Number(id)
+&&
+item.size === size
+
+);
+
+
+if(existing){
+
+if(existing.quantity >= stock){
+
+alert(
+"لا يمكن تجاوز الكمية المتوفرة"
+);
+
+return;
+
+}
+
+existing.quantity++;
+
+}else{
+
+cart.push({
+
+id:id,
+
+name:product.name,
+
+price:Number(product.price)||0,
+
+stock:stock,
+
+size:size,
+
+quantity:1
+
+});
+
+}
+
+
+updateCart();
+
+openCart();
+
+}
+
+
+/* =================================
+UPDATE CART
+================================= */
+
+function updateCart(){
+
+const list =
+document.getElementById(
+"cartList"
+);
+
+
+const count =
+document.getElementById(
+"cartCount"
+);
+
+
+const totalBox =
+document.getElementById(
+"total"
+);
+
+
+list.innerHTML = "";
+
+
+let total = 0;
+
+let countItems = 0;
+
+
+cart.forEach((item,index)=>{
+
+
+const subtotal =
+item.price *
+item.quantity;
+
+
+total += subtotal;
+
+countItems += item.quantity;
+
+
+list.innerHTML += `
+
+<div class="cart-item">
+
+<div class="cart-name">
+
+${escapeHTML(item.name)}
+
+</div>
+
+
+${
+item.size
+?
+`
+<div class="cart-size">
+
+📏 المقاس:
+${item.size}
+
+</div>
+`
+:
+""
+}
+
+
+<div class="cart-price">
+
+${item.price.toLocaleString("fr-DZ")}
+دج
+
+</div>
+
+
+<div class="quantity">
+
+
+<button
+onclick="changeQuantity(${index},-1)">
+
+−
+
+</button>
+
+
+<span>
+${item.quantity}
+</span>
+
+
+<button
+onclick="changeQuantity(${index},1)">
+
++
+
+</button>
+
+
+<button
+class="delete"
+onclick="removeFromCart(${index})">
+
+🗑️
+
+</button>
+
+
+</div>
+
+
+<div style="margin-top:8px">
+
+المجموع:
+${subtotal.toLocaleString("fr-DZ")}
+دج
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+
+if(cart.length === 0){
+
+list.innerHTML = `
+
+<div style="
+text-align:center;
+padding:35px;
+color:#777">
+
+السلة فارغة 🛒
+
+</div>
+
+`;
+
+}
+
+
+count.innerText =
+countItems;
+
+
+totalBox.innerText =
+"المجموع: " +
+total.toLocaleString("fr-DZ") +
+" دج";
+
+}
+
+
+/* =================================
+QUANTITY
+================================= */
+
+function changeQuantity(index,value){
+
+const item =
+cart[index];
+
+
+if(!item)return;
+
+
+const newQuantity =
+item.quantity + value;
+
+
+if(newQuantity <= 0){
+
+removeFromCart(index);
+
+return;
+
+}
+
+
+if(newQuantity > item.stock){
+
+alert(
+"لا يمكن تجاوز المخزون"
+);
+
+return;
+
+}
+
+
+item.quantity =
+newQuantity;
+
+
+updateCart();
+
+}
+
+
+/* =================================
+REMOVE
+================================= */
+
+function removeFromCart(index){
+
+cart.splice(index,1);
+
+updateCart();
+
+}
+
+
+/* =================================
+CLEAR
+================================= */
+
+function clearCart(){
+
+cart = [];
+
+updateCart();
+
+}
+
+
+/* =================================
+OPEN CART
+================================= */
+
+function openCart(){
+
+document
+.getElementById("cart")
+.classList.add("open");
+
+
+document
+.getElementById("overlay")
+.classList.add("show");
+
+}
+
+
+/* =================================
+CLOSE CART
+================================= */
+
+function closeCart(){
+
+document
+.getElementById("cart")
+.classList.remove("open");
+
+
+document
+.getElementById("overlay")
+.classList.remove("show");
+
+}
+
+
+/* =================================
+SEND WHATSAPP
+================================= */
+
+function sendOrder(){
+
+if(cart.length === 0){
+
+alert(
+"السلة فارغة"
+);
+
+return;
+
+}
+
+
+const name =
+document
+.getElementById("customerName")
+.value
+.trim();
+
+
+const phone =
+document
+.getElementById("customerPhone")
+.value
+.trim();
+
+
+const wilaya =
+document
+.getElementById("customerWilaya")
+.value
+.trim();
+
+
+const city =
+document
+.getElementById("customerCity")
+.value
+.trim();
+
+
+const address =
+document
+.getElementById("customerAddress")
+.value
+.trim();
+
+
+const note =
+document
+.getElementById("customerNote")
+.value
+.trim();
+
+
+if(!name){
+
+alert("اكتب اسم الزبون");
+
+return;
+
+}
+
+
+if(!phone){
+
+alert("اكتب رقم هاتف الزبون");
+
+return;
+
+}
+
+
+if(!wilaya){
+
+alert("اكتب الولاية");
+
+return;
+
+}
+
+
+if(!city){
+
+alert("اكتب المدينة");
+
+return;
+
+}
+
+
+if(!address){
+
+alert("اكتب العنوان");
+
+return;
+
+}
+
+
+let message =
+"السلام عليكم، أريد تأكيد هذا الطلب:%0A%0A";
+
+
+message +=
+"👤 الاسم: " +
+encodeURIComponent(name) +
+"%0A";
+
+
+message +=
+"📞 الهاتف: " +
+encodeURIComponent(phone) +
+"%0A";
+
+
+message +=
+"📍 الولاية: " +
+encodeURIComponent(wilaya) +
+"%0A";
+
+
+message +=
+"🏙️ المدينة: " +
+encodeURIComponent(city) +
+"%0A";
+
+
+message +=
+"🏠 العنوان: " +
+encodeURIComponent(address) +
+"%0A";
+
+
+if(note){
+
+message +=
+"📝 ملاحظة: " +
+encodeURIComponent(note) +
+"%0A";
+
+}
+
+
+message +=
+"%0A🛍️ المنتجات:%0A";
+
+
+let total = 0;
+
+
+cart.forEach(item=>{
+
+
+const subtotal =
+item.price *
+item.quantity;
+
+
+total += subtotal;
+
+
+message +=
+"• " +
+encodeURIComponent(item.name) +
+" × " +
+item.quantity;
+
+
+if(item.size){
+
+message +=
+" | المقاس: " +
+item.size;
+
+}
+
+
+message +=
+" = " +
+subtotal +
+" دج%0A";
+
+});
+
+
+message +=
+"%0A💰 المجموع: " +
+total +
+" دج";
+
+
+/*
+ضع هنا رقم WhatsApp الخاص بالمتجر
+بدون +
+*/
+
+const STORE_WHATSAPP =
+"213675996957";
+
+
+const whatsappURL =
+"https://wa.me/" +
+STORE_WHATSAPP +
+"?text=" +
+message;
+
+
+window.open(
+whatsappURL,
+"_blank"
+);
+
+
+/* =================================
+ESCAPE
+================================= */
 
 function escapeHTML(text){
 
 return String(text)
 
-.replace(
-/&/g,
-"&amp;"
-)
+.replace(/&/g,"&amp;")
 
-.replace(
-/</g,
-"&lt;"
-)
+.replace(/</g,"&lt;")
 
-.replace(
-/>/g,
-"&gt;"
-)
+.replace(/>/g,"&gt;")
 
-.replace(
-/"/g,
-"&quot;"
-)
+.replace(/"/g,"&quot;")
 
-.replace(
-/'/g,
-"&#039;"
-);
+.replace(/'/g,"&#039;");
 
 }
 
 
-/* ==================================
+/* =================================
 START
-================================== */
+================================= */
 
 loadProducts();
 
+updateCart();
 
 </script>
 
-
 </body>
-
-  </html>
+</html>
