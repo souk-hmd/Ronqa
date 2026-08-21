@@ -403,4 +403,22 @@
 </footer>
 
 </body>
+    <script>
+const SUPABASE_URL = "https://qpctjcaygybpanzyweso.supabase.co";
+const SUPABASE_KEY = "sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
+
+fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
+    headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log("Products:", data);
+})
+.catch(error => {
+    console.error("Error:", error);
+});
+    </script>
 </html>
