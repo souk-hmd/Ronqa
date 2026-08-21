@@ -1,8 +1,11 @@
-RONQA — app.js
+/* =========================================
+   RONQA - APP.JS
+========================================= */
 
-/* =========================
+
+/* =========================================
    SUPABASE
-========================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://qpctjcaygybpanzyweso.supabase.co";
@@ -14,14 +17,34 @@ const STORE_WHATSAPP =
 "213675996957";
 
 
+/* =========================================
+   VARIABLES
+========================================= */
+
 let products = [];
 let cart = [];
 let selectedCategory = "all";
 
 
-/* =========================
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
    CATEGORY
-========================= */
+========================================= */
 
 function getCategory(value){
 
@@ -56,44 +79,52 @@ function getCategory(value){
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(text){
-
-    return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-/* =========================
+/* =========================================
    LOAD PRODUCTS
-========================= */
+========================================= */
 
 async function loadProducts(){
 
     const box =
     document.getElementById("products");
 
-    if(!box)return;
+    if(!box){
+        console.error(
+            "Element #products not found"
+        );
+        return;
+    }
+
 
     box.innerHTML = `
-        <div class="loading">
+        <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:40px;
+            font-size:18px;">
+            
             ⏳ جاري تحميل المنتجات...
+            
         </div>
     `;
 
+
     try{
+
+        const url =
+        SUPABASE_URL +
+        "/rest/v1/Products?select=*";
+
+
+        console.log(
+            "Supabase URL:",
+            url
+        );
+
 
         const response =
         await fetch(
-            SUPABASE_URL +
-            "/rest/v1/Products?select=*",
+            url,
             {
                 method:"GET",
 
@@ -102,36 +133,78 @@ async function loadProducts(){
                     "Authorization":
                     "Bearer " + SUPABASE_KEY,
                     "Content-Type":
+                    "application/json",
+                    "Accept":
                     "application/json"
                 }
             }
         );
 
 
-        if(!response.ok){
+        console.log(
+            "Supabase status:",
+            response.status
+        );
 
-            const errorText =
-            await response.text();
+
+        const responseText =
+        await response.text();
+
+
+        console.log(
+            "Supabase response:",
+            responseText
+        );
+
+
+        if(!response.ok){
 
             throw new Error(
                 "HTTP " +
                 response.status +
-                " - " +
-                errorText
+                ": " +
+                responseText
             );
+
         }
 
 
-        products =
-        await response.json();
+        let data;
 
 
-        if(!Array.isArray(products)){
+        try{
+
+            data =
+            JSON.parse(
+                responseText
+            );
+
+        }
+        catch(parseError){
 
             throw new Error(
-                "بيانات المنتجات غير صحيحة"
+                "Supabase لم يرجع بيانات JSON صحيحة"
             );
+
         }
+
+
+        if(!Array.isArray(data)){
+
+            throw new Error(
+                "بيانات المنتجات ليست قائمة"
+            );
+
+        }
+
+
+        products = data;
+
+
+        console.log(
+            "Products loaded:",
+            products.length
+        );
 
 
         showProducts(products);
@@ -140,61 +213,85 @@ async function loadProducts(){
     catch(error){
 
         console.error(
-            "Supabase Error:",
+            "LOAD PRODUCTS ERROR:",
             error
         );
 
 
         box.innerHTML = `
 
-            <div
-                style="
+            <div style="
                 grid-column:1/-1;
                 text-align:center;
-                padding:40px;
-                color:#c00;">
+                padding:40px;">
 
-                ❌ تعذر تحميل المنتجات
+                <div style="
+                    font-size:45px;
+                    margin-bottom:15px;">
+                    
+                    ❌
+                    
+                </div>
 
-                <br><br>
+                <h3>
+                    تعذر تحميل المنتجات
+                </h3>
 
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
+                <p style="
+                    color:#777;
+                    margin-top:10px;
+                    direction:ltr;
+                    word-break:break-word;">
+                    
+                    ${escapeHTML(
+                        error.message
+                    )}
+                    
+                </p>
 
             </div>
+
         `;
     }
 }
 
 
-/* =========================
+/* =========================================
    SHOW PRODUCTS
-========================= */
+========================================= */
 
 function showProducts(list){
 
     const box =
-    document.getElementById("products");
+    document.getElementById(
+        "products"
+    );
 
-    if(!box)return;
+
+    if(!box){
+        return;
+    }
+
 
     box.innerHTML = "";
 
 
-    if(!list || list.length === 0){
+    if(
+        !Array.isArray(list) ||
+        list.length === 0
+    ){
 
         box.innerHTML = `
 
-            <div
-                style="
+            <div style="
                 grid-column:1/-1;
                 text-align:center;
                 padding:40px;">
 
-                لا توجد منتجات في هذا التصنيف.
+                لا توجد منتجات في هذا التصنيف 🛍️
 
             </div>
+
         `;
 
         return;
@@ -207,16 +304,20 @@ function showProducts(list){
         product.id;
 
         const name =
-        product.name || "منتج";
+        product.name ||
+        "منتج";
 
         const description =
-        product.description || "";
+        product.description ||
+        "";
 
         const price =
-        Number(product.price) || 0;
+        Number(product.price) ||
+        0;
 
         const stock =
-        Number(product.stock) || 0;
+        Number(product.stock) ||
+        0;
 
         const image =
         String(
@@ -224,7 +325,9 @@ function showProducts(list){
         ).trim();
 
         const category =
-        getCategory(product.category);
+        getCategory(
+            product.category
+        );
 
 
         let imageHTML = "";
@@ -241,15 +344,17 @@ function showProducts(list){
                     onerror="
                     this.style.display='none';
                     this.nextElementSibling.style.display='flex';
-                    ">
+                    "
+                >
 
                 <div
                     class="no-image"
-                    style="display:none">
-
+                    style="display:none;">
+                    
                     🛍️
-
+                    
                 </div>
+
             `;
 
         }
@@ -268,32 +373,65 @@ function showProducts(list){
         let sizeHTML = "";
 
 
-        if(category === "shoes"){
+        if(
+            category === "shoes"
+        ){
 
             sizeHTML = `
 
                 <div class="size-box">
 
-                    <select id="size-${id}">
+                    <select
+                        id="size-${id}">
 
                         <option value="">
                             اختر المقاس
                         </option>
 
-                        <option value="36">36</option>
-                        <option value="37">37</option>
-                        <option value="38">38</option>
-                        <option value="39">39</option>
-                        <option value="40">40</option>
-                        <option value="41">41</option>
-                        <option value="42">42</option>
-                        <option value="43">43</option>
-                        <option value="44">44</option>
-                        <option value="45">45</option>
+                        <option value="36">
+                            36
+                        </option>
+
+                        <option value="37">
+                            37
+                        </option>
+
+                        <option value="38">
+                            38
+                        </option>
+
+                        <option value="39">
+                            39
+                        </option>
+
+                        <option value="40">
+                            40
+                        </option>
+
+                        <option value="41">
+                            41
+                        </option>
+
+                        <option value="42">
+                            42
+                        </option>
+
+                        <option value="43">
+                            43
+                        </option>
+
+                        <option value="44">
+                            44
+                        </option>
+
+                        <option value="45">
+                            45
+                        </option>
 
                     </select>
 
                 </div>
+
             `;
         }
 
@@ -345,40 +483,52 @@ function showProducts(list){
 
                     ${
                         stock <= 0
-                        ? "غير متوفر"
-                        : "🛒 أضف إلى السلة"
+                        ?
+                        "غير متوفر"
+                        :
+                        "🛒 أضف إلى السلة"
                     }
 
                 </button>
 
             </div>
+
         `;
     });
 }
 
 
-/* =========================
-   CATEGORY FILTER
-========================= */
+/* =========================================
+   CATEGORY BUTTON
+========================================= */
 
-function setCategory(category,button){
+function setCategory(
+    category,
+    button
+){
 
     selectedCategory =
     category;
 
 
     document
-    .querySelectorAll(".category")
+    .querySelectorAll(
+        ".category"
+    )
     .forEach(btn=>{
 
-        btn.classList.remove("active");
+        btn.classList.remove(
+            "active"
+        );
 
     });
 
 
     if(button){
 
-        button.classList.add("active");
+        button.classList.add(
+            "active"
+        );
 
     }
 
@@ -387,25 +537,35 @@ function setCategory(category,button){
 }
 
 
-/* =========================
-   FILTER PRODUCTS
-========================= */
+/* =========================================
+   FILTER
+========================================= */
 
 function filterProducts(){
 
+    const searchElement =
+    document.getElementById(
+        "search"
+    );
+
+
     const search =
-    document
-    .getElementById("search")
-    .value
+    searchElement
+    ?
+    searchElement.value
     .trim()
-    .toLowerCase();
+    .toLowerCase()
+    :
+    "";
 
 
     const result =
     products.filter(product=>{
 
         const category =
-        getCategory(product.category);
+        getCategory(
+            product.category
+        );
 
 
         const name =
@@ -423,15 +583,23 @@ function filterProducts(){
         return (
 
             (
-                selectedCategory === "all" ||
-                category === selectedCategory
+                selectedCategory ===
+                "all"
+                ||
+                category ===
+                selectedCategory
             )
 
             &&
 
             (
-                name.includes(search) ||
-                description.includes(search)
+                name.includes(
+                    search
+                )
+                ||
+                description.includes(
+                    search
+                )
             )
 
         );
@@ -443,52 +611,41 @@ function filterProducts(){
 }
 
 
-/* =========================
+/* =========================================
    SEARCH
-========================= */
+========================================= */
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
+function setupSearch(){
 
     const search =
-    document.getElementById("search");
+    document.getElementById(
+        "search"
+    );
 
-    if(search){
 
-        search.addEventListener(
-            "input",
-            filterProducts
-        );
-
+    if(!search){
+        return;
     }
 
-    loadProducts();
 
-    updateCart();
-
-    if(
-        typeof loadWilayas ===
-        "function"
-    ){
-
-        loadWilayas();
-
-    }
-
-});
+    search.addEventListener(
+        "input",
+        filterProducts
+    );
+}
 
 
-/* =========================
+/* =========================================
    ADD TO CART
-========================= */
+========================================= */
 
 function addToCart(id){
 
     const product =
     products.find(
         p =>
-        Number(p.id) === Number(id)
+        Number(p.id) ===
+        Number(id)
     );
 
 
@@ -511,7 +668,9 @@ function addToCart(id){
     let size = "";
 
 
-    if(category === "shoes"){
+    if(
+        category === "shoes"
+    ){
 
         const select =
         document.getElementById(
@@ -579,16 +738,19 @@ function addToCart(id){
             "منتج",
 
             price:
-            Number(product.price) || 0,
+            Number(product.price) ||
+            0,
 
             stock:
-            Number(product.stock) || 0,
+            Number(product.stock) ||
+            0,
 
             size:size,
 
             quantity:1
 
         });
+
     }
 
 
@@ -598,9 +760,46 @@ function addToCart(id){
 }
 
 
-/* =========================
+/* =========================================
+   DELIVERY PRICE
+========================================= */
+
+function getDeliveryPrice(){
+
+    const delivery =
+    document.getElementById(
+        "delivery"
+    );
+
+
+    const price =
+    document.getElementById(
+        "deliveryPrice"
+    );
+
+
+    if(
+        !delivery ||
+        !price ||
+        !delivery.value
+    ){
+
+        return 0;
+    }
+
+
+    return Math.max(
+        0,
+        Number(
+            price.value
+        ) || 0
+    );
+}
+
+
+/* =========================================
    UPDATE CART
-========================= */
+========================================= */
 
 function updateCart(){
 
@@ -609,24 +808,16 @@ function updateCart(){
         "cartList"
     );
 
+
     const count =
     document.getElementById(
         "cartCount"
     );
 
+
     const totalBox =
     document.getElementById(
         "total"
-    );
-
-    const subtotalBox =
-    document.getElementById(
-        "subtotal"
-    );
-
-    const deliveryTotalBox =
-    document.getElementById(
-        "deliveryTotal"
     );
 
 
@@ -680,12 +871,14 @@ function updateCart(){
                 ${
                     item.size
                     ?
-                    `<div>
+                    `
+                    <div>
                         📏 المقاس:
                         ${escapeHTML(
                             item.size
                         )}
-                    </div>`
+                    </div>
+                    `
                     :
                     ""
                 }
@@ -744,16 +937,18 @@ function updateCart(){
                 </div>
 
             </div>
+
         `;
     });
 
 
-    if(cart.length === 0){
+    if(
+        cart.length === 0
+    ){
 
         list.innerHTML = `
 
-            <div
-                style="
+            <div style="
                 text-align:center;
                 padding:40px;
                 color:#777;">
@@ -761,91 +956,70 @@ function updateCart(){
                 السلة فارغة 🛒
 
             </div>
+
         `;
     }
 
 
-    const deliveryPrice =
+    const delivery =
     getDeliveryPrice();
 
 
     const finalTotal =
     subtotal +
-    deliveryPrice;
+    delivery;
 
 
     count.innerText =
     itemCount;
 
 
+    const subtotalBox =
+    document.getElementById(
+        "subtotal"
+    );
+
+
+    const deliveryBox =
+    document.getElementById(
+        "deliveryTotal"
+    );
+
+
     if(subtotalBox){
 
         subtotalBox.innerText =
         "المنتجات: " +
-        subtotal.toLocaleString("fr-DZ") +
+        subtotal.toLocaleString(
+            "fr-DZ"
+        ) +
         " دج";
     }
 
 
-    if(deliveryTotalBox){
+    if(deliveryBox){
 
-        deliveryTotalBox.innerText =
+        deliveryBox.innerText =
         "التوصيل: " +
-        deliveryPrice.toLocaleString("fr-DZ") +
+        delivery.toLocaleString(
+            "fr-DZ"
+        ) +
         " دج";
     }
 
 
     totalBox.innerText =
     "المجموع النهائي: " +
-    finalTotal.toLocaleString("fr-DZ") +
+    finalTotal.toLocaleString(
+        "fr-DZ"
+    ) +
     " دج";
 }
 
 
-/* =========================
-   DELIVERY PRICE
-========================= */
-
-function getDeliveryPrice(){
-
-    const delivery =
-    document.getElementById(
-        "delivery"
-    );
-
-
-    const price =
-    document.getElementById(
-        "deliveryPrice"
-    );
-
-
-    if(
-        !delivery ||
-        !price
-    ){
-
-        return 0;
-    }
-
-
-    if(!delivery.value){
-
-        return 0;
-    }
-
-
-    return Math.max(
-        0,
-        Number(price.value) || 0
-    );
-}
-
-
-/* =========================
+/* =========================================
    QUANTITY
-========================= */
+========================================= */
 
 function changeQuantity(
     index,
@@ -856,7 +1030,9 @@ function changeQuantity(
     cart[index];
 
 
-    if(!item)return;
+    if(!item){
+        return;
+    }
 
 
     const newQuantity =
@@ -864,7 +1040,9 @@ function changeQuantity(
     change;
 
 
-    if(newQuantity <= 0){
+    if(
+        newQuantity <= 0
+    ){
 
         removeItem(index);
 
@@ -893,21 +1071,24 @@ function changeQuantity(
 }
 
 
-/* =========================
-   REMOVE ITEM
-========================= */
+/* =========================================
+   REMOVE
+========================================= */
 
 function removeItem(index){
 
-    cart.splice(index,1);
+    cart.splice(
+        index,
+        1
+    );
 
     updateCart();
 }
 
 
-/* =========================
-   CLEAR CART
-========================= */
+/* =========================================
+   CLEAR
+========================================= */
 
 function clearCart(){
 
@@ -917,9 +1098,9 @@ function clearCart(){
 }
 
 
-/* =========================
+/* =========================================
    OPEN CART
-========================= */
+========================================= */
 
 function openCart(){
 
@@ -927,6 +1108,7 @@ function openCart(){
     document.getElementById(
         "cartPanel"
     );
+
 
     const overlay =
     document.getElementById(
@@ -951,9 +1133,9 @@ function openCart(){
 }
 
 
-/* =========================
+/* =========================================
    CLOSE CART
-========================= */
+========================================= */
 
 function closeCart(){
 
@@ -961,6 +1143,7 @@ function closeCart(){
     document.getElementById(
         "cartPanel"
     );
+
 
     const overlay =
     document.getElementById(
@@ -985,13 +1168,15 @@ function closeCart(){
 }
 
 
-/* =========================
+/* =========================================
    SEND ORDER
-========================= */
+========================================= */
 
 function sendOrder(){
 
-    if(cart.length === 0){
+    if(
+        cart.length === 0
+    ){
 
         alert(
             "السلة فارغة"
@@ -1001,66 +1186,71 @@ function sendOrder(){
     }
 
 
+    const getValue =
+    id => {
+
+        const element =
+        document.getElementById(
+            id
+        );
+
+        return element
+        ?
+        element.value.trim()
+        :
+        "";
+
+    };
+
+
     const name =
-    document
-    .getElementById(
+    getValue(
         "customerName"
-    )
-    .value
-    .trim();
+    );
 
 
     const phone =
-    document
-    .getElementById(
+    getValue(
         "customerPhone"
-    )
-    .value
-    .trim();
+    );
 
 
     const wilaya =
-    document
-    .getElementById(
+    getValue(
         "wilaya"
-    )
-    .value
-    .trim();
+    );
 
 
     const city =
-    document
-    .getElementById(
+    getValue(
         "city"
-    )
-    .value
-    .trim();
+    );
 
 
     const address =
-    document
-    .getElementById(
+    getValue(
         "address"
-    )
-    .value
-    .trim();
+    );
 
 
     const note =
-    document
-    .getElementById(
+    getValue(
         "note"
-    )
-    .value
-    .trim();
+    );
+
+
+    const deliveryElement =
+    document.getElementById(
+        "delivery"
+    );
 
 
     const delivery =
-    document
-    .getElementById(
-        "delivery"
-    )
-    .value;
+    deliveryElement
+    ?
+    deliveryElement.value
+    :
+    "";
 
 
     if(!name){
@@ -1119,149 +1309,4 @@ function sendOrder(){
             "اختر طريقة التوصيل"
         );
 
-        return;
-    }
-
-
-    const deliveryPrice =
-    getDeliveryPrice();
-
-
-    let subtotal = 0;
-
-
-    let message =
-    "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
-
-
-    message +=
-    "👤 الاسم: " +
-    name +
-    "\n";
-
-
-    message +=
-    "📞 الهاتف: " +
-    phone +
-    "\n";
-
-
-    message +=
-    "📍 الولاية: " +
-    wilaya +
-    "\n";
-
-
-    message +=
-    "🏙️ المدينة / البلدية: " +
-    city +
-    "\n";
-
-
-    message +=
-    "🏠 العنوان: " +
-    address +
-    "\n";
-
-
-    message +=
-    "🚚 طريقة التوصيل: " +
-    (
-        delivery === "home"
-        ?
-        "توصيل للمنزل"
-        :
-        "استلام من المكتب"
-    ) +
-    "\n";
-
-
-    message +=
-    "💵 سعر التوصيل: " +
-    deliveryPrice +
-    " دج\n";
-
-
-    if(note){
-
-        message +=
-        "📝 ملاحظة: " +
-        note +
-        "\n";
-    }
-
-
-    message +=
-    "\n🛍️ المنتجات:\n";
-
-
-    cart.forEach(item=>{
-
-        const itemSubtotal =
-        item.price *
-        item.quantity;
-
-
-        subtotal +=
-        itemSubtotal;
-
-
-        message +=
-        "• " +
-        item.name +
-        " × " +
-        item.quantity;
-
-
-        if(item.size){
-
-            message +=
-            " | المقاس: " +
-            item.size;
-        }
-
-
-        message +=
-        " = " +
-        itemSubtotal +
-        " دج\n";
-    });
-
-
-    const finalTotal =
-    subtotal +
-    deliveryPrice;
-
-
-    message +=
-    "\n💰 المنتجات: " +
-    subtotal +
-    " دج\n";
-
-
-    message +=
-    "🚚 التوصيل: " +
-    deliveryPrice +
-    " دج\n";
-
-
-    message +=
-    "💵 المجموع النهائي: " +
-    finalTotal +
-    " دج";
-
-
-    const url =
-    "https://wa.me/" +
-    STORE_WHATSAPP +
-    "?text=" +
-    encodeURIComponent(
-        message
-    );
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-      }
+        
