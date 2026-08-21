@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RONQA</title>
 
 <style>
@@ -360,8 +359,7 @@ background:#fafafa;
 }
 
 .total-products,
-.delivery-total,
-.final-total{
+.delivery-total{
 margin-bottom:7px;
 }
 
@@ -481,9 +479,7 @@ onclick="openCart()">
 
 <h1>RONQA</h1>
 
-<p>
-منتجات مميزة بأسعار مناسبة
-</p>
+<p>منتجات مميزة بأسعار مناسبة</p>
 
 </section>
 
@@ -531,9 +527,7 @@ onclick="setCategory('accessories',this)">
 🛍️ منتجاتنا
 </h2>
 
-<div
-id="products"
-class="products">
+<div id="products" class="products">
 
 <div class="loading">
 ⏳ جاري تحميل المنتجات...
@@ -555,9 +549,7 @@ class="cart-panel">
 
 <div class="cart-header">
 
-<h2>
-🛒 السلة
-</h2>
+<h2>🛒 السلة</h2>
 
 <button
 class="close-cart"
@@ -574,9 +566,7 @@ class="cart-list">
 
 <div class="customer-form">
 
-<h3>
-📋 معلومات الطلب
-</h3>
+<h3>📋 معلومات الطلب</h3>
 
 <input
 id="customerName"
@@ -592,9 +582,7 @@ placeholder="📞 رقم الهاتف"
 
 <select id="wilaya">
 
-<option value="">
-📍 اختر الولاية
-</option>
+<option value="">📍 اختر الولاية</option>
 
 <option>أدرار</option>
 <option>الشلف</option>
@@ -699,7 +687,7 @@ onclick="setDelivery('office')">
 id="deliveryPrice"
 class="delivery-price">
 
-🚚 سعر التوصيل: اختر الولاية
+🚚 اختر الولاية لمعرفة سعر التوصيل
 
 </div>
 
@@ -757,9 +745,7 @@ onclick="clearCart()">
 </div>
 
 <footer>
-
 © 2026 RONQA
-
 </footer>
 
 <script>
@@ -775,13 +761,9 @@ const SUPABASE_KEY =
 "sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
 
 let products = [];
-
 let cart = [];
-
 let selectedCategory = "all";
-
 let deliveryType = "home";
-
 let deliveryPrice = 0;
 
 
@@ -791,64 +773,64 @@ DELIVERY PRICES
 
 const deliveryPrices = {
 
-"أدرار": {home:1000,office:700},
-"الشلف": {home:700,office:500},
-"الأغواط": {home:800,office:600},
-"أم البواقي": {home:750,office:550},
-"باتنة": {home:750,office:550},
-"بجاية": {home:750,office:550},
-"بسكرة": {home:750,office:550},
-"بشار": {home:1000,office:700},
-"البليدة": {home:600,office:450},
-"البويرة": {home:650,office:500},
-"تمنراست": {home:1400,office:1000},
-"تبسة": {home:850,office:600},
-"تلمسان": {home:850,office:600},
-"تيارت": {home:750,office:550},
-"تيزي وزو": {home:700,office:500},
-"الجزائر": {home:600,office:450},
-"الجلفة": {home:800,office:600},
-"جيجل": {home:800,office:600},
-"سطيف": {home:750,office:550},
-"سعيدة": {home:800,office:600},
-"سكيكدة": {home:800,office:600},
-"سيدي بلعباس": {home:800,office:600},
-"عنابة": {home:850,office:600},
-"قالمة": {home:800,office:600},
-"قسنطينة": {home:750,office:550},
-"المدية": {home:700,office:500},
-"مستغانم": {home:800,office:600},
-"المسيلة": {home:750,office:550},
-"معسكر": {home:800,office:600},
-"ورقلة": {home:950,office:700},
-"وهران": {home:800,office:600},
-"البيض": {home:900,office:650},
-"إليزي": {home:1400,office:1000},
-"برج بوعريريج": {home:750,office:550},
-"بومرداس": {home:650,office:500},
-"الطارف": {home:850,office:600},
-"تندوف": {home:1200,office:900},
-"تيسمسيلت": {home:800,office:600},
-"الوادي": {home:950,office:700},
-"خنشلة": {home:800,office:600},
-"سوق أهراس": {home:850,office:600},
-"تيبازة": {home:650,office:500},
-"ميلة": {home:800,office:600},
-"عين الدفلى": {home:700,office:500},
-"النعامة": {home:950,office:700},
-"عين تموشنت": {home:850,office:600},
-"غرداية": {home:850,office:600},
-"غليزان": {home:800,office:600},
-"تيميمون": {home:1100,office:800},
-"برج باجي مختار": {home:1400,office:1000},
-"أولاد جلال": {home:850,office:600},
-"بني عباس": {home:1100,office:800},
-"عين صالح": {home:1200,office:900},
-"عين قزام": {home:1400,office:1000},
-"تقرت": {home:900,office:650},
-"جانت": {home:1400,office:1000},
-"المغير": {home:900,office:650},
-"المنيعة": {home:900,office:650}
+"أدرار":{home:1000,office:700},
+"الشلف":{home:700,office:500},
+"الأغواط":{home:800,office:600},
+"أم البواقي":{home:750,office:550},
+"باتنة":{home:750,office:550},
+"بجاية":{home:750,office:550},
+"بسكرة":{home:750,office:550},
+"بشار":{home:1000,office:700},
+"البليدة":{home:600,office:450},
+"البويرة":{home:650,office:500},
+"تمنراست":{home:1400,office:1000},
+"تبسة":{home:850,office:600},
+"تلمسان":{home:850,office:600},
+"تيارت":{home:750,office:550},
+"تيزي وزو":{home:700,office:500},
+"الجزائر":{home:600,office:450},
+"الجلفة":{home:800,office:600},
+"جيجل":{home:800,office:600},
+"سطيف":{home:750,office:550},
+"سعيدة":{home:800,office:600},
+"سكيكدة":{home:800,office:600},
+"سيدي بلعباس":{home:800,office:600},
+"عنابة":{home:850,office:600},
+"قالمة":{home:800,office:600},
+"قسنطينة":{home:750,office:550},
+"المدية":{home:700,office:500},
+"مستغانم":{home:800,office:600},
+"المسيلة":{home:750,office:550},
+"معسكر":{home:800,office:600},
+"ورقلة":{home:950,office:700},
+"وهران":{home:800,office:600},
+"البيض":{home:900,office:650},
+"إليزي":{home:1400,office:1000},
+"برج بوعريريج":{home:750,office:550},
+"بومرداس":{home:650,office:500},
+"الطارف":{home:850,office:600},
+"تندوف":{home:1200,office:900},
+"تيسمسيلت":{home:800,office:600},
+"الوادي":{home:950,office:700},
+"خنشلة":{home:800,office:600},
+"سوق أهراس":{home:850,office:600},
+"تيبازة":{home:650,office:500},
+"ميلة":{home:800,office:600},
+"عين الدفلى":{home:700,office:500},
+"النعامة":{home:950,office:700},
+"عين تموشنت":{home:850,office:600},
+"غرداية":{home:850,office:600},
+"غليزان":{home:800,office:600},
+"تيميمون":{home:1100,office:800},
+"برج باجي مختار":{home:1400,office:1000},
+"أولاد جلال":{home:850,office:600},
+"بني عباس":{home:1100,office:800},
+"عين صالح":{home:1200,office:900},
+"عين قزام":{home:1400,office:1000},
+"تقرت":{home:900,office:650},
+"جانت":{home:1400,office:1000},
+"المغير":{home:900,office:650},
+"المنيعة":{home:900,office:650}
 
 };
 
@@ -885,12 +867,11 @@ return "accessories";
 }
 
 return "other";
-
 }
 
 
 /* =========================
-LOAD PRODUCTS
+LOAD PRODUCTS - FIXED
 ========================= */
 
 async function loadProducts(){
@@ -900,41 +881,59 @@ document.getElementById("products");
 
 box.innerHTML = `
 <div class="loading">
-⏳ جاري الاتصال بالمتجر...
+⏳ جاري تحميل المنتجات...
 </div>
 `;
 
 try{
 
-const response =
-await fetch(
+const url =
 SUPABASE_URL +
-"/rest/v1/Products?select=*",
-{
+"/rest/v1/Products?select=id,name,description,price,stock,image_url,category";
+
+const response =
+await fetch(url,{
 method:"GET",
 headers:{
 "apikey":SUPABASE_KEY,
 "Authorization":"Bearer "+SUPABASE_KEY,
-"Content-Type":"application/json"
+"Content-Type":"application/json",
+"Accept":"application/json"
 }
-}
-);
+});
+
+const text =
+await response.text();
+
+console.log("Supabase:",text);
 
 if(!response.ok){
 
 throw new Error(
-"HTTP "+response.status
+"HTTP "+response.status+" - "+text
 );
 
 }
 
-const data =
-await response.json();
+let data;
+
+try{
+
+data =
+JSON.parse(text);
+
+}catch(e){
+
+throw new Error(
+"Supabase لم يرجع JSON صحيح"
+);
+
+}
 
 if(!Array.isArray(data)){
 
 throw new Error(
-"البيانات غير صحيحة"
+"البيانات ليست قائمة منتجات"
 );
 
 }
@@ -946,13 +945,16 @@ showProducts(products);
 }
 catch(error){
 
-console.error(error);
+console.error(
+"LOAD PRODUCTS ERROR:",
+error
+);
 
 box.innerHTML = `
 
 <div class="error">
 
-❌ لم نتمكن من تحميل المنتجات.
+❌ حدث خطأ في تحميل المنتجات
 
 <br><br>
 
@@ -1008,7 +1010,8 @@ return;
 
 list.forEach(product=>{
 
-const id = product.id;
+const id =
+product.id;
 
 const name =
 product.name || "منتج";
@@ -1117,11 +1120,17 @@ ${escapeHTML(description)}
 </p>
 
 <div class="price">
-${price.toLocaleString("fr-DZ")} دج
+
+${price.toLocaleString("fr-DZ")}
+دج
+
 </div>
 
 <div class="stock">
-📦 المخزون: ${stock}
+
+📦 المخزون:
+${stock}
+
 </div>
 
 ${sizeHTML}
@@ -1263,7 +1272,8 @@ return;
 
 }
 
-size = select.value;
+size =
+select.value;
 
 }
 
@@ -1418,7 +1428,9 @@ color:#777;">
 count.innerText =
 itemCount;
 
-document.getElementById("productsTotal").innerText =
+document.getElementById(
+"productsTotal"
+).innerText =
 "🛍️ المنتجات: " +
 total.toLocaleString("fr-DZ") +
 " دج";
@@ -1429,7 +1441,7 @@ updateDelivery();
 
 
 /* =========================
-CHANGE QUANTITY
+QUANTITY
 ========================= */
 
 function changeQuantity(index,change){
@@ -1452,7 +1464,9 @@ return;
 
 if(newQuantity > item.stock){
 
-alert("لا توجد كمية كافية في المخزون");
+alert(
+"لا توجد كمية كافية في المخزون"
+);
 
 return;
 
@@ -1527,7 +1541,7 @@ document
 
 
 /* =========================
-DELIVERY TYPE
+DELIVERY
 ========================= */
 
 function setDelivery(type){
@@ -1573,22 +1587,4 @@ document.getElementById("wilaya").value;
 
 if(
 wilaya &&
-deliveryPrices[wilaya]
-){
-
-deliveryPrice =
-deliveryPrices[wilaya][deliveryType];
-
-}else{
-
-deliveryPrice = 0;
-
-}
-
-const label =
-deliveryType === "home"
-? "🏠 للمنزل"
-: "🏢 للمكتب";
-
-document
-.getElementById("
+deliveryPr
