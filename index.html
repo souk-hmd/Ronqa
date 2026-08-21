@@ -2,16 +2,11 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RONQA</title>
 
 <style>
-
 *{
 box-sizing:border-box;
 margin:0;
@@ -116,8 +111,7 @@ margin-bottom:22px;
 
 .products{
 display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
@@ -297,6 +291,8 @@ background:#c00 !important;
 .customer-form{
 padding:12px;
 border-top:1px solid #ddd;
+max-height:330px;
+overflow-y:auto;
 }
 
 .customer-form h3{
@@ -307,7 +303,7 @@ margin-bottom:10px;
 .customer-form select,
 .customer-form textarea{
 width:100%;
-padding:10px;
+padding:11px;
 margin-bottom:8px;
 border:1px solid #ddd;
 border-radius:8px;
@@ -318,27 +314,6 @@ background:white;
 .customer-form textarea{
 height:55px;
 resize:none;
-}
-
-.delivery-box{
-background:#f8f4df;
-border:1px solid #e5d28a;
-padding:12px;
-border-radius:10px;
-margin-top:5px;
-margin-bottom:8px;
-}
-
-.delivery-row{
-display:flex;
-justify-content:space-between;
-margin-bottom:6px;
-}
-
-.delivery-row:last-child{
-margin-bottom:0;
-font-weight:bold;
-font-size:18px;
 }
 
 .cart-bottom{
@@ -382,6 +357,21 @@ text-align:center;
 padding:25px;
 }
 
+.loading{
+grid-column:1/-1;
+text-align:center;
+padding:50px;
+font-size:18px;
+color:#777;
+}
+
+.error{
+grid-column:1/-1;
+text-align:center;
+padding:40px;
+color:#c00;
+}
+
 @media(max-width:600px){
 
 .products{
@@ -414,45 +404,31 @@ max-width:100%;
 }
 
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
 <div class="header">
 
-<div class="logo">
-RONQA
-</div>
+<div class="logo">RONQA</div>
 
-<button
-class="cart-button"
-onclick="openCart()">
-
+<button class="cart-button" onclick="openCart()">
 🛒 السلة
 (<span id="cartCount">0</span>)
-
 </button>
 
 </div>
-
 </header>
-
 
 <section class="hero">
 
 <h1>RONQA</h1>
 
-<p>
-منتجات مميزة بأسعار مناسبة
-</p>
+<p>منتجات مميزة بأسعار مناسبة</p>
 
 </section>
-
 
 <div class="container">
 
@@ -466,66 +442,45 @@ placeholder="🔎 ابحث عن منتج..."
 
 </div>
 
-
 <div class="categories">
 
 <button
 class="category active"
 onclick="setCategory('all',this)">
-
 الكل
-
 </button>
 
 <button
 class="category"
 onclick="setCategory('bags',this)">
-
 👜 حقائب
-
 </button>
 
 <button
 class="category"
 onclick="setCategory('shoes',this)">
-
 👟 أحذية
-
 </button>
 
 <button
 class="category"
 onclick="setCategory('accessories',this)">
-
 ⌚ إكسسوارات
-
 </button>
 
 </div>
 
+<h2 class="title">🛍️ منتجاتنا</h2>
 
-<h2 class="title">
-🛍️ منتجاتنا
-</h2>
+<div id="products" class="products">
 
-
-<div
-id="products"
-class="products">
-
-<div style="
-grid-column:1/-1;
-text-align:center;
-padding:40px;">
-
+<div class="loading">
 جاري تحميل المنتجات...
-
 </div>
 
 </div>
 
 </div>
-
 
 <div
 id="overlay"
@@ -533,41 +488,25 @@ class="overlay"
 onclick="closeCart()">
 </div>
 
-
-<div
-id="cartPanel"
-class="cart-panel">
-
+<div id="cartPanel" class="cart-panel">
 
 <div class="cart-header">
 
-<h2>
-🛒 السلة
-</h2>
+<h2>🛒 السلة</h2>
 
 <button
 class="close-cart"
 onclick="closeCart()">
-
 ×
-
 </button>
 
 </div>
 
-
-<div
-id="cartList"
-class="cart-list">
-</div>
-
+<div id="cartList" class="cart-list"></div>
 
 <div class="customer-form">
 
-<h3>
-📋 معلومات الطلب
-</h3>
-
+<h3>📋 معلومات الطلب</h3>
 
 <input
 id="customerName"
@@ -575,125 +514,72 @@ type="text"
 placeholder="👤 اسم الزبون"
 >
 
-
 <input
 id="customerPhone"
 type="tel"
 placeholder="📞 رقم الهاتف"
 >
 
-
-<select id="wilaya">
+<select id="wilaya" onchange="updateCities()">
 
 <option value="">
-📍 جاري تحميل الولايات...
+📍 اختر الولاية
 </option>
 
 </select>
 
-
-<select id="city" disabled>
+<select id="city">
 
 <option value="">
-🏙️ اختر الولاية أولاً
+🏙️ اختر المدينة / البلدية
 </option>
 
 </select>
-
 
 <input
 id="address"
 type="text"
-placeholder="🏠 العنوان"
+placeholder="🏠 العنوان بالتفصيل"
 >
-
 
 <textarea
 id="note"
 placeholder="📝 ملاحظة اختيارية">
 </textarea>
 
-
-<div
-class="delivery-box">
-
-<div class="delivery-row">
-
-<span>
-🚚 التوصيل
-</span>
-
-<strong id="deliveryPrice">
-0 دج
-</strong>
-
 </div>
-
-
-<div class="delivery-row">
-
-<span>
-💰 المجموع النهائي
-</span>
-
-<strong id="grandTotal">
-0 دج
-</strong>
-
-</div>
-
-</div>
-
-
-</div>
-
 
 <div class="cart-bottom">
 
-<div
-id="total"
-class="total">
-
+<div id="total" class="total">
 المجموع: 0 دج
-
 </div>
-
 
 <button
 class="whatsapp"
 onclick="sendOrder()">
-
 💬 إرسال الطلب عبر WhatsApp
-
 </button>
-
 
 <button
 class="clear"
 onclick="clearCart()">
-
 🗑️ تفريغ السلة
-
 </button>
 
 </div>
 
-
 </div>
 
-
 <footer>
-
 © 2026 RONQA
-
 </footer>
-
 
 <script>
 
-/* =========================
+/* =====================================
    SUPABASE
-========================= */
+===================================== */
 
 const SUPABASE_URL =
 "https://qpctjcaygybpanzyweso.supabase.co";
@@ -702,64 +588,330 @@ const SUPABASE_KEY =
 "sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
 
 
-/* =========================
-   ALGERIA LOCATION DATA
-========================= */
+/* =====================================
+   VARIABLES
+===================================== */
 
-const WILAYA_API =
-"https://mohamed-gp.github.io/algeria_69_wilayas/main.json";
-
-const COMMUNE_API =
-"https://mohamed-gp.github.io/algeria_69_wilayas/communes.json";
+let products = [];
+let cart = [];
+let selectedCategory = "all";
 
 
-/* =========================
-   DELIVERY PRICES
-   مؤقتة وقابلة للتعديل
-========================= */
+/* =====================================
+   WILAYAS + CITIES
+   بدون أي API خارجي
+===================================== */
 
-const DEFAULT_DELIVERY = 800;
+const wilayas = {
 
-const DELIVERY_PRICES = {
+"أدرار":[
+"أدرار","تيميمون","أولف","رقان","فنوغيل","زاوية كنتة"
+],
 
-"الجزائر":900,
-"وهران":900,
-"قسنطينة":850,
-"عنابة":850,
-"سطيف":800,
-"باتنة":800,
-"بسكرة":750,
-"الوادي":700,
-"ورقلة":700,
-"تقرت":700,
-"المغير":700,
-"المنيعة":700,
-"غرداية":700,
-"الأغواط":750,
-"الجلفة":750,
-"المسيلة":800,
-"بومرداس":900,
-"البليدة":900,
-"تيبازة":900,
-"تيزي وزو":900
+"الشلف":[
+"الشلف","تنيس","بوقادير","وادي الفضة","أولاد فارس","الزبوجة"
+],
+
+"الأغواط":[
+"الأغواط","قصر الحيران","عين ماضي","حاسي الرمل","الأبيض سيدي الشيخ"
+],
+
+"أم البواقي":[
+"أم البواقي","عين البيضاء","عين مليلة","عين فكرون","مسكيانة"
+],
+
+"باتنة":[
+"باتنة","آريس","مروانة","نقاوس","بريكة","عين التوتة"
+],
+
+"بجاية":[
+"بجاية","أقبو","أميزور","خراطة","تيشي","صدوق"
+],
+
+"بسكرة":[
+"بسكرة","طولقة","سيدي عقبة","زريبة الوادي","أورلال","ليوة"
+],
+
+"بشار":[
+"بشار","القنادسة","بني ونيف","العبادلة","تاغيت"
+],
+
+"البليدة":[
+"البليدة","بوفاريك","البليدة الجديدة","موزاية","العفرون","الأربعاء"
+],
+
+"البويرة":[
+"البويرة","سور الغزلان","الأخضرية","برج أخريص","عين بسام"
+],
+
+"تمنراست":[
+"تمنراست","عين أمقل","أبلسة","إدلس"
+],
+
+"تبسة":[
+"تبسة","الشريعة","بئر العاتر","الونزة","العوينات"
+],
+
+"تلمسان":[
+"تلمسان","مغنية","الرمشي","ندرومة","سبدو","الغزوات"
+],
+
+"تيارت":[
+"تيارت","فرندة","السوقر","مهدية","قصر الشلالة","رحوية"
+],
+
+"تيزي وزو":[
+"تيزي وزو","ذراع بن خدة","عزازقة","بوغني","تيقزيرت","واقنون"
+],
+
+"الجزائر":[
+"الجزائر الوسطى","باب الوادي","الحراش","الدار البيضاء","الرويبة","برج الكيفان","بئر مراد رايس","الشراقة","زرالدة"
+],
+
+"الجلفة":[
+"الجلفة","حاسي بحبح","عين وسارة","مسعد","الإدريسية","الشارف"
+],
+
+"جيجل":[
+"جيجل","الطاهير","الميلية","العنصر","تاكسنة"
+],
+
+"سطيف":[
+"سطيف","العلمة","عين ولمان","عين أرنات","بوقاعة","صالح باي"
+],
+
+"سعيدة":[
+"سعيدة","يوب","الحساسنة","عين الحجر"
+],
+
+"سكيكدة":[
+"سكيكدة","القل","الحروش","عزابة","رمضان جمال","تمالوس"
+],
+
+"سيدي بلعباس":[
+"سيدي بلعباس","تلاغ","سفيزف","رأس الماء","بن باديس"
+],
+
+"عنابة":[
+"عنابة","البوني","الحجار","برحال","سيدي عمار"
+],
+
+"قالمة":[
+"قالمة","حمام دباغ","وادي الزناتي","بوشقوف","هيليوبوليس"
+],
+
+"قسنطينة":[
+"قسنطينة","الخروب","عين سمارة","حامة بوزيان","ديدوش مراد","زيغود يوسف"
+],
+
+"المدية":[
+"المدية","البرواقية","قصر البخاري","بني سليمان","تابلاط"
+],
+
+"مستغانم":[
+"مستغانم","مزغران","عين تادلس","سيدي علي","حاسي ماماش","خير الدين"
+],
+
+"المسيلة":[
+"المسيلة","بوسعادة","سيدي عيسى","مقرة","حمام الضلعة","عين الحجل"
+],
+
+"معسكر":[
+"معسكر","سيق","المحمدية","تيغنيف","غريس","وادي الأبطال"
+],
+
+"ورقلة":[
+"ورقلة","حاسي مسعود","الرويسات","تقرت","الطيبات","سيدي خويلد"
+],
+
+"وهران":[
+"وهران","بئر الجير","السانية","أرزيو","بطيوة","قديل","عين الترك"
+],
+
+"البيض":[
+"البيض","بوقطب","الأبيض سيدي الشيخ","بريزينة","بوعلام"
+],
+
+"إليزي":[
+"إليزي","جانت","إن أمناس","برج عمر إدريس"
+],
+
+"برج بوعريريج":[
+"برج بوعريريج","رأس الوادي","المنصورة","برج الغدير","مجانة"
+],
+
+"بومرداس":[
+"بومرداس","دلس","برج منايل","الثنية","خميس الخشنة","يسر"
+],
+
+"الطارف":[
+"الطارف","القالة","البسباس","الذرعان","بن مهيدي"
+],
+
+"تندوف":[
+"تندوف","أم العسل"
+],
+
+"تيسمسيلت":[
+"تيسمسيلت","ثنية الحد","برج بونعامة","خميستي"
+],
+
+"الوادي":[
+"الوادي","قمار","الرباح","الدبيلة","المقرن","حساني عبد الكريم"
+],
+
+"خنشلة":[
+"خنشلة","قايس","ششار","بابار","الحامة","بوحمامة"
+],
+
+"سوق أهراس":[
+"سوق أهراس","تاورة","مداوروش","سدراتة","الحدادة"
+],
+
+"تيبازة":[
+"تيبازة","القليعة","شرشال","حجوط","فوكة","الدواودة"
+],
+
+"ميلة":[
+"ميلة","فرجيوة","شلغوم العيد","تاجنانت","وادي العثمانية"
+],
+
+"عين الدفلى":[
+"عين الدفلى","خميس مليانة","العطاف","مليانة","العامرة"
+],
+
+"النعامة":[
+"النعامة","المشرية","عين الصفراء","مغرار","البيوض"
+],
+
+"عين تموشنت":[
+"عين تموشنت","بني صاف","العامرية","حمام بوحجر","المالح"
+],
+
+"غرداية":[
+"غرداية","بونورة","بريان","القرارة","متليلي","العطف"
+],
+
+"غليزان":[
+"غليزان","وادي رهيو","مازونة","عمي موسى","جديوية","زمورة"
+],
+
+"تيميمون":[
+"تيميمون","أوقروت","تنركوك","طالمين"
+],
+
+"برج باجي مختار":[
+"برج باجي مختار","تيمياوين"
+],
+
+"أولاد جلال":[
+"أولاد جلال","سيدي خالد","البسباس"
+],
+
+"بني عباس":[
+"بني عباس","الواتة","كرزاز","تبلبالة"
+],
+
+"عين صالح":[
+"عين صالح","فقارة الزوى","عين غار"
+],
+
+"عين قزام":[
+"عين قزام","تين زواتين"
+],
+
+"تقرت":[
+"تقرت","تماسين","النزلة","الزاوية العابدية","الحجيرة"
+],
+
+"جانت":[
+"جانت","برج الحواس"
+],
+
+"المغير":[
+"المغير","جامعة","أم الطيور","سيدي عمران","المرارة"
+],
+
+"المنيعة":[
+"المنيعة","حاسي القارة","حاسي الفحل"
+]
 
 };
 
 
-let products = [];
+/* =====================================
+   LOAD WILAYAS
+===================================== */
 
-let cart = [];
+function loadWilayas(){
 
-let selectedCategory = "all";
+const select =
+document.getElementById("wilaya");
 
-let wilayasData = [];
+Object.keys(wilayas).forEach(function(wilaya){
 
-let communesData = [];
+const option =
+document.createElement("option");
+
+option.value = wilaya;
+option.textContent = wilaya;
+
+select.appendChild(option);
+
+});
+
+}
 
 
-/* =========================
+/* =====================================
+   UPDATE CITIES
+===================================== */
+
+function updateCities(){
+
+const wilaya =
+document.getElementById("wilaya").value;
+
+const city =
+document.getElementById("city");
+
+city.innerHTML = "";
+
+const first =
+document.createElement("option");
+
+first.value = "";
+first.textContent =
+"🏙️ اختر المدينة / البلدية";
+
+city.appendChild(first);
+
+
+if(!wilaya)return;
+
+
+const cities =
+wilayas[wilaya] || [];
+
+
+cities.forEach(function(name){
+
+const option =
+document.createElement("option");
+
+option.value = name;
+option.textContent = name;
+
+city.appendChild(option);
+
+});
+
+}
+
+
+/* =====================================
    CATEGORY
-========================= */
+===================================== */
 
 function getCategory(value){
 
@@ -768,14 +920,20 @@ String(value || "")
 .trim()
 .toLowerCase();
 
-if(text.includes("حق")){
+if(
+text.includes("حق") ||
+text.includes("bag") ||
+text.includes("sac")
+){
 return "bags";
 }
 
 if(
 text.includes("حذ") ||
 text.includes("احذ") ||
-text.includes("أحذ")
+text.includes("أحذ") ||
+text.includes("shoe") ||
+text.includes("chauss")
 ){
 return "shoes";
 }
@@ -783,7 +941,9 @@ return "shoes";
 if(
 text.includes("كسسو") ||
 text.includes("اكسسو") ||
-text.includes("إكسسو")
+text.includes("إكسسو") ||
+text.includes("access") ||
+text.includes("accessoire")
 ){
 return "accessories";
 }
@@ -793,16 +953,29 @@ return "other";
 }
 
 
-/* =========================
+/* =====================================
    LOAD PRODUCTS
-========================= */
+===================================== */
 
 async function loadProducts(){
 
 const box =
 document.getElementById("products");
 
+box.innerHTML =
+'<div class="loading">⏳ جاري تحميل المنتجات...</div>';
+
+
 try{
+
+const controller =
+new AbortController();
+
+const timeout =
+setTimeout(function(){
+controller.abort();
+},15000);
+
 
 const response =
 await fetch(
@@ -811,14 +984,21 @@ SUPABASE_URL +
 "/rest/v1/Products?select=*",
 
 {
+method:"GET",
+
 headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":
-"Bearer "+SUPABASE_KEY
-}
-}
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Accept":"application/json"
+},
 
+signal:controller.signal
+
+}
 );
+
+
+clearTimeout(timeout);
 
 
 if(!response.ok){
@@ -830,26 +1010,65 @@ throw new Error(
 }
 
 
-products =
+const data =
 await response.json();
 
 
+if(!Array.isArray(data)){
+
+throw new Error(
+"البيانات غير صحيحة"
+);
+
+}
+
+
+products = data;
+
+
 showProducts(products);
+
 
 }
 
 catch(error){
 
-console.error(error);
+console.error(
+"Supabase Error:",
+error
+);
+
 
 box.innerHTML = `
 
-<div style="
-grid-column:1/-1;
-text-align:center;
-padding:40px;">
+<div class="error">
 
-❌ حدث خطأ في تحميل المنتجات
+❌ تعذر تحميل المنتجات
+
+<br><br>
+
+<span style="font-size:14px;color:#777">
+
+تحقق من اتصال الإنترنت ثم أعد تحميل الصفحة.
+
+</span>
+
+<br><br>
+
+<button
+onclick="loadProducts()"
+style="
+padding:10px 20px;
+border:0;
+border-radius:8px;
+background:#111;
+color:white;
+cursor:pointer;
+">
+
+🔄 إعادة المحاولة
+
+</button>
 
 </div>
 
@@ -860,9 +1079,9 @@ padding:40px;">
 }
 
 
-/* =========================
+/* =====================================
    SHOW PRODUCTS
-========================= */
+===================================== */
 
 function showProducts(list){
 
@@ -872,14 +1091,11 @@ document.getElementById("products");
 box.innerHTML = "";
 
 
-if(list.length === 0){
+if(!Array.isArray(list) || list.length === 0){
 
 box.innerHTML = `
 
-<div style="
-grid-column:1/-1;
-text-align:center;
-padding:40px;">
+<div class="loading">
 
 لا توجد منتجات في هذا التصنيف.
 
@@ -892,7 +1108,7 @@ return;
 }
 
 
-list.forEach(product=>{
+list.forEach(function(product){
 
 const id =
 product.id;
@@ -924,7 +1140,7 @@ if(image){
 imageHTML = `
 
 <img
-src="${image}"
+src="${escapeHTML(image)}"
 alt="${escapeHTML(name)}"
 loading="lazy"
 onerror="
@@ -1000,16 +1216,13 @@ ${imageHTML}
 
 </div>
 
-
 <h3>
 ${escapeHTML(name)}
 </h3>
 
-
 <p class="description">
 ${escapeHTML(description)}
 </p>
-
 
 <div class="price">
 
@@ -1018,7 +1231,6 @@ ${price.toLocaleString("fr-DZ")}
 
 </div>
 
-
 <div class="stock">
 
 📦 المخزون:
@@ -1026,13 +1238,11 @@ ${stock}
 
 </div>
 
-
 ${sizeHTML}
-
 
 <button
 class="add"
-onclick="addToCart(${id})"
+onclick="addToCart(${Number(id)})"
 ${stock <= 0 ? "disabled" : ""}>
 
 ${
@@ -1043,7 +1253,6 @@ stock <= 0
 
 </button>
 
-
 </div>
 
 `;
@@ -1053,31 +1262,36 @@ stock <= 0
 }
 
 
-/* =========================
+/* =====================================
    CATEGORY FILTER
-========================= */
+===================================== */
 
 function setCategory(category,button){
 
 selectedCategory =
 category;
 
+
 document
 .querySelectorAll(".category")
-.forEach(btn=>{
+.forEach(function(btn){
+
 btn.classList.remove("active");
+
 });
 
+
 button.classList.add("active");
+
 
 filterProducts();
 
 }
 
 
-/* =========================
+/* =====================================
    FILTER
-========================= */
+===================================== */
 
 function filterProducts(){
 
@@ -1090,7 +1304,7 @@ document
 
 
 const result =
-products.filter(product=>{
+products.filter(function(product){
 
 const category =
 getCategory(product.category);
@@ -1126,9 +1340,9 @@ showProducts(result);
 }
 
 
-/* =========================
+/* =====================================
    SEARCH
-========================= */
+===================================== */
 
 document
 .getElementById("search")
@@ -1138,332 +1352,18 @@ filterProducts
 );
 
 
-/* =========================
-   LOAD WILAYAS
-========================= */
-
-async function loadLocations(){
-
-const wilayaSelect =
-document.getElementById("wilaya");
-
-const citySelect =
-document.getElementById("city");
-
-try{
-
-const [
-wilayaResponse,
-communeResponse
-] = await Promise.all([
-
-fetch(WILAYA_API),
-
-fetch(COMMUNE_API)
-
-]);
-
-
-if(
-!wilayaResponse.ok ||
-!communeResponse.ok
-){
-
-throw new Error(
-"Location API error"
-);
-
-}
-
-
-const wilayaJSON =
-await wilayaResponse.json();
-
-const communeJSON =
-await communeResponse.json();
-
-
-wilayasData =
-wilayaJSON.wilayas || [];
-
-communesData =
-communeJSON.communes || [];
-
-
-wilayaSelect.innerHTML = `
-
-<option value="">
-📍 اختر الولاية
-</option>
-
-`;
-
-
-wilayasData
-.sort((a,b)=>Number(a.id)-Number(b.id))
-.forEach(wilaya=>{
-
-const option =
-document.createElement("option");
-
-option.value =
-wilaya.id;
-
-option.textContent =
-wilaya.name_ar;
-
-wilayaSelect.appendChild(option);
-
-});
-
-
-citySelect.disabled = true;
-
-citySelect.innerHTML = `
-
-<option value="">
-🏙️ اختر الولاية أولاً
-</option>
-
-`;
-
-
-}catch(error){
-
-console.error(error);
-
-wilayaSelect.innerHTML = `
-
-<option value="">
-❌ تعذر تحميل الولايات
-</option>
-
-`;
-
-}
-
-}
-
-
-/* =========================
-   WILAYA CHANGE
-========================= */
-
-document
-.getElementById("wilaya")
-.addEventListener(
-"change",
-function(){
-
-const wilayaId =
-this.value;
-
-const citySelect =
-document.getElementById("city");
-
-citySelect.innerHTML = `
-
-<option value="">
-🏙️ اختر البلدية
-</option>
-
-`;
-
-
-if(!wilayaId){
-
-citySelect.disabled = true;
-
-updateCart();
-
-return;
-
-}
-
-
-const selectedCommunes =
-communesData.filter(
-commune =>
-String(commune.wilaya_id) ===
-String(wilayaId)
-);
-
-
-if(selectedCommunes.length === 0){
-
-citySelect.innerHTML = `
-
-<option value="">
-لا توجد بلديات
-</option>
-
-`;
-
-citySelect.disabled = true;
-
-return;
-
-}
-
-
-selectedCommunes
-.sort((a,b)=>
-String(a.name_ar)
-.localeCompare(
-String(b.name_ar),
-"ar"
-)
-)
-.forEach(commune=>{
-
-const option =
-document.createElement("option");
-
-option.value =
-commune.name_ar;
-
-option.textContent =
-commune.name_ar;
-
-citySelect.appendChild(option);
-
-});
-
-
-citySelect.disabled = false;
-
-updateCart();
-
-}
-);
-
-
-/* =========================
-   GET WILAYA NAME
-========================= */
-
-function getWilayaName(){
-
-const select =
-document.getElementById("wilaya");
-
-if(!select.value){
-
-return "";
-
-}
-
-const wilaya =
-wilayasData.find(
-w =>
-String(w.id) ===
-String(select.value)
-);
-
-return wilaya
-? wilaya.name_ar
-: "";
-
-}
-
-
-/* =========================
-   DELIVERY
-========================= */
-
-function getDeliveryPrice(){
-
-const wilaya =
-getWilayaName();
-
-if(!wilaya){
-
-return 0;
-
-}
-
-return Number(
-DELIVERY_PRICES[wilaya]
-) || DEFAULT_DELIVERY;
-
-}
-
-
-/* =========================
-   CART PRODUCTS TOTAL
-========================= */
-
-function getProductsTotal(){
-
-let total = 0;
-
-cart.forEach(item=>{
-
-total +=
-item.price *
-item.quantity;
-
-});
-
-return total;
-
-}
-
-
-/* =========================
-   UPDATE TOTAL
-========================= */
-
-function updateTotals(){
-
-const productsTotal =
-getProductsTotal();
-
-const delivery =
-cart.length
-? getDeliveryPrice()
-: 0;
-
-const grandTotal =
-productsTotal +
-delivery;
-
-
-document.getElementById(
-"total"
-).innerText =
-"المنتجات: " +
-productsTotal.toLocaleString("fr-DZ") +
-" دج";
-
-
-document.getElementById(
-"deliveryPrice"
-).innerText =
-delivery.toLocaleString("fr-DZ") +
-" دج";
-
-
-document.getElementById(
-"grandTotal"
-).innerText =
-grandTotal.toLocaleString("fr-DZ") +
-" دج";
-
-}
-
-
-/* =========================
+/* =====================================
    ADD TO CART
-========================= */
+===================================== */
 
 function addToCart(id){
 
 const product =
-products.find(
-p =>
-Number(p.id) === Number(id)
-);
+products.find(function(p){
+
+return Number(p.id) === Number(id);
+
+});
 
 
 if(!product)return;
@@ -1484,7 +1384,7 @@ document.getElementById(
 );
 
 
-if(!select.value){
+if(!select || !select.value){
 
 alert(
 "اختر مقاس الحذاء أولاً"
@@ -1494,6 +1394,7 @@ return;
 
 }
 
+
 size =
 select.value;
 
@@ -1501,13 +1402,15 @@ select.value;
 
 
 const existing =
-cart.find(item=>
+cart.find(function(item){
 
+return (
 Number(item.id) === Number(id)
 &&
 item.size === size
-
 );
+
+});
 
 
 if(existing){
@@ -1555,9 +1458,9 @@ openCart();
 }
 
 
-/* =========================
+/* =====================================
    UPDATE CART
-========================= */
+===================================== */
 
 function updateCart(){
 
@@ -1567,22 +1470,27 @@ document.getElementById("cartList");
 const count =
 document.getElementById("cartCount");
 
+const totalBox =
+document.getElementById("total");
+
 
 list.innerHTML = "";
 
 
+let total = 0;
+
 let itemCount = 0;
 
 
-cart.forEach((item,index)=>{
-
-itemCount +=
-item.quantity;
-
+cart.forEach(function(item,index){
 
 const subtotal =
-item.price *
-item.quantity;
+item.price * item.quantity;
+
+
+total += subtotal;
+
+itemCount += item.quantity;
 
 
 list.innerHTML += `
@@ -1595,17 +1503,13 @@ ${escapeHTML(item.name)}
 
 </div>
 
-
 ${
 item.size
 ?
-`<div>
-📏 المقاس: ${item.size}
-</div>`
+`<div>📏 المقاس: ${escapeHTML(item.size)}</div>`
 :
 ""
 }
-
 
 <div class="cart-item-price">
 
@@ -1614,7 +1518,6 @@ ${item.price.toLocaleString("fr-DZ")}
 
 </div>
 
-
 <div class="quantity">
 
 <button
@@ -1622,39 +1525,22 @@ onclick="changeQuantity(${index},-1)">
 −
 </button>
 
-
 <span>
 ${item.quantity}
 </span>
-
 
 <button
 onclick="changeQuantity(${index},1)">
 +
 </button>
 
-
 <button
 class="remove"
 onclick="removeItem(${index})">
-
 🗑️
-
 </button>
 
 </div>
-
-
-<div style="
-margin-top:6px;
-font-weight:bold;">
-
-المجموع الفرعي:
-${subtotal.toLocaleString("fr-DZ")}
-دج
-
-</div>
-
 
 </div>
 
@@ -1685,14 +1571,17 @@ count.innerText =
 itemCount;
 
 
-updateTotals();
+totalBox.innerText =
+"المجموع: " +
+total.toLocaleString("fr-DZ") +
+" دج";
 
 }
 
 
-/* =========================
+/* =====================================
    QUANTITY
-========================= */
+===================================== */
 
 function changeQuantity(index,change){
 
@@ -1735,196 +1624,12 @@ updateCart();
 }
 
 
-/* =========================
+/* =====================================
    REMOVE
-========================= */
+===================================== */
 
 function removeItem(index){
 
 cart.splice(index,1);
 
-updateCart();
-
-}
-
-
-/* =========================
-   CLEAR
-========================= */
-
-function clearCart(){
-
-cart = [];
-
-updateCart();
-
-}
-
-
-/* =========================
-   OPEN CART
-========================= */
-
-function openCart(){
-
-document
-.getElementById("cartPanel")
-.classList.add("open");
-
-document
-.getElementById("overlay")
-.classList.add("show");
-
-}
-
-
-/* =========================
-   CLOSE CART
-========================= */
-
-function closeCart(){
-
-document
-.getElementById("cartPanel")
-.classList.remove("open");
-
-document
-.getElementById("overlay")
-.classList.remove("show");
-
-}
-
-
-/* =========================
-   SEND WHATSAPP
-========================= */
-
-function sendOrder(){
-
-if(cart.length === 0){
-
-alert(
-"السلة فارغة"
-);
-
-return;
-
-}
-
-
-const name =
-document
-.getElementById("customerName")
-.value
-.trim();
-
-
-const phone =
-document
-.getElementById("customerPhone")
-.value
-.trim();
-
-
-const wilaya =
-getWilayaName();
-
-
-const city =
-document
-.getElementById("city")
-.value
-.trim();
-
-
-const address =
-document
-.getElementById("address")
-.value
-.trim();
-
-
-const note =
-document
-.getElementById("note")
-.value
-.trim();
-
-
-if(!name){
-
-alert("اكتب اسم الزبون");
-
-return;
-
-}
-
-
-if(!phone){
-
-alert("اكتب رقم الهاتف");
-
-return;
-
-}
-
-
-if(!wilaya){
-
-alert("اختر الولاية");
-
-return;
-
-}
-
-
-if(!city){
-
-alert("اختر البلدية");
-
-return;
-
-}
-
-
-if(!address){
-
-alert("اكتب العنوان");
-
-return;
-
-}
-
-
-const productsTotal =
-getProductsTotal();
-
-
-const delivery =
-getDeliveryPrice();
-
-
-const grandTotal =
-productsTotal +
-delivery;
-
-
-let message =
-"السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
-
-
-message +=
-"👤 الاسم: " +
-name +
-"\n";
-
-
-message +=
-"📞 الهاتف: " +
-phone +
-"\n";
-
-
-message +=
-"📍 الولاية: " +
-wilaya 
+upd
