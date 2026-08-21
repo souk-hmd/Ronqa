@@ -7,454 +7,510 @@
 <title>RONQA | متجر إلكتروني</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f6f6f6;
-    color:#222;
+background:#f6f6f6;
+color:#222;
 }
 
+/* HEADER */
+
 header{
-    background:#111;
-    color:white;
-    padding:18px 15px;
-    position:sticky;
-    top:0;
-    z-index:100;
+background:#111;
+color:white;
+padding:17px 15px;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .header{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
 .logo{
-    color:#d4af37;
-    font-size:32px;
-    font-weight:bold;
-    letter-spacing:5px;
+color:#d4af37;
+font-size:31px;
+font-weight:bold;
+letter-spacing:5px;
 }
 
 .logo small{
-    display:block;
-    font-size:9px;
-    color:#ddd;
-    letter-spacing:3px;
-    text-align:center;
-    margin-top:4px;
+display:block;
+font-size:9px;
+color:#ddd;
+letter-spacing:3px;
+text-align:center;
+margin-top:4px;
 }
 
 .cart-btn{
-    background:#d4af37;
-    border:0;
-    border-radius:9px;
-    padding:11px 16px;
-    font-weight:bold;
-    cursor:pointer;
+background:#d4af37;
+border:0;
+border-radius:9px;
+padding:11px 16px;
+font-weight:bold;
+cursor:pointer;
 }
 
+/* HERO */
+
 .hero{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:45px 15px;
+background:#111;
+color:white;
+text-align:center;
+padding:42px 15px;
 }
 
 .hero h1{
-    font-size:40px;
-    color:#d4af37;
-    letter-spacing:5px;
-    margin-bottom:10px;
+font-size:40px;
+color:#d4af37;
+letter-spacing:5px;
+margin-bottom:10px;
 }
 
 .hero p{
-    color:#ddd;
+color:#ddd;
 }
+
+/* MAIN */
 
 .container{
-    max-width:1100px;
-    margin:auto;
-    padding:30px 15px;
+max-width:1100px;
+margin:auto;
+padding:25px 15px;
 }
 
+/* SEARCH */
+
 .search{
-    margin-bottom:18px;
+margin-bottom:18px;
 }
 
 .search input{
-    width:100%;
-    padding:15px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    font-size:16px;
-    outline:none;
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px;
+outline:none;
 }
 
 /* CATEGORIES */
 
 .categories{
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-    padding:5px 0 20px;
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:5px 0 20px;
 }
 
 .category{
-    white-space:nowrap;
-    border:1px solid #ddd;
-    background:white;
-    padding:10px 18px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:bold;
+white-space:nowrap;
+border:1px solid #ddd;
+background:white;
+padding:10px 18px;
+border-radius:20px;
+cursor:pointer;
+font-weight:bold;
 }
 
 .category.active{
-    background:#111;
-    color:#d4af37;
-    border-color:#111;
+background:#111;
+color:#d4af37;
+border-color:#111;
 }
 
 /* PRODUCTS */
 
 .title{
-    text-align:center;
-    margin-bottom:25px;
-    font-size:28px;
+text-align:center;
+margin-bottom:22px;
+font-size:27px;
 }
 
 .products{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
 }
 
 .product{
-    background:white;
-    border-radius:15px;
-    padding:15px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+background:white;
+border-radius:15px;
+padding:15px;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .image{
-    width:100%;
-    height:220px;
-    background:#eee;
-    border-radius:12px;
-    overflow:hidden;
-    margin-bottom:15px;
+width:100%;
+height:220px;
+background:#eee;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:14px;
 }
 
 .image img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
 }
 
 .no-image{
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:50px;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
 }
 
 .product h3{
-    font-size:20px;
-    margin-bottom:8px;
+font-size:20px;
+margin-bottom:7px;
 }
 
 .description{
-    color:#777;
-    margin-bottom:10px;
-    min-height:35px;
+color:#777;
+margin-bottom:9px;
+min-height:35px;
 }
 
 .price{
-    font-size:21px;
-    font-weight:bold;
-    color:#b08b00;
-    margin-bottom:7px;
+font-size:21px;
+font-weight:bold;
+color:#b08b00;
+margin-bottom:7px;
 }
 
 .stock{
-    font-size:14px;
-    color:#666;
-    margin-bottom:12px;
+font-size:14px;
+color:#666;
+margin-bottom:12px;
 }
 
+/* SIZE */
+
+.size-box{
+margin-bottom:12px;
+}
+
+.size-box label{
+display:block;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.size-select{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+background:white;
+font-size:15px;
+}
+
+/* ADD */
+
 .add{
-    width:100%;
-    background:#111;
-    color:white;
-    border:0;
-    padding:13px;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
+width:100%;
+background:#111;
+color:white;
+border:0;
+padding:13px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
 }
 
 .add:hover{
-    background:#d4af37;
-    color:#111;
+background:#d4af37;
+color:#111;
 }
 
 .add:disabled{
-    background:#aaa;
-    cursor:not-allowed;
+background:#aaa;
+cursor:not-allowed;
 }
 
 /* CART */
 
 .cart{
-    position:fixed;
-    top:0;
-    right:-100%;
-    width:100%;
-    max-width:430px;
-    height:100vh;
-    background:white;
-    z-index:300;
-    transition:.3s;
-    display:flex;
-    flex-direction:column;
-    box-shadow:-5px 0 20px rgba(0,0,0,.2);
+position:fixed;
+top:0;
+right:-100%;
+width:100%;
+max-width:440px;
+height:100vh;
+background:white;
+z-index:300;
+transition:.3s;
+display:flex;
+flex-direction:column;
+box-shadow:-5px 0 20px rgba(0,0,0,.2);
 }
 
 .cart.open{
-    right:0;
+right:0;
 }
 
 .cart-head{
-    background:#111;
-    color:white;
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+background:#111;
+color:white;
+padding:17px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .cart-head h2{
-    color:#d4af37;
+color:#d4af37;
 }
 
 .close{
-    background:none;
-    border:0;
-    color:white;
-    font-size:25px;
-    cursor:pointer;
+background:none;
+border:0;
+color:white;
+font-size:26px;
+cursor:pointer;
 }
 
 .cart-list{
-    flex:1;
-    overflow-y:auto;
-    padding:15px;
+flex:1;
+overflow-y:auto;
+padding:15px;
 }
 
 .cart-item{
-    border-bottom:1px solid #ddd;
-    padding:15px 0;
+border-bottom:1px solid #ddd;
+padding:14px 0;
 }
 
 .cart-name{
-    font-weight:bold;
-    margin-bottom:7px;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.cart-size{
+color:#555;
+margin-bottom:7px;
 }
 
 .cart-price{
-    color:#b08b00;
-    font-weight:bold;
-    margin-bottom:10px;
+color:#b08b00;
+font-weight:bold;
+margin-bottom:9px;
 }
 
 .qty{
-    display:flex;
-    align-items:center;
-    gap:10px;
+display:flex;
+align-items:center;
+gap:10px;
 }
 
 .qty button{
-    width:32px;
-    height:32px;
-    border:0;
-    background:#111;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
+width:32px;
+height:32px;
+border:0;
+background:#111;
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
 
 .delete{
-    margin-right:auto;
-    background:#c00 !important;
+margin-right:auto;
+background:#c00 !important;
 }
 
-/* CUSTOMER FORM */
+/* CUSTOMER */
 
 .customer-form{
-    border-top:1px solid #ddd;
-    padding:15px;
-    background:white;
+border-top:1px solid #ddd;
+padding:14px;
+background:white;
 }
 
 .customer-form h3{
-    margin-bottom:12px;
+margin-bottom:11px;
 }
 
 .customer-form input,
+.customer-form select,
 .customer-form textarea{
-    width:100%;
-    padding:11px;
-    margin-bottom:8px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    font-size:14px;
-    outline:none;
+width:100%;
+padding:11px;
+margin-bottom:8px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:14px;
+outline:none;
+background:white;
 }
 
 .customer-form textarea{
-    height:65px;
-    resize:none;
+height:60px;
+resize:none;
 }
 
-/* CART BOTTOM */
+/* BOTTOM */
 
 .cart-bottom{
-    padding:15px;
-    border-top:1px solid #ddd;
-    background:#fafafa;
+padding:14px;
+border-top:1px solid #ddd;
+background:#fafafa;
 }
 
 .total{
-    font-size:21px;
-    font-weight:bold;
-    margin-bottom:12px;
+font-size:21px;
+font-weight:bold;
+margin-bottom:11px;
 }
 
 .whatsapp-order{
-    display:block;
-    background:#25D366;
-    color:white;
-    text-align:center;
-    padding:14px;
-    border-radius:9px;
-    text-decoration:none;
-    font-weight:bold;
+display:block;
+background:#25D366;
+color:white;
+text-align:center;
+padding:14px;
+border-radius:9px;
+text-decoration:none;
+font-weight:bold;
 }
 
 .clear{
-    width:100%;
-    margin-top:8px;
-    padding:10px;
-    border:0;
-    border-radius:8px;
-    cursor:pointer;
+width:100%;
+margin-top:8px;
+padding:10px;
+border:0;
+border-radius:8px;
+cursor:pointer;
 }
 
 /* OVERLAY */
 
 .overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.5);
-    z-index:250;
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+z-index:250;
 }
 
 .overlay.show{
-    display:block;
+display:block;
 }
 
 /* CONTACT */
 
 .contact{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:35px 15px;
-    margin-top:50px;
+background:#111;
+color:white;
+text-align:center;
+padding:35px 15px;
+margin-top:50px;
 }
 
 .whatsapp{
-    display:inline-block;
-    margin-top:15px;
-    background:#25D366;
-    color:white;
-    padding:13px 25px;
-    border-radius:9px;
-    text-decoration:none;
-    font-weight:bold;
+display:inline-block;
+margin-top:15px;
+background:#25D366;
+color:white;
+padding:13px 25px;
+border-radius:9px;
+text-decoration:none;
+font-weight:bold;
 }
 
 footer{
-    text-align:center;
-    padding:25px;
-    color:#777;
+text-align:center;
+padding:25px;
+color:#777;
 }
+
+/* MOBILE */
 
 @media(max-width:600px){
 
-    .logo{
-        font-size:27px;
-    }
-
-    .products{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-
-    .product{
-        padding:10px;
-    }
-
-    .image{
-        height:180px;
-    }
-
-    .product h3{
-        font-size:17px;
-    }
-
-    .price{
-        font-size:18px;
-    }
-
-    .add{
-        font-size:12px;
-        padding:11px 5px;
-    }
-
-    .cart{
-        max-width:100%;
-    }
+.logo{
+font-size:27px;
 }
+
+.products{
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.product{
+padding:10px;
+}
+
+.image{
+height:180px;
+}
+
+.product h3{
+font-size:17px;
+}
+
+.price{
+font-size:18px;
+}
+
+.add{
+font-size:12px;
+padding:11px 5px;
+}
+
+.cart{
+max-width:100%;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <div class="header">
 
 <div class="logo">
+
 RONQA
-<small>DESERT STORE</small>
+
+<small>
+DESERT STORE
+</small>
+
 </div>
 
-<button class="cart-btn" onclick="openCart()">
-🛒 السلة (<span id="count">0</span>)
+<button
+class="cart-btn"
+onclick="openCart()">
+
+🛒 السلة
+(<span id="count">0</span>)
+
 </button>
 
 </div>
+
 </header>
 
 
@@ -462,12 +518,16 @@ RONQA
 
 <h1>RONQA</h1>
 
-<p>منتجات مميزة بأسعار مناسبة</p>
+<p>
+منتجات مميزة بأسعار مناسبة
+</p>
 
 </section>
 
 
 <div class="container">
+
+<!-- SEARCH -->
 
 <div class="search">
 
@@ -480,34 +540,40 @@ placeholder="🔎 ابحث عن منتج..."
 </div>
 
 
+<!-- CATEGORIES -->
+
 <div class="categories">
 
 <button
 class="category active"
-data-category="all"
 onclick="filterCategory('all',this)">
+
 الكل
+
 </button>
 
 <button
 class="category"
-data-category="حقائب"
 onclick="filterCategory('حقائب',this)">
+
 👜 حقائب
+
 </button>
 
 <button
 class="category"
-data-category="أحذية"
 onclick="filterCategory('أحذية',this)">
+
 👟 أحذية
+
 </button>
 
 <button
 class="category"
-data-category="إكسسوارات"
 onclick="filterCategory('إكسسوارات',this)">
+
 ⌚ إكسسوارات
+
 </button>
 
 </div>
@@ -518,18 +584,25 @@ onclick="filterCategory('إكسسوارات',this)">
 </h2>
 
 
-<div class="products" id="products">
+<div
+class="products"
+id="products">
 
-<div style="text-align:center;grid-column:1/-1;">
+<div
+style="
+text-align:center;
+grid-column:1/-1;">
+
 جاري تحميل المنتجات...
-</div>
 
 </div>
 
 </div>
 
+</div>
 
-<!-- CART -->
+
+<!-- OVERLAY -->
 
 <div
 class="overlay"
@@ -538,17 +611,22 @@ onclick="closeCart()">
 </div>
 
 
+<!-- CART -->
+
 <div
 class="cart"
 id="cart">
 
 <div class="cart-head">
 
-<h2>🛒 السلة</h2>
+<h2>
+🛒 السلة
+</h2>
 
 <button
 class="close"
 onclick="closeCart()">
+
 ×
 </button>
 
@@ -561,11 +639,14 @@ id="cartList">
 </div>
 
 
-<!-- CUSTOMER INFORMATION -->
+<!-- CUSTOMER FORM -->
 
 <div class="customer-form">
 
-<h3>📋 معلومات الطلب</h3>
+<h3>
+📋 معلومات الطلب
+</h3>
+
 
 <input
 id="customerName"
@@ -573,17 +654,34 @@ type="text"
 placeholder="👤 اسم الزبون"
 >
 
+
 <input
 id="customerPhone"
 type="tel"
 placeholder="📞 رقم هاتف الزبون"
 >
 
-<input
+
+<select
 id="customerWilaya"
-type="text"
-placeholder="📍 الولاية"
->
+onchange="loadCities()">
+
+<option value="">
+📍 اختر الولاية
+</option>
+
+</select>
+
+
+<select
+id="customerCity">
+
+<option value="">
+🏙️ اختر المدينة / البلدية
+</option>
+
+</select>
+
 
 <input
 id="customerAddress"
@@ -591,10 +689,12 @@ type="text"
 placeholder="🏠 العنوان بالتفصيل"
 >
 
+
 <textarea
 id="customerNote"
-placeholder="📝 ملاحظة (اختياري)">
+placeholder="📝 ملاحظة اختيارية">
 </textarea>
+
 
 </div>
 
@@ -604,7 +704,9 @@ placeholder="📝 ملاحظة (اختياري)">
 <div
 class="total"
 id="total">
+
 المجموع: 0 دج
+
 </div>
 
 
@@ -612,7 +714,6 @@ id="total">
 id="whatsappOrder"
 class="whatsapp-order"
 href="#"
-target="_blank"
 onclick="sendOrder(event)">
 
 💬 إرسال الطلب عبر WhatsApp
@@ -635,7 +736,9 @@ onclick="clearCart()">
 
 <section class="contact">
 
-<h2>📞 للطلب والاستفسار</h2>
+<h2>
+📞 للطلب والاستفسار
+</h2>
 
 <p style="margin-top:10px;">
 تواصل معنا عبر WhatsApp
@@ -654,7 +757,9 @@ target="_blank">
 
 
 <footer>
+
 © 2026 RONQA - جميع الحقوق محفوظة
+
 </footer>
 
 
@@ -680,20 +785,522 @@ const productsBox =
 document.getElementById("products");
 
 
+/* ALGERIA WILAYAS */
+
+const wilayas = {
+
+"أدرار":[
+"أدرار",
+"تمنطيط",
+"رقان",
+"زاوية كنتة",
+"أولف"
+],
+
+"الشلف":[
+"الشلف",
+"تنيس",
+"بوقادير",
+"واد سلي",
+"الكريمية"
+],
+
+"الأغواط":[
+"الأغواط",
+"قصر الحيران",
+"حاسي الرمل",
+"عين ماضي",
+"الأبيض سيدي الشيخ"
+],
+
+"أم البواقي":[
+"أم البواقي",
+"عين البيضاء",
+"عين مليلة",
+"مسكيانة",
+"عين فكرون"
+],
+
+"باتنة":[
+"باتنة",
+"مروانة",
+"آريس",
+"نقاوس",
+"عين التوتة"
+],
+
+"بجاية":[
+"بجاية",
+"أميزور",
+"أقبو",
+"خراطة",
+"تيشي"
+],
+
+"بسكرة":[
+"بسكرة",
+"طولقة",
+"سيدي عقبة",
+"زريبة الوادي",
+"أورلال"
+],
+
+"بشار":[
+"بشار",
+"القنادسة",
+"بني عباس",
+"العبادلة",
+"تاغيت"
+],
+
+"البليدة":[
+"البليدة",
+"بوفاريك",
+"العفرون",
+"موزاية",
+"الشفة"
+],
+
+"البويرة":[
+"البويرة",
+"سور الغزلان",
+"الأخضرية",
+"عين بسام",
+"بشلول"
+],
+
+"تمنراست":[
+"تمنراست",
+"عين صالح",
+"عين قزام"
+],
+
+"تبسة":[
+"تبسة",
+"بئر العاتر",
+"الشريعة",
+"الونزة",
+"العوينات"
+],
+
+"تلمسان":[
+"تلمسان",
+"مغنية",
+"الرمشي",
+"الغزوات",
+"سبدو"
+],
+
+"تيارت":[
+"تيارت",
+"فرندة",
+"السوقر",
+"مهدية",
+"قصر الشلالة"
+],
+
+"تيزي وزو":[
+"تيزي وزو",
+"ذراع بن خدة",
+"عزازقة",
+"بوغني",
+"تيقزيرت"
+],
+
+"الجزائر":[
+"الجزائر الوسطى",
+"باب الوادي",
+"الحراش",
+"الدار البيضاء",
+"برج الكيفان",
+"الرويبة",
+"زرالدة",
+"الشراقة"
+],
+
+"الجلفة":[
+"الجلفة",
+"مسعد",
+"حاسي بحبح",
+"عين وسارة",
+"القديد"
+],
+
+"جيجل":[
+"جيجل",
+"الطاهير",
+"الميلية",
+"العوانة",
+"تاكسنة"
+],
+
+"سطيف":[
+"سطيف",
+"العلمة",
+"عين أرنات",
+"عين ولمان",
+"بوقاعة"
+],
+
+"سعيدة":[
+"سعيدة",
+"عين الحجر",
+"الحساسنة",
+"يوب"
+],
+
+"سكيكدة":[
+"سكيكدة",
+"القل",
+"عزابة",
+"الحروش",
+"رمضان جمال"
+],
+
+"سيدي بلعباس":[
+"سيدي بلعباس",
+"تلموني",
+"تلاغ",
+"رأس الماء",
+"بن باديس"
+],
+
+"عنابة":[
+"عنابة",
+"البوني",
+"الحجار",
+"برحال",
+"سرايدي"
+],
+
+"قالمة":[
+"قالمة",
+"وادي الزناتي",
+"هيليوبوليس",
+"بوشقوف",
+"حمام دباغ"
+],
+
+"قسنطينة":[
+"قسنطينة",
+"الخروب",
+"عين سمارة",
+"حامة بوزيان",
+"ديدوش مراد"
+],
+
+"المدية":[
+"المدية",
+"البرواقية",
+"قصر البخاري",
+"بن شكاو",
+"تابلاط"
+],
+
+"مستغانم":[
+"مستغانم",
+"مزغران",
+"عين تادلس",
+"سيدي علي",
+"حاسي ماماش"
+],
+
+"المسيلة":[
+"المسيلة",
+"بوسعادة",
+"سيدي عيسى",
+"مقرة",
+"حمام الضلعة"
+],
+
+"معسكر":[
+"معسكر",
+"محمدية",
+"سيق",
+"تيغنيف",
+"غريس"
+],
+
+"ورقلة":[
+"ورقلة",
+"حاسي مسعود",
+"الرويسات",
+"تقرت",
+"تماسين"
+],
+
+"وهران":[
+"وهران",
+"السانية",
+"بئر الجير",
+"أرزيو",
+"بطيوة"
+],
+
+"البيض":[
+"البيض",
+"بوقطب",
+"بريزينة",
+"الأبيض سيدي الشيخ"
+],
+
+"إليزي":[
+"إليزي",
+"جانت",
+"برج عمر إدريس",
+"دبداب"
+],
+
+"برج بوعريريج":[
+"برج بوعريريج",
+"رأس الوادي",
+"المنصورة",
+"برج الغدير",
+"مجانة"
+],
+
+"بومرداس":[
+"بومرداس",
+"دلس",
+"الثنية",
+"برج منايل",
+"خميس الخشنة"
+],
+
+"الطارف":[
+"الطارف",
+"القالة",
+"البسباس",
+"الذرعان",
+"بن مهيدي"
+],
+
+"تندوف":[
+"تندوف"
+],
+
+"تيسمسيلت":[
+"تيسمسيلت",
+"ثنية الحد",
+"برج بونعامة",
+"الأزهرية"
+],
+
+"الوادي":[
+"الوادي",
+"قمار",
+"الرباح",
+"الدبيلة",
+"حساني عبد الكريم"
+],
+
+"خنشلة":[
+"خنشلة",
+"قايس",
+"ششار",
+"بابار",
+"المحمل"
+],
+
+"سوق أهراس":[
+"سوق أهراس",
+"سدراتة",
+"مداوروش",
+"تاورة",
+"المراهنة"
+],
+
+"تيبازة":[
+"تيبازة",
+"القليعة",
+"شرشال",
+"حجوط",
+"فوكة"
+],
+
+"ميلة":[
+"ميلة",
+"فرجيوة",
+"شلغوم العيد",
+"التلاغمة",
+"القرارم قوقة"
+],
+
+"عين الدفلى":[
+"عين الدفلى",
+"خميس مليانة",
+"مليانة",
+"العطاف",
+"الروينة"
+],
+
+"النعامة":[
+"النعامة",
+"مشرية",
+"عين الصفراء",
+"مكمن بن عمار"
+],
+
+"عين تموشنت":[
+"عين تموشنت",
+"بني صاف",
+"حمام بوحجر",
+"المالح",
+"العامرية"
+],
+
+"غرداية":[
+"غرداية",
+"بونورة",
+"العطف",
+"متليلي",
+"القرارة"
+],
+
+"غليزان":[
+"غليزان",
+"وادي رهيو",
+"مازونة",
+"عمي موسى",
+"جديوية"
+],
+
+"توقرت":[
+"تقرت",
+"تماسين",
+"النزلة",
+"تبسبست"
+],
+
+"برج باجي مختار":[
+"برج باجي مختار",
+"تيمياوين"
+],
+
+"أولاد جلال":[
+"أولاد جلال",
+"الدوسن",
+"سيدي خالد"
+],
+
+"بني عباس":[
+"بني عباس",
+"كرزاز",
+"الواتة"
+],
+
+"إن قزام":[
+"عين قزام",
+"تين زواتين"
+],
+
+"تقرت":[
+"تقرت",
+"تماسين",
+"النزلة",
+"تبسبست"
+],
+
+"المغير":[
+"المغير",
+"جامعة",
+"المرارة",
+"سيدي عمران"
+],
+
+"المنيعة":[
+"المنيعة",
+"حاسي القارة",
+"حاسي الفحل"
+]
+
+};
+
+
+/* LOAD WILAYAS */
+
+const wilayaSelect =
+document.getElementById(
+"customerWilaya"
+);
+
+
+Object.keys(wilayas)
+.forEach(wilaya=>{
+
+const option =
+document.createElement("option");
+
+option.value=wilaya;
+
+option.textContent=wilaya;
+
+wilayaSelect.appendChild(option);
+
+});
+
+
+/* LOAD CITIES */
+
+function loadCities(){
+
+const wilaya =
+document.getElementById(
+"customerWilaya"
+).value;
+
+
+const citySelect =
+document.getElementById(
+"customerCity"
+);
+
+
+citySelect.innerHTML = `
+
+<option value="">
+🏙️ اختر المدينة / البلدية
+</option>
+
+`;
+
+
+if(!wilaya) return;
+
+
+wilayas[wilaya]
+.forEach(city=>{
+
+const option =
+document.createElement("option");
+
+option.value=city;
+
+option.textContent=city;
+
+citySelect.appendChild(option);
+
+});
+
+}
+
+
 /* LOAD PRODUCTS */
 
 async function loadProducts(){
 
 try{
 
-const response = await fetch(
+const response =
+await fetch(
 
 `${SUPABASE_URL}/rest/v1/Products?select=*`,
 
 {
 headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
+"Authorization":
+"Bearer "+SUPABASE_KEY
 }
 }
 
@@ -719,7 +1326,7 @@ showProducts(products);
 
 catch(error){
 
-productsBox.innerHTML = `
+productsBox.innerHTML=`
 
 <div style="
 grid-column:1/-1;
@@ -746,12 +1353,12 @@ ${error.message}
 
 function showProducts(list){
 
-productsBox.innerHTML = "";
+productsBox.innerHTML="";
 
 
 if(!list.length){
 
-productsBox.innerHTML = `
+productsBox.innerHTML=`
 
 <div style="
 grid-column:1/-1;
@@ -778,13 +1385,18 @@ const description =
 product.description || "";
 
 const price =
-Number(product.price) || 0;
+Number(product.price)||0;
 
 const stock =
-Number(product.stock) || 0;
+Number(product.stock)||0;
 
 const image =
-String(product.image_url || "").trim();
+String(product.image_url||"")
+.trim();
+
+const category =
+String(product.category||"")
+.trim();
 
 
 let imageHTML;
@@ -792,7 +1404,7 @@ let imageHTML;
 
 if(image){
 
-imageHTML = `
+imageHTML=`
 
 <img
 src="${image}"
@@ -814,10 +1426,55 @@ style="display:none;">
 
 }else{
 
-imageHTML = `
+imageHTML=`
 
 <div class="no-image">
 🛍️
+</div>
+
+`;
+
+}
+
+
+/* SHOE SIZE */
+
+let sizeHTML="";
+
+
+if(
+category.includes("أحذية")
+){
+
+sizeHTML=`
+
+<div class="size-box">
+
+<label>
+📏 المقاس
+</label>
+
+<select
+class="size-select"
+id="size-${product.id}">
+
+<option value="">
+اختر المقاس
+</option>
+
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40">40</option>
+<option value="41">41</option>
+<option value="42">42</option>
+<option value="43">43</option>
+<option value="44">44</option>
+<option value="45">45</option>
+
+</select>
+
 </div>
 
 `;
@@ -848,17 +1505,19 @@ ${price} دج
 </div>
 
 <div class="stock">
-
 📦 متوفر: ${stock}
-
 </div>
+
+${sizeHTML}
 
 <button
 class="add"
 onclick="addToCart(${product.id})"
-${stock <= 0 ? "disabled" : ""}>
+${stock<=0?"disabled":""}>
 
-${stock <= 0 ? "غير متوفر" : "🛒 أضف إلى السلة"}
+${stock<=0?
+"غير متوفر":
+"🛒 أضف إلى السلة"}
 
 </button>
 
@@ -873,9 +1532,10 @@ ${stock <= 0 ? "غير متوفر" : "🛒 أضف إلى السلة"}
 
 /* CATEGORY */
 
-function filterCategory(category, button){
+function filterCategory(category,button){
 
-currentCategory = category;
+currentCategory =
+category;
 
 
 document
@@ -893,7 +1553,7 @@ applyFilters();
 }
 
 
-/* SEARCH + CATEGORY */
+/* FILTER */
 
 function applyFilters(){
 
@@ -905,27 +1565,34 @@ document
 .trim();
 
 
+const selected =
+String(currentCategory)
+.trim()
+.toLowerCase();
+
+
 const filtered =
 products.filter(product=>{
 
 const productCategory =
-String(product.category || "")
-.trim();
+String(product.category||"")
+.trim()
+.toLowerCase();
 
 
 const name =
-String(product.name || "")
+String(product.name||"")
 .toLowerCase();
 
 
 const description =
-String(product.description || "")
+String(product.description||"")
 .toLowerCase();
 
 
 const categoryOK =
-currentCategory === "all" ||
-productCategory === currentCategory;
+selected==="all" ||
+productCategory.includes(selected);
 
 
 const searchOK =
@@ -953,48 +1620,84 @@ applyFilters
 );
 
 
-/* ADD TO CART */
+/* ADD CART */
 
 function addToCart(id){
 
 const product =
 products.find(
-p => Number(p.id) === Number(id)
+p=>Number(p.id)===Number(id)
 );
 
 
-if(!product) return;
+if(!product)return;
 
 
 const stock =
-Number(product.stock) || 0;
+Number(product.stock)||0;
 
 
-if(stock <= 0){
+if(stock<=0){
 
-alert("هذا المنتج غير متوفر حاليًا");
+alert("المنتج غير متوفر");
 
 return;
 
 }
 
 
+const category =
+String(product.category||"")
+.trim();
+
+
+let size="";
+
+
+if(category.includes("أحذية")){
+
+const select =
+document.getElementById(
+"size-"+product.id
+);
+
+
+if(!select || !select.value){
+
+alert("من فضلك اختر المقاس");
+
+return;
+
+}
+
+
+size=select.value;
+
+}
+
+
+/* SAME PRODUCT + SAME SIZE */
+
 const existing =
-cart.find(
-p => Number(p.id) === Number(id)
+cart.find(item=>
+
+Number(item.id)===Number(id)
+&&
+item.size===size
+
 );
 
 
 if(existing){
 
-if(existing.quantity < stock){
+if(existing.quantity<stock){
 
 existing.quantity++;
 
 }else{
 
 alert(
-"لا يمكن تجاوز الكمية المتوفرة"
+"لا يمكن تجاوز المخزون"
 );
 
 return;
@@ -1005,15 +1708,17 @@ return;
 
 cart.push({
 
-id: product.id,
+id:product.id,
 
-name: product.name,
+name:product.name,
 
-price: Number(product.price) || 0,
+price:Number(product.price)||0,
 
-stock: stock,
+stock:stock,
 
-quantity: 1
+size:size,
+
+quantity:1
 
 });
 
@@ -1032,41 +1737,59 @@ openCart();
 function updateCart(){
 
 const list =
-document.getElementById("cartList");
+document.getElementById(
+"cartList"
+);
 
 const count =
-document.getElementById("count");
+document.getElementById(
+"count"
+);
 
 const totalBox =
-document.getElementById("total");
+document.getElementById(
+"total"
+);
 
 
-list.innerHTML = "";
+list.innerHTML="";
 
 
-let total = 0;
+let total=0;
 
-let itemCount = 0;
+let countNumber=0;
 
 
 cart.forEach((item,index)=>{
 
 const subtotal =
-item.price * item.quantity;
+item.price*item.quantity;
 
 
-total += subtotal;
+total+=subtotal;
 
-itemCount += item.quantity;
+countNumber+=item.quantity;
 
 
-list.innerHTML += `
+list.innerHTML+=`
 
 <div class="cart-item">
 
 <div class="cart-name">
 ${item.name}
 </div>
+
+${
+item.size
+?
+`
+<div class="cart-size">
+📏 المقاس: ${item.size}
+</div>
+`
+:
+""
+}
 
 <div class="cart-price">
 ${item.price} دج
@@ -1097,8 +1820,10 @@ onclick="removeItem(${index})">
 </div>
 
 <div style="margin-top:8px;">
+
 المجموع:
 ${subtotal} دج
+
 </div>
 
 </div>
@@ -1110,7 +1835,7 @@ ${subtotal} دج
 
 if(!cart.length){
 
-list.innerHTML = `
+list.innerHTML=`
 
 <div style="
 text-align:center;
@@ -1127,16 +1852,16 @@ color:#777;">
 
 
 count.innerText =
-itemCount;
+countNumber;
 
 
 totalBox.innerText =
-"المجموع: " + total + " دج";
+"المجموع: "+total+" دج";
 
 }
 
 
-/* CHANGE QUANTITY */
+/* QUANTITY */
 
 function changeQty(index,value){
 
@@ -1144,14 +1869,14 @@ const item =
 cart[index];
 
 
-if(!item) return;
+if(!item)return;
 
 
 const newQty =
-item.quantity + value;
+item.quantity+value;
 
 
-if(newQty <= 0){
+if(newQty<=0){
 
 removeItem(index);
 
@@ -1160,10 +1885,10 @@ return;
 }
 
 
-if(newQty > item.stock){
+if(newQty>item.stock){
 
 alert(
-"لا يمكن تجاوز المخزون المتوفر"
+"لا يمكن تجاوز المخزون"
 );
 
 return;
@@ -1195,7 +1920,7 @@ updateCart();
 
 function clearCart(){
 
-cart = [];
+cart=[];
 
 updateCart();
 
@@ -1209,7 +1934,7 @@ function sendOrder(event){
 event.preventDefault();
 
 
-if(cart.length === 0){
+if(!cart.length){
 
 alert("السلة فارغة");
 
@@ -1239,6 +1964,13 @@ document
 .trim();
 
 
+const city =
+document
+.getElementById("customerCity")
+.value
+.trim();
+
+
 const address =
 document
 .getElementById("customerAddress")
@@ -1255,7 +1987,7 @@ document
 
 if(!name){
 
-alert("من فضلك اكتب اسم الزبون");
+alert("اكتب اسم الزبون");
 
 return;
 
@@ -1264,7 +1996,7 @@ return;
 
 if(!phone){
 
-alert("من فضلك اكتب رقم هاتف الزبون");
+alert("اكتب رقم هاتف الزبون");
 
 return;
 
@@ -1273,7 +2005,16 @@ return;
 
 if(!wilaya){
 
-alert("من فضلك اكتب الولاية");
+alert("اختر الولاية");
+
+return;
+
+}
+
+
+if(!city){
+
+alert("اختر المدينة / البلدية");
 
 return;
 
@@ -1282,7 +2023,7 @@ return;
 
 if(!address){
 
-alert("من فضلك اكتب العنوان");
+alert("اكتب العنوان");
 
 return;
 
@@ -1294,122 +2035,53 @@ let message =
 
 
 message +=
-"👤 الاسم: " +
-encodeURIComponent(name) +
+"👤 الاسم: "+
+encodeURIComponent(name)+
 "%0A";
 
 
 message +=
-"📞 الهاتف: " +
-encodeURIComponent(phone) +
+"📞 الهاتف: "+
+encodeURIComponent(phone)+
 "%0A";
 
 
 message +=
-"📍 الولاية: " +
-encodeURIComponent(wilaya) +
+"📍 الولاية: "+
+encodeURIComponent(wilaya)+
 "%0A";
 
 
 message +=
-"🏠 العنوان: " +
-encodeURIComponent(address) +
+"🏙️ المدينة: "+
+encodeURIComponent(city)+
+"%0A";
+
+
+message +=
+"🏠 العنوان: "+
+encodeURIComponent(address)+
 "%0A";
 
 
 if(note){
 
 message +=
-"📝 ملاحظة: " +
-encodeURIComponent(note) +
+"📝 ملاحظة: "+
+encodeURIComponent(note)+
 "%0A";
 
 }
 
 
-message += "%0A🛍️ المنتجات:%0A";
+message +=
+"%0A🛍️ المنتجات:%0A";
 
 
-let total = 0;
+let total=0;
 
 
 cart.forEach(item=>{
 
 const subtotal =
-item.price * item.quantity;
-
-
-total += subtotal;
-
-
-message +=
-"• " +
-encodeURIComponent(item.name) +
-" × " +
-item.quantity +
-" = " +
-subtotal +
-" دج%0A";
-
-});
-
-
-message +=
-"%0A💰 المجموع: " +
-total +
-" دج";
-
-
-const whatsappURL =
-"https://wa.me/213675996957?text=" +
-message;
-
-
-window.open(
-whatsappURL,
-"_blank"
-);
-
-}
-
-
-/* OPEN CART */
-
-function openCart(){
-
-document
-.getElementById("cart")
-.classList.add("open");
-
-document
-.getElementById("overlay")
-.classList.add("show");
-
-}
-
-
-/* CLOSE CART */
-
-function closeCart(){
-
-document
-.getElementById("cart")
-.classList.remove("open");
-
-document
-.getElementById("overlay")
-.classList.remove("show");
-
-}
-
-
-/* START */
-
-loadProducts();
-
-updateCart();
-
-</script>
-
-</body>
-</html>
+item.price*i
