@@ -1,250 +1,328 @@
-RONQA — index.html
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>RONQA</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<header>
-    <div class="header">
-        <div class="logo">RONQA</div>
 
-        <button class="cart-button" onclick="openCart()">
-            🛒 السلة
-            (<span id="cartCount">0</span>)
-        </button>
-    </div>
+<header>
+
+<div class="header">
+
+<div class="logo">
+RONQA
+</div>
+
+<button
+class="cart-button"
+onclick="openCart()">
+
+🛒 السلة
+(<span id="cartCount">0</span>)
+
+</button>
+
+</div>
+
 </header>
 
+
 <section class="hero">
-    <h1>RONQA</h1>
-    <p>منتجات مميزة بأسعار مناسبة</p>
+
+<h1>
+RONQA
+</h1>
+
+<p>
+منتجات مميزة بأسعار مناسبة
+</p>
+
 </section>
 
-<main class="container">
 
-    <div class="search">
-        <input
-            id="search"
-            type="text"
-            placeholder="🔎 ابحث عن منتج..."
-        >
-    </div>
+<div class="container">
 
-    <div class="categories">
 
-        <button
-            class="category active"
-            onclick="setCategory('all',this)">
-            الكل
-        </button>
+<div class="search">
 
-        <button
-            class="category"
-            onclick="setCategory('bags',this)">
-            👜 حقائب
-        </button>
+<input
+id="search"
+type="text"
+placeholder="🔎 ابحث عن منتج..."
+>
 
-        <button
-            class="category"
-            onclick="setCategory('shoes',this)">
-            👟 أحذية
-        </button>
-
-        <button
-            class="category"
-            onclick="setCategory('accessories',this)">
-            ⌚ إكسسوارات
-        </button>
-
-    </div>
-
-    <h2 class="title">🛍️ منتجاتنا</h2>
-
-    <div id="products" class="products">
-
-        <div class="loading">
-            جاري تحميل المنتجات...
-        </div>
-
-    </div>
-
-</main>
-
-<!-- OVERLAY -->
-
-<div
-    id="overlay"
-    class="overlay"
-    onclick="closeCart()">
 </div>
 
 
-<!-- CART -->
-
-<div id="cartPanel" class="cart-panel">
-
-    <div class="cart-header">
-
-        <h2>🛒 السلة</h2>
-
-        <button
-            class="close-cart"
-            onclick="closeCart()">
-            ×
-        </button>
-
-    </div>
+<div class="categories">
 
 
-    <div id="cartList" class="cart-list"></div>
+<button
+class="category active"
+onclick="setCategory('all',this)">
+
+الكل
+
+</button>
 
 
-    <!-- CUSTOMER -->
+<button
+class="category"
+onclick="setCategory('bags',this)">
 
-    <div class="customer-form">
+👜 حقائب
 
-        <h3>📋 معلومات الطلب</h3>
-
-        <input
-            id="customerName"
-            type="text"
-            placeholder="👤 اسم الزبون"
-        >
-
-        <input
-            id="customerPhone"
-            type="tel"
-            placeholder="📞 رقم الهاتف"
-        >
+</button>
 
 
-        <!-- WILAYA -->
+<button
+class="category"
+onclick="setCategory('shoes',this)">
 
-        <select
-            id="wilaya"
-            onchange="loadCities()">
+👟 أحذية
 
-            <option value="">
-                📍 اختر الولاية
-            </option>
-
-        </select>
+</button>
 
 
-        <!-- CITY -->
+<button
+class="category"
+onclick="setCategory('accessories',this)">
 
-        <select id="city">
+⌚ إكسسوارات
 
-            <option value="">
-                🏙️ اختر المدينة / البلدية
-            </option>
-
-        </select>
+</button>
 
 
-        <input
-            id="address"
-            type="text"
-            placeholder="🏠 العنوان"
-        >
-
-        <textarea
-            id="note"
-            placeholder="📝 ملاحظة اختيارية">
-        </textarea>
-
-    </div>
+</div>
 
 
-    <!-- DELIVERY -->
+<h2 class="title">
 
-    <div class="delivery-box">
+🛍️ منتجاتنا
 
-        <h3>🚚 التوصيل</h3>
-
-        <select id="delivery" onchange="updateCart()">
-
-            <option value="">
-                اختر طريقة التوصيل
-            </option>
-
-            <option value="home">
-                🏠 توصيل للمنزل
-            </option>
-
-            <option value="office">
-                📦 استلام من المكتب
-            </option>
-
-        </select>
+</h2>
 
 
-        <input
-            id="deliveryPrice"
-            type="number"
-            min="0"
-            placeholder="💰 سعر التوصيل (دج)"
-            oninput="updateCart()"
-        >
+<div
+id="products"
+class="products">
 
-    </div>
+<div style="
+grid-column:1/-1;
+text-align:center;
+padding:40px;">
 
+جاري تحميل المنتجات...
 
-    <!-- CART BOTTOM -->
+</div>
 
-    <div class="cart-bottom">
-
-        <div id="subtotal" class="subtotal">
-            المنتجات: 0 دج
-        </div>
-
-        <div id="deliveryTotal" class="delivery-total">
-            التوصيل: 0 دج
-        </div>
-
-        <div id="total" class="total">
-            المجموع النهائي: 0 دج
-        </div>
+</div>
 
 
-        <button
-            class="whatsapp"
-            onclick="sendOrder()">
-
-            💬 إرسال الطلب عبر WhatsApp
-
-        </button>
+</div>
 
 
-        <button
-            class="clear"
-            onclick="clearCart()">
+<div
+id="overlay"
+class="overlay"
+onclick="closeCart()">
+</div>
 
-            🗑️ تفريغ السلة
 
-        </button>
+<div
+id="cartPanel"
+class="cart-panel">
 
-    </div>
+
+<div class="cart-header">
+
+<h2>
+🛒 السلة
+</h2>
+
+<button
+class="close-cart"
+onclick="closeCart()">
+
+×
+</button>
+
+</div>
+
+
+<div
+id="cartList"
+class="cart-list">
+</div>
+
+
+<div class="customer-form">
+
+<h3>
+📋 معلومات الطلب
+</h3>
+
+
+<input
+id="customerName"
+type="text"
+placeholder="👤 اسم الزبون"
+>
+
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="📞 رقم الهاتف"
+>
+
+
+<select id="wilaya">
+
+<option value="">
+📍 اختر الولاية
+</option>
+
+<option>أدرار</option>
+<option>الشلف</option>
+<option>الأغواط</option>
+<option>أم البواقي</option>
+<option>باتنة</option>
+<option>بجاية</option>
+<option>بسكرة</option>
+<option>بشار</option>
+<option>البليدة</option>
+<option>البويرة</option>
+<option>تمنراست</option>
+<option>تبسة</option>
+<option>تلمسان</option>
+<option>تيارت</option>
+<option>تيزي وزو</option>
+<option>الجزائر</option>
+<option>الجلفة</option>
+<option>جيجل</option>
+<option>سطيف</option>
+<option>سعيدة</option>
+<option>سكيكدة</option>
+<option>سيدي بلعباس</option>
+<option>عنابة</option>
+<option>قالمة</option>
+<option>قسنطينة</option>
+<option>المدية</option>
+<option>مستغانم</option>
+<option>المسيلة</option>
+<option>معسكر</option>
+<option>ورقلة</option>
+<option>وهران</option>
+<option>البيض</option>
+<option>إليزي</option>
+<option>برج بوعريريج</option>
+<option>بومرداس</option>
+<option>الطارف</option>
+<option>تندوف</option>
+<option>تيسمسيلت</option>
+<option>الوادي</option>
+<option>خنشلة</option>
+<option>سوق أهراس</option>
+<option>تيبازة</option>
+<option>ميلة</option>
+<option>عين الدفلى</option>
+<option>النعامة</option>
+<option>عين تموشنت</option>
+<option>غرداية</option>
+<option>غليزان</option>
+<option>تيميمون</option>
+<option>برج باجي مختار</option>
+<option>أولاد جلال</option>
+<option>بني عباس</option>
+<option>عين صالح</option>
+<option>عين قزام</option>
+<option>تقرت</option>
+<option>جانت</option>
+<option>المغير</option>
+<option>المنيعة</option>
+
+</select>
+
+
+<input
+id="city"
+type="text"
+placeholder="🏙️ المدينة / البلدية"
+>
+
+
+<input
+id="address"
+type="text"
+placeholder="🏠 العنوان"
+>
+
+
+<textarea
+id="note"
+placeholder="📝 ملاحظة اختيارية">
+</textarea>
+
+
+</div>
+
+
+<div class="cart-bottom">
+
+<div
+id="total"
+class="total">
+
+المجموع: 0 دج
+
+</div>
+
+
+<button
+class="whatsapp"
+onclick="sendOrder()">
+
+💬 إرسال الطلب عبر WhatsApp
+
+</button>
+
+
+<button
+class="clear"
+onclick="clearCart()">
+
+🗑️ تفريغ السلة
+
+</button>
+
+</div>
+
 
 </div>
 
 
 <footer>
-    © 2026 RONQA
+
+© 2026 RONQA
+
 </footer>
 
 
-<script src="data.js"></script>
 <script src="app.js"></script>
 
 </body>
-  </html>
+
+    </html>
