@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RONQA | متجر إلكتروني</title>
 
 <style>
@@ -69,6 +70,9 @@ header p {
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product-image img {
@@ -79,11 +83,6 @@ header p {
 }
 
 .no-image {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 55px;
 }
 
@@ -227,7 +226,11 @@ footer {
 <h2 class="title">🛍️ منتجاتنا</h2>
 
 <div class="products" id="products">
-    <div class="loading">جاري تحميل المنتجات...</div>
+
+<div class="loading">
+جاري تحميل المنتجات...
+</div>
+
 </div>
 
 </section>
@@ -331,16 +334,17 @@ const productsContainer =
 document.getElementById("products");
 
 
-fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
-
+fetch(
+`${SUPABASE_URL}/rest/v1/Products?select=id,name,description,price,image`,
+{
     method: "GET",
 
     headers: {
         "apikey": SUPABASE_KEY,
         "Authorization": "Bearer " + SUPABASE_KEY
     }
-
-})
+}
+)
 
 .then(response => {
 
@@ -377,25 +381,31 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
         product.price || 0;
 
         const image =
-        product.image || "";
+        String(product.image || "").trim();
 
 
         const message =
         `السلام عليكم، أريد طلب ${name} بسعر ${price} دج`;
 
 
-        let imageHTML;
+        let imageHTML = "";
 
 
-        if (image.trim() !== "") {
+        if (image.length > 0) {
 
             imageHTML = `
                 <img
                     src="${image}"
                     alt="${name}"
                     loading="lazy"
-                    onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>🛍️</div>';"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                 >
+
+                <div
+                    class="no-image"
+                    style="display:none;">
+                    🛍️
+                </div>
             `;
 
         } else {
