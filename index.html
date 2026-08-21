@@ -1,646 +1,265 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>RONQA | متجر إلكتروني</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f7f7f7;
-    color:#222;
+background:#f7f7f7;
+color:#222;
 }
 
+
 /* HEADER */
+
 header{
-    background:#111;
-    color:white;
-    padding:22px 18px;
-    position:sticky;
-    top:0;
-    z-index:1000;
-    box-shadow:0 3px 15px rgba(0,0,0,.2);
+background:#111;
+color:white;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 3px 15px rgba(0,0,0,.25);
 }
 
 .header-content{
-    max-width:1150px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
+max-width:1150px;
+margin:auto;
+padding:15px 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
+
+
+/* LOGO */
 
 .logo{
-    color:#d4af37;
-    font-size:32px;
-    font-weight:bold;
-    letter-spacing:2px;
+text-align:center;
+line-height:1;
 }
+
+.logo-main{
+font-size:34px;
+font-weight:bold;
+letter-spacing:5px;
+color:#d4af37;
+}
+
+.logo-sub{
+font-size:10px;
+letter-spacing:3px;
+color:#ddd;
+margin-top:5px;
+}
+
+
+/* CART BUTTON */
 
 .cart-button{
-    background:#d4af37;
-    color:#111;
-    border:0;
-    padding:11px 16px;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:15px;
+background:#d4af37;
+color:#111;
+border:0;
+padding:11px 17px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+font-size:15px;
 }
 
+.cart-count{
+background:#111;
+color:#d4af37;
+padding:2px 6px;
+border-radius:50%;
+margin-right:4px;
+}
+
+
 /* HERO */
+
 .hero{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:55px 20px;
+background:#111;
+color:white;
+text-align:center;
+padding:50px 20px;
 }
 
 .hero h1{
-    font-size:42px;
-    color:#d4af37;
-    margin-bottom:12px;
+font-size:42px;
+color:#d4af37;
+letter-spacing:5px;
+margin-bottom:12px;
 }
 
 .hero p{
-    font-size:18px;
-    color:#ddd;
+font-size:18px;
+color:#ddd;
 }
+
 
 /* CONTAINER */
+
 .container{
-    max-width:1150px;
-    margin:auto;
-    padding:30px 15px;
+max-width:1150px;
+margin:auto;
+padding:30px 15px;
 }
 
+
 /* SEARCH */
+
 .search-box{
-    margin-bottom:25px;
+margin-bottom:30px;
 }
 
 .search-box input{
-    width:100%;
-    padding:15px 18px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    font-size:16px;
-    outline:none;
+width:100%;
+padding:15px 18px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:16px;
+outline:none;
 }
 
 .search-box input:focus{
-    border-color:#d4af37;
+border-color:#d4af37;
 }
+
+
+/* TITLE */
+
+.title{
+text-align:center;
+font-size:28px;
+margin-bottom:25px;
+}
+
 
 /* PRODUCTS */
-.title{
-    text-align:center;
-    font-size:28px;
-    margin-bottom:25px;
-}
 
 .products{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:22px;
 }
 
 .product{
-    background:white;
-    border-radius:16px;
-    padding:15px;
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
-    transition:.2s;
-    overflow:hidden;
+background:white;
+border-radius:16px;
+padding:15px;
+box-shadow:
+0 4px 18px rgba(0,0,0,.08);
+transition:.2s;
 }
 
 .product:hover{
-    transform:translateY(-4px);
+transform:translateY(-4px);
 }
 
+
+/* IMAGE */
+
 .product-image{
-    width:100%;
-    height:230px;
-    background:#f0f0f0;
-    border-radius:12px;
-    overflow:hidden;
-    margin-bottom:15px;
+width:100%;
+height:230px;
+background:#f0f0f0;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:15px;
 }
 
 .product-image img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
 }
 
 .no-image{
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:55px;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:55px;
 }
 
+
+/* PRODUCT INFO */
+
 .product h3{
-    font-size:20px;
-    margin-bottom:8px;
+font-size:20px;
+margin-bottom:8px;
 }
 
 .product-description{
-    color:#777;
-    min-height:38px;
-    margin-bottom:10px;
+color:#777;
+min-height:38px;
+margin-bottom:10px;
 }
 
 .price{
-    color:#b08b00;
-    font-size:21px;
-    font-weight:bold;
-    margin-bottom:8px;
+color:#b08b00;
+font-size:21px;
+font-weight:bold;
+margin-bottom:8px;
 }
 
 .stock{
-    font-size:14px;
-    color:#555;
-    margin-bottom:13px;
-}
-
-.order-btn{
-    width:100%;
-    display:block;
-    border:0;
-    background:#111;
-    color:white;
-    padding:13px;
-    border-radius:9px;
-    text-decoration:none;
-    text-align:center;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.order-btn:hover{
-    background:#d4af37;
-    color:#111;
-}
-
-/* CONTACT */
-.contact{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:35px 15px;
-    margin-top:55px;
-}
-
-.whatsapp{
-    display:inline-block;
-    margin-top:18px;
-    padding:14px 28px;
-    background:#25D366;
-    color:white;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:25px;
-    color:#777;
-}
-
-/* LOADING */
-.loading{
-    text-align:center;
-    grid-column:1/-1;
-    padding:40px;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-
-    .logo{
-        font-size:27px;
-    }
-
-    .hero{
-        padding:40px 15px;
-    }
-
-    .hero h1{
-        font-size:32px;
-    }
-
-    .products{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-
-    .product{
-        padding:10px;
-    }
-
-    .product-image{
-        height:180px;
-    }
-
-    .product h3{
-        font-size:17px;
-    }
-
-    .price{
-        font-size:18px;
-    }
-
-    .order-btn{
-        font-size:13px;
-        padding:11px 5px;
-    }
-}
-
-@media(max-width:380px){
-
-    .products{
-        grid-template-columns:1fr;
-    }
-
-}
-</style>
-</head>
-
-<body>
-
-<header>
-
-<div class="header-content">
-
-<div class="logo">
-RONQA
-</div>
-
-<button class="cart-button">
-🛒 السلة
-</button>
-
-</div>
-
-</header>
-
-
-<section class="hero">
-
-<h1>RONQA</h1>
-
-<p>
-منتجات مميزة بأسعار مناسبة
-</p>
-
-</section>
-
-
-<div class="container">
-
-<div class="search-box">
-
-<input
-type="text"
-id="search"
-placeholder="🔎 ابحث عن منتج..."
->
-
-</div>
-
-
-<h2 class="title">
-🛍️ منتجاتنا
-</h2>
-
-
-<div
-class="products"
-id="products">
-
-<div class="loading">
-جاري تحميل المنتجات...
-</div>
-
-</div>
-
-
-</div>
-
-
-<section class="contact">
-
-<h2>
-📞 للطلب والاستفسار
-</h2>
-
-<p style="margin-top:10px;">
-تواصل معنا عبر WhatsApp
-</p>
-
-<a
-class="whatsapp"
-href="https://wa.me/213675996957"
-target="_blank">
-
-💬 WhatsApp
-
-</a>
-
-</section>
-
-
-<footer>
-
-© 2026 RONQA - جميع الحقوق محفوظة
-
-</footer>
-
-
-<script>
-
-const SUPABASE_URL =
-"https://qpctjcaygybpanzyweso.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
-
-const productsContainer =
-document.getElementById("products");
-
-const searchInput =
-document.getElementById("search");
-
-let allProducts = [];
-
-
-async function loadProducts(){
-
-try{
-
-const response = await fetch(
-
-`${SUPABASE_URL}/rest/v1/Products?select=*`,
-
-{
-
-method:"GET",
-
-headers:{
-
-"apikey":SUPABASE_KEY,
-
-"Authorization":
-"Bearer " + SUPABASE_KEY
-
-}
-
-}
-
-);
-
-
-if(!response.ok){
-
-throw new Error(
-"HTTP " + response.status
-);
-
+font-size:14px;
+color:#555;
+margin-bottom:13px;
 }
 
 
-allProducts =
-await response.json();
+/* ADD BUTTON */
 
-
-displayProducts(allProducts);
-
+.add-cart{
+width:100%;
+border:0;
+background:#111;
+color:white;
+padding:13px;
+border-radius:9px;
+font-weight:bold;
+cursor:pointer;
+font-size:14px;
 }
 
-catch(error){
-
-productsContainer.innerHTML = `
-
-<div class="loading">
-
-حدث خطأ في تحميل المنتجات
-
-<br><br>
-
-${error.message}
-
-</div>
-
-`;
-
+.add-cart:hover{
+background:#d4af37;
+color:#111;
 }
 
+.add-cart:disabled{
+background:#aaa;
+cursor:not-allowed;
 }
 
 
-function displayProducts(products){
-
-productsContainer.innerHTML="";
-
-
-if(!products.length){
-
-productsContainer.innerHTML=`
-
-<div class="loading">
-
-لا توجد منتجات
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-products.forEach(product=>{
-
-const name =
-product.name || "منتج";
-
-const description =
-product.description || "";
-
-const price =
-product.price || 0;
-
-const stock =
-product.stock ?? 0;
-
-const image =
-String(
-product.image_url || ""
-).trim();
-
-
-let imageHTML;
-
-
-if(image){
-
-imageHTML=`
-
-<img
-
-src="${image}"
-
-alt="${name}"
-
-loading="lazy"
-
-onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-
->
-
-<div
-class="no-image"
-style="display:none">
-
-🛍️
-
-</div>
-
-`;
-
-}else{
-
-imageHTML=`
-
-<div class="no-image">
-
-🛍️
-
-</div>
-
-`;
-
-}
-
-
-const message =
-
-`السلام عليكم، أريد طلب ${name} بسعر ${price} دج`;
-
-
-productsContainer.innerHTML += `
-
-<div class="product">
-
-<div class="product-image">
-
-${imageHTML}
-
-</div>
-
-
-<h3>
-
-${name}
-
-</h3>
-
-
-<p class="product-description">
-
-${description}
-
-</p>
-
-
-<div class="price">
-
-${price} دج
-
-</div>
-
-
-<div class="stock">
-
-📦 متوفر: ${stock}
-
-</div>
-
-
-<a
-
-class="order-btn"
-
-href="https://wa.me/213675996957?text=${encodeURIComponent(message)}"
-
-target="_blank">
-
-💬 اطلب عبر WhatsApp
-
-</a>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-searchInput.addEventListener(
-"input",
-function(){
-
-const text =
-this.value.toLowerCase().trim();
-
-
-const filtered =
-allProducts.filter(product=>{
-
-const name =
-String(product.name || "")
-.toLowerCase();
-
-const description =
-String(product.description || "")
-.toLowerCase();
-
-
-return
-
-name.includes(text) ||
-
-description.includes(text);
-
-});
-
-
-displayProducts(filtered);
-
-});
-
-
-loadProducts();
-
-</script>
-
-</body>
-    </html>
+/* CART */
+
+.cart{
+position:fixed;
+top:0;
+left:-100%;
+width:100%;
+max-width:430px;
+height:100%;
+background:white
