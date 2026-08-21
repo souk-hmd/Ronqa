@@ -1,0 +1,2750 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RONQA | Style. Character. Quality.</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#080808;
+    color:#f5f2ea;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(8,8,8,.95);
+    border-bottom:1px solid #252525;
+}
+
+.navbar{
+    width:90%;
+    max-width:1200px;
+    height:75px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:7px;
+    direction:ltr;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:#aaa;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c9a55b;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle at 20% 50%,
+        #3b2d18 0,
+        #17130d 20%,
+        transparent 50%
+    );
+}
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.small-title{
+    color:#c9a55b;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.hero h1{
+    font-size:clamp(60px,12vw,130px);
+    letter-spacing:12px;
+    line-height:.9;
+    margin-bottom:30px;
+    direction:ltr;
+}
+
+.hero p{
+    max-width:600px;
+    color:#aaa;
+    font-size:19px;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 28px;
+
+    border:1px solid #c9a55b;
+
+    color:#c9a55b;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#c9a55b;
+    color:#111;
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 5%;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    color:#777;
+    margin-bottom:40px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+}
+
+.product{
+    background:#121212;
+
+    border:1px solid #242424;
+
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-6px);
+
+    border-color:#5b4725;
+}
+
+.product-image{
+    height:280px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        #292929,
+        #0d0d0d
+    );
+
+    color:#555;
+
+    letter-spacing:3px;
+
+    direction:ltr;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-name{
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#c9a55b;
+    direction:ltr;
+}
+
+/* ABOUT */
+
+.about{
+    background:#101010;
+}
+
+.about-grid{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:70px;
+
+    align-items:center;
+}
+
+.manifesto{
+    font-size:42px;
+    line-height:1.25;
+
+    direction:ltr;
+
+    text-align:left;
+}
+
+.about-text{
+    color:#999;
+
+    font-size:17px;
+
+    line-height:2;
+}
+
+/* CONTACT */
+
+.contact{
+    text-align:center;
+}
+
+.contact .section-subtitle{
+    margin-bottom:20px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #242424;
+
+    padding:30px 5%;
+
+    color:#666;
+
+    font-size:12px;
+}
+
+.footer-content{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        display:none;
+    }
+
+    .products{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+
+        gap:30px;
+    }
+
+    .manifesto{
+        font-size:32px;
+    }
+}
+
+@media(max-width:520px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:320px;
+    }
+
+    .hero h1{
+        font-size:55px;
+
+        letter-spacing:7px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<div class="logo">
+RONQA
+</div>
+
+<nav>
+
+<a href="#home">
+الرئيسية
+</a>
+
+<a href="#collection">
+المجموعة
+</a>
+
+<a href="#about">
+عن RONQA
+</a>
+
+<a href="#contact">
+تواصل معنا
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="small-title">
+
+STYLE • CHARACTER • QUALITY
+
+</div>
+
+<h1>
+RONQA
+</h1>
+
+<p>
+
+علامة عصرية تهتم بالأناقة،
+الشخصية والجودة.
+منتجات مختارة بعناية لمن يريد
+أن يترك أثرًا في التفاصيل.
+
+</p>
+
+<a
+href="#collection"
+class="btn">
+
+اكتشف المجموعة
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- COLLECTION -->
+
+<section id="collection">
+
+<div class="container">
+
+<h2 class="section-title">
+
+المجموعة
+
+</h2>
+
+<p class="section-subtitle">
+
+اختيارات RONQA المميزة
+
+</p>
+
+
+<div class="products">
+
+
+<!-- PRODUCT 1 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 01
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+ساعة Signature
+
+</div>
+
+<div class="price">
+
+12,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 02
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+محفظة جلدية
+
+</div>
+
+<div class="price">
+
+5,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 03
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+سوار Classic
+
+</div>
+
+<div class="price">
+
+3,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 4 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 04
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+حقيبة RONQA
+
+</div>
+
+<div class="price">
+
+8,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section
+class="about"
+id="about">
+
+<div class="about-grid">
+
+
+<div>
+
+<div class="small-title">
+
+THE RONQA IDEA
+
+</div>
+
+<div class="manifesto">
+
+Style is not what you wear.
+<br>
+
+It's how you are remembered.
+
+</div>
+
+</div>
+
+
+<div class="about-text">
+
+RONQA علامة جزائرية حديثة
+بهُوية عالمية، تركز على الجودة
+والشخصية والأناقة الخالدة.
+
+نبدأ بمنتجات مختارة بعناية،
+ونطمح إلى بناء علامة متكاملة
+تعبر عن أسلوب حياة عصري.
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section
+class="contact"
+id="contact">
+
+<div class="container">
+
+<div class="small-title">
+
+CONNECT WITH RONQA
+
+</div>
+
+<h2 class="section-title">
+
+قطعتك القادمة تبدأ من هنا.
+
+</h2>
+
+<p class="section-subtitle">
+
+Instagram • Facebook • WhatsApp
+
+</p>
+
+
+<!-- غير الرقم هنا -->
+
+<a
+class="btn"
+href="https://wa.me/213000000000"
+target="_blank">
+
+تواصل معنا عبر WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-content">
+
+<span>
+
+© 2026 RONQA
+
+</span>
+
+<span>
+
+Style. Character. Quality.
+
+</span>
+
+</div>
+
+</footer>
+
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RONQA | Style. Character. Quality.</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#080808;
+    color:#f5f2ea;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(8,8,8,.95);
+    border-bottom:1px solid #252525;
+}
+
+.navbar{
+    width:90%;
+    max-width:1200px;
+    height:75px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:7px;
+    direction:ltr;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:#aaa;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c9a55b;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle at 20% 50%,
+        #3b2d18 0,
+        #17130d 20%,
+        transparent 50%
+    );
+}
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.small-title{
+    color:#c9a55b;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.hero h1{
+    font-size:clamp(60px,12vw,130px);
+    letter-spacing:12px;
+    line-height:.9;
+    margin-bottom:30px;
+    direction:ltr;
+}
+
+.hero p{
+    max-width:600px;
+    color:#aaa;
+    font-size:19px;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 28px;
+
+    border:1px solid #c9a55b;
+
+    color:#c9a55b;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#c9a55b;
+    color:#111;
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 5%;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    color:#777;
+    margin-bottom:40px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+}
+
+.product{
+    background:#121212;
+
+    border:1px solid #242424;
+
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-6px);
+
+    border-color:#5b4725;
+}
+
+.product-image{
+    height:280px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        #292929,
+        #0d0d0d
+    );
+
+    color:#555;
+
+    letter-spacing:3px;
+
+    direction:ltr;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-name{
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#c9a55b;
+    direction:ltr;
+}
+
+/* ABOUT */
+
+.about{
+    background:#101010;
+}
+
+.about-grid{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:70px;
+
+    align-items:center;
+}
+
+.manifesto{
+    font-size:42px;
+    line-height:1.25;
+
+    direction:ltr;
+
+    text-align:left;
+}
+
+.about-text{
+    color:#999;
+
+    font-size:17px;
+
+    line-height:2;
+}
+
+/* CONTACT */
+
+.contact{
+    text-align:center;
+}
+
+.contact .section-subtitle{
+    margin-bottom:20px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #242424;
+
+    padding:30px 5%;
+
+    color:#666;
+
+    font-size:12px;
+}
+
+.footer-content{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        display:none;
+    }
+
+    .products{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+
+        gap:30px;
+    }
+
+    .manifesto{
+        font-size:32px;
+    }
+}
+
+@media(max-width:520px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:320px;
+    }
+
+    .hero h1{
+        font-size:55px;
+
+        letter-spacing:7px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<div class="logo">
+RONQA
+</div>
+
+<nav>
+
+<a href="#home">
+الرئيسية
+</a>
+
+<a href="#collection">
+المجموعة
+</a>
+
+<a href="#about">
+عن RONQA
+</a>
+
+<a href="#contact">
+تواصل معنا
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="small-title">
+
+STYLE • CHARACTER • QUALITY
+
+</div>
+
+<h1>
+RONQA
+</h1>
+
+<p>
+
+علامة عصرية تهتم بالأناقة،
+الشخصية والجودة.
+منتجات مختارة بعناية لمن يريد
+أن يترك أثرًا في التفاصيل.
+
+</p>
+
+<a
+href="#collection"
+class="btn">
+
+اكتشف المجموعة
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- COLLECTION -->
+
+<section id="collection">
+
+<div class="container">
+
+<h2 class="section-title">
+
+المجموعة
+
+</h2>
+
+<p class="section-subtitle">
+
+اختيارات RONQA المميزة
+
+</p>
+
+
+<div class="products">
+
+
+<!-- PRODUCT 1 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 01
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+ساعة Signature
+
+</div>
+
+<div class="price">
+
+12,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 02
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+محفظة جلدية
+
+</div>
+
+<div class="price">
+
+5,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 03
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+سوار Classic
+
+</div>
+
+<div class="price">
+
+3,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 4 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 04
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+حقيبة RONQA
+
+</div>
+
+<div class="price">
+
+8,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section
+class="about"
+id="about">
+
+<div class="about-grid">
+
+
+<div>
+
+<div class="small-title">
+
+THE RONQA IDEA
+
+</div>
+
+<div class="manifesto">
+
+Style is not what you wear.
+<br>
+
+It's how you are remembered.
+
+</div>
+
+</div>
+
+
+<div class="about-text">
+
+RONQA علامة جزائرية حديثة
+بهُوية عالمية، تركز على الجودة
+والشخصية والأناقة الخالدة.
+
+نبدأ بمنتجات مختارة بعناية،
+ونطمح إلى بناء علامة متكاملة
+تعبر عن أسلوب حياة عصري.
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section
+class="contact"
+id="contact">
+
+<div class="container">
+
+<div class="small-title">
+
+CONNECT WITH RONQA
+
+</div>
+
+<h2 class="section-title">
+
+قطعتك القادمة تبدأ من هنا.
+
+</h2>
+
+<p class="section-subtitle">
+
+Instagram • Facebook • WhatsApp
+
+</p>
+
+
+<!-- غير الرقم هنا -->
+
+<a
+class="btn"
+href="https://wa.me/213000000000"
+target="_blank">
+
+تواصل معنا عبر WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-content">
+
+<span>
+
+© 2026 RONQA
+
+</span>
+
+<span>
+
+Style. Character. Quality.
+
+</span>
+
+</div>
+
+</footer>
+
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RONQA | Style. Character. Quality.</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#080808;
+    color:#f5f2ea;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(8,8,8,.95);
+    border-bottom:1px solid #252525;
+}
+
+.navbar{
+    width:90%;
+    max-width:1200px;
+    height:75px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:7px;
+    direction:ltr;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:#aaa;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c9a55b;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle at 20% 50%,
+        #3b2d18 0,
+        #17130d 20%,
+        transparent 50%
+    );
+}
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.small-title{
+    color:#c9a55b;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.hero h1{
+    font-size:clamp(60px,12vw,130px);
+    letter-spacing:12px;
+    line-height:.9;
+    margin-bottom:30px;
+    direction:ltr;
+}
+
+.hero p{
+    max-width:600px;
+    color:#aaa;
+    font-size:19px;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 28px;
+
+    border:1px solid #c9a55b;
+
+    color:#c9a55b;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#c9a55b;
+    color:#111;
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 5%;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    color:#777;
+    margin-bottom:40px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+}
+
+.product{
+    background:#121212;
+
+    border:1px solid #242424;
+
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-6px);
+
+    border-color:#5b4725;
+}
+
+.product-image{
+    height:280px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        #292929,
+        #0d0d0d
+    );
+
+    color:#555;
+
+    letter-spacing:3px;
+
+    direction:ltr;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-name{
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#c9a55b;
+    direction:ltr;
+}
+
+/* ABOUT */
+
+.about{
+    background:#101010;
+}
+
+.about-grid{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:70px;
+
+    align-items:center;
+}
+
+.manifesto{
+    font-size:42px;
+    line-height:1.25;
+
+    direction:ltr;
+
+    text-align:left;
+}
+
+.about-text{
+    color:#999;
+
+    font-size:17px;
+
+    line-height:2;
+}
+
+/* CONTACT */
+
+.contact{
+    text-align:center;
+}
+
+.contact .section-subtitle{
+    margin-bottom:20px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #242424;
+
+    padding:30px 5%;
+
+    color:#666;
+
+    font-size:12px;
+}
+
+.footer-content{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        display:none;
+    }
+
+    .products{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+
+        gap:30px;
+    }
+
+    .manifesto{
+        font-size:32px;
+    }
+}
+
+@media(max-width:520px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:320px;
+    }
+
+    .hero h1{
+        font-size:55px;
+
+        letter-spacing:7px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<div class="logo">
+RONQA
+</div>
+
+<nav>
+
+<a href="#home">
+الرئيسية
+</a>
+
+<a href="#collection">
+المجموعة
+</a>
+
+<a href="#about">
+عن RONQA
+</a>
+
+<a href="#contact">
+تواصل معنا
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="small-title">
+
+STYLE • CHARACTER • QUALITY
+
+</div>
+
+<h1>
+RONQA
+</h1>
+
+<p>
+
+علامة عصرية تهتم بالأناقة،
+الشخصية والجودة.
+منتجات مختارة بعناية لمن يريد
+أن يترك أثرًا في التفاصيل.
+
+</p>
+
+<a
+href="#collection"
+class="btn">
+
+اكتشف المجموعة
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- COLLECTION -->
+
+<section id="collection">
+
+<div class="container">
+
+<h2 class="section-title">
+
+المجموعة
+
+</h2>
+
+<p class="section-subtitle">
+
+اختيارات RONQA المميزة
+
+</p>
+
+
+<div class="products">
+
+
+<!-- PRODUCT 1 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 01
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+ساعة Signature
+
+</div>
+
+<div class="price">
+
+12,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 02
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+محفظة جلدية
+
+</div>
+
+<div class="price">
+
+5,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 03
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+سوار Classic
+
+</div>
+
+<div class="price">
+
+3,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 4 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 04
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+حقيبة RONQA
+
+</div>
+
+<div class="price">
+
+8,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section
+class="about"
+id="about">
+
+<div class="about-grid">
+
+
+<div>
+
+<div class="small-title">
+
+THE RONQA IDEA
+
+</div>
+
+<div class="manifesto">
+
+Style is not what you wear.
+<br>
+
+It's how you are remembered.
+
+</div>
+
+</div>
+
+
+<div class="about-text">
+
+RONQA علامة جزائرية حديثة
+بهُوية عالمية، تركز على الجودة
+والشخصية والأناقة الخالدة.
+
+نبدأ بمنتجات مختارة بعناية،
+ونطمح إلى بناء علامة متكاملة
+تعبر عن أسلوب حياة عصري.
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section
+class="contact"
+id="contact">
+
+<div class="container">
+
+<div class="small-title">
+
+CONNECT WITH RONQA
+
+</div>
+
+<h2 class="section-title">
+
+قطعتك القادمة تبدأ من هنا.
+
+</h2>
+
+<p class="section-subtitle">
+
+Instagram • Facebook • WhatsApp
+
+</p>
+
+
+<!-- غير الرقم هنا -->
+
+<a
+class="btn"
+href="https://wa.me/213000000000"
+target="_blank">
+
+تواصل معنا عبر WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-content">
+
+<span>
+
+© 2026 RONQA
+
+</span>
+
+<span>
+
+Style. Character. Quality.
+
+</span>
+
+</div>
+
+</footer>
+
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RONQA | Style. Character. Quality.</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#080808;
+    color:#f5f2ea;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(8,8,8,.95);
+    border-bottom:1px solid #252525;
+}
+
+.navbar{
+    width:90%;
+    max-width:1200px;
+    height:75px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:7px;
+    direction:ltr;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:#aaa;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c9a55b;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle at 20% 50%,
+        #3b2d18 0,
+        #17130d 20%,
+        transparent 50%
+    );
+}
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.small-title{
+    color:#c9a55b;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.hero h1{
+    font-size:clamp(60px,12vw,130px);
+    letter-spacing:12px;
+    line-height:.9;
+    margin-bottom:30px;
+    direction:ltr;
+}
+
+.hero p{
+    max-width:600px;
+    color:#aaa;
+    font-size:19px;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 28px;
+
+    border:1px solid #c9a55b;
+
+    color:#c9a55b;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#c9a55b;
+    color:#111;
+}
+
+/* SECTIONS */
+
+section{
+    padding:90px 5%;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    color:#777;
+    margin-bottom:40px;
+}
+
+/* PRODUCTS */
+
+.products{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+}
+
+.product{
+    background:#121212;
+
+    border:1px solid #242424;
+
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-6px);
+
+    border-color:#5b4725;
+}
+
+.product-image{
+    height:280px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        #292929,
+        #0d0d0d
+    );
+
+    color:#555;
+
+    letter-spacing:3px;
+
+    direction:ltr;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-name{
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#c9a55b;
+    direction:ltr;
+}
+
+/* ABOUT */
+
+.about{
+    background:#101010;
+}
+
+.about-grid{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:70px;
+
+    align-items:center;
+}
+
+.manifesto{
+    font-size:42px;
+    line-height:1.25;
+
+    direction:ltr;
+
+    text-align:left;
+}
+
+.about-text{
+    color:#999;
+
+    font-size:17px;
+
+    line-height:2;
+}
+
+/* CONTACT */
+
+.contact{
+    text-align:center;
+}
+
+.contact .section-subtitle{
+    margin-bottom:20px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #242424;
+
+    padding:30px 5%;
+
+    color:#666;
+
+    font-size:12px;
+}
+
+.footer-content{
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    nav{
+        display:none;
+    }
+
+    .products{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+
+        gap:30px;
+    }
+
+    .manifesto{
+        font-size:32px;
+    }
+}
+
+@media(max-width:520px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        height:320px;
+    }
+
+    .hero h1{
+        font-size:55px;
+
+        letter-spacing:7px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="navbar">
+
+<div class="logo">
+RONQA
+</div>
+
+<nav>
+
+<a href="#home">
+الرئيسية
+</a>
+
+<a href="#collection">
+المجموعة
+</a>
+
+<a href="#about">
+عن RONQA
+</a>
+
+<a href="#contact">
+تواصل معنا
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="small-title">
+
+STYLE • CHARACTER • QUALITY
+
+</div>
+
+<h1>
+RONQA
+</h1>
+
+<p>
+
+علامة عصرية تهتم بالأناقة،
+الشخصية والجودة.
+منتجات مختارة بعناية لمن يريد
+أن يترك أثرًا في التفاصيل.
+
+</p>
+
+<a
+href="#collection"
+class="btn">
+
+اكتشف المجموعة
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- COLLECTION -->
+
+<section id="collection">
+
+<div class="container">
+
+<h2 class="section-title">
+
+المجموعة
+
+</h2>
+
+<p class="section-subtitle">
+
+اختيارات RONQA المميزة
+
+</p>
+
+
+<div class="products">
+
+
+<!-- PRODUCT 1 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 01
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+ساعة Signature
+
+</div>
+
+<div class="price">
+
+12,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 02
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+محفظة جلدية
+
+</div>
+
+<div class="price">
+
+5,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 03
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+سوار Classic
+
+</div>
+
+<div class="price">
+
+3,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT 4 -->
+
+<div class="product">
+
+<div class="product-image">
+
+PRODUCT 04
+
+</div>
+
+<div class="product-info">
+
+<div class="product-name">
+
+حقيبة RONQA
+
+</div>
+
+<div class="price">
+
+8,900 DZD
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section
+class="about"
+id="about">
+
+<div class="about-grid">
+
+
+<div>
+
+<div class="small-title">
+
+THE RONQA IDEA
+
+</div>
+
+<div class="manifesto">
+
+Style is not what you wear.
+<br>
+
+It's how you are remembered.
+
+</div>
+
+</div>
+
+
+<div class="about-text">
+
+RONQA علامة جزائرية حديثة
+بهُوية عالمية، تركز على الجودة
+والشخصية والأناقة الخالدة.
+
+نبدأ بمنتجات مختارة بعناية،
+ونطمح إلى بناء علامة متكاملة
+تعبر عن أسلوب حياة عصري.
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section
+class="contact"
+id="contact">
+
+<div class="container">
+
+<div class="small-title">
+
+CONNECT WITH RONQA
+
+</div>
+
+<h2 class="section-title">
+
+قطعتك القادمة تبدأ من هنا.
+
+</h2>
+
+<p class="section-subtitle">
+
+Instagram • Facebook • WhatsApp
+
+</p>
+
+
+<!-- غير الرقم هنا -->
+
+<a
+class="btn"
+href="https://wa.me/213000000000"
+target="_blank">
+
+تواصل معنا عبر WhatsApp
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-content">
+
+<span>
+
+© 2026 RONQA
+
+</span>
+
+<span>
+
+Style. Character. Quality.
+
+</span>
+
+</div>
+
+</footer>
+
+
+</body>
+
+</html>
+
