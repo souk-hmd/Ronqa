@@ -1,34 +1,104 @@
-/* =========================================
-   RONQA - APP.JS
-========================================= */
-
-
-/* =========================================
-   SUPABASE
-========================================= */
-
 const SUPABASE_URL =
 "https://qpctjcaygybpanzyweso.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_p_iM1Wod_z9W0kfBXAC90w_J8tH85fO";
 
-const STORE_WHATSAPP =
-"213675996957";
+async function loadProducts(){
 
+    const box =
+    document.getElementById("products");
 
-/* =========================================
-   VARIABLES
-========================================= */
+    box.innerHTML = `
+        <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;">
+        ⏳ جاري الاتصال بقاعدة البيانات...
+        </div>
+    `;
+
+    try{
+
+        const url =
+        SUPABASE_URL +
+        "/rest/v1/Products?select=*&apikey=" +
+        encodeURIComponent(SUPABASE_KEY);
+
+        const response =
+        await fetch(url,{
+            method:"GET",
+            headers:{
+                "apikey":SUPABASE_KEY,
+                "Authorization":"Bearer "+SUPABASE_KEY
+            }
+        });
+
+        const text =
+        await response.text();
+
+        console.log("STATUS:",response.status);
+        console.log("RESPONSE:",text);
+
+        if(!response.ok){
+
+            throw new Error(
+                "Supabase: HTTP " +
+                response.status +
+                " - " +
+                text
+            );
+        }
+
+        const data =
+        JSON.parse(text);
+
+        if(!Array.isArray(data)){
+
+            throw new Error(
+                "البيانات ليست قائمة منتجات"
+            );
+        }
+
+        products = data;
+
+        showProducts(products);
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        box.innerHTML = `
+            <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:40px;">
+
+            ❌ خطأ في تحميل المنتجات
+
+            <br><br>
+
+            <small style="
+            direction:ltr;
+            display:block;
+            word-break:break-word;
+            color:red;">
+
+            ${escapeHTML(error.message)}
+
+            </small>
+
+            </div>
+        `;
+    }
+}
+
 
 let products = [];
 let cart = [];
 let selectedCategory = "all";
 
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
 
 function escapeHTML(text){
 
@@ -42,10 +112,6 @@ function escapeHTML(text){
 }
 
 
-/* =========================================
-   CATEGORY
-========================================= */
-
 function getCategory(value){
 
     const text =
@@ -53,706 +119,315 @@ function getCategory(value){
     .trim()
     .toLowerCase();
 
-    if(
-        text.includes("حق")
-    ){
+    if(text.includes("حق"))
         return "bags";
-    }
 
     if(
         text.includes("حذ") ||
         text.includes("احذ") ||
         text.includes("أحذ")
-    ){
+    )
         return "shoes";
-    }
 
     if(
         text.includes("كسسو") ||
         text.includes("اكسسو") ||
         text.includes("إكسسو")
-    ){
+    )
         return "accessories";
-    }
 
     return "other";
 }
 
 
-/* =========================================
-   LOAD PRODUCTS
-========================================= */
-
-async function loadProducts(){
+function showProducts(list){
 
     const box =
     document.getElementById("products");
 
-    if(!box){
-        console.error(
-            "Element #products not found"
-        );
-        return;
-    }
-
-
-    box.innerHTML = `
-        <div style="
-            grid-column:1/-1;
-            text-align:center;
-            padding:40px;
-            font-size:18px;">
-            
-            ⏳ جاري تحميل المنتجات...
-            
-        </div>
-    `;
-
-
-    try{
-
-        const url =
-        SUPABASE_URL +
-        "/rest/v1/Products?select=*";
-
-
-        console.log(
-            "Supabase URL:",
-            url
-        );
-
-
-        const response =
-        await fetch(
-            url,
-            {
-                method:"GET",
-
-                headers:{
-                    "apikey":SUPABASE_KEY,
-                    "Authorization":
-                    "Bearer " + SUPABASE_KEY,
-                    "Content-Type":
-                    "application/json",
-                    "Accept":
-                    "application/json"
-                }
-            }
-        );
-
-
-        console.log(
-            "Supabase status:",
-            response.status
-        );
-
-
-        const responseText =
-        await response.text();
-
-
-        console.log(
-            "Supabase response:",
-            responseText
-        );
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " +
-                response.status +
-                ": " +
-                responseText
-            );
-
-        }
-
-
-        let data;
-
-
-        try{
-
-            data =
-            JSON.parse(
-                responseText
-            );
-
-        }
-        catch(parseError){
-
-            throw new Error(
-                "Supabase لم يرجع بيانات JSON صحيحة"
-            );
-
-        }
-
-
-        if(!Array.isArray(data)){
-
-            throw new Error(
-                "بيانات المنتجات ليست قائمة"
-            );
-
-        }
-
-
-        products = data;
-
-
-        console.log(
-            "Products loaded:",
-            products.length
-        );
-
-
-        showProducts(products);
-
-    }
-    catch(error){
-
-        console.error(
-            "LOAD PRODUCTS ERROR:",
-            error
-        );
-
-
-        box.innerHTML = `
-
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                padding:40px;">
-
-                <div style="
-                    font-size:45px;
-                    margin-bottom:15px;">
-                    
-                    ❌
-                    
-                </div>
-
-                <h3>
-                    تعذر تحميل المنتجات
-                </h3>
-
-                <p style="
-                    color:#777;
-                    margin-top:10px;
-                    direction:ltr;
-                    word-break:break-word;">
-                    
-                    ${escapeHTML(
-                        error.message
-                    )}
-                    
-                </p>
-
-            </div>
-
-        `;
-    }
-}
-
-
-/* =========================================
-   SHOW PRODUCTS
-========================================= */
-
-function showProducts(list){
-
-    const box =
-    document.getElementById(
-        "products"
-    );
-
-
-    if(!box){
-        return;
-    }
-
-
     box.innerHTML = "";
 
-
-    if(
-        !Array.isArray(list) ||
-        list.length === 0
-    ){
+    if(!list.length){
 
         box.innerHTML = `
+        <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;">
 
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                padding:40px;">
+        لا توجد منتجات.
 
-                لا توجد منتجات في هذا التصنيف 🛍️
-
-            </div>
-
-        `;
+        </div>`;
 
         return;
     }
-
 
     list.forEach(product=>{
 
-        const id =
-        product.id;
+        const id = product.id;
 
         const name =
-        product.name ||
-        "منتج";
+        product.name || "منتج";
 
         const description =
-        product.description ||
-        "";
+        product.description || "";
 
         const price =
-        Number(product.price) ||
-        0;
+        Number(product.price) || 0;
 
         const stock =
-        Number(product.stock) ||
-        0;
+        Number(product.stock) || 0;
 
         const image =
-        String(
-            product.image_url || ""
-        ).trim();
+        String(product.image_url || "").trim();
 
         const category =
-        getCategory(
-            product.category
-        );
+        getCategory(product.category);
 
+        let sizeHTML = "";
+
+        if(category === "shoes"){
+
+            sizeHTML = `
+            <div class="size-box">
+
+            <select id="size-${id}">
+
+            <option value="">
+            اختر المقاس
+            </option>
+
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+
+            </select>
+
+            </div>`;
+        }
 
         let imageHTML = "";
-
 
         if(image){
 
             imageHTML = `
+            <img
+            src="${escapeHTML(image)}"
+            alt="${escapeHTML(name)}"
+            style="
+            width:100%;
+            height:100%;
+            object-fit:contain;"
+            onerror="this.style.display='none';"
+            >`;
 
-                <img
-                    src="${escapeHTML(image)}"
-                    alt="${escapeHTML(name)}"
-                    loading="lazy"
-                    onerror="
-                    this.style.display='none';
-                    this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="no-image"
-                    style="display:none;">
-                    
-                    🛍️
-                    
-                </div>
-
-            `;
-
-        }
-        else{
+        }else{
 
             imageHTML = `
-
-                <div class="no-image">
-                    🛍️
-                </div>
-
-            `;
+            <div class="no-image">
+            🛍️
+            </div>`;
         }
-
-
-        let sizeHTML = "";
-
-
-        if(
-            category === "shoes"
-        ){
-
-            sizeHTML = `
-
-                <div class="size-box">
-
-                    <select
-                        id="size-${id}">
-
-                        <option value="">
-                            اختر المقاس
-                        </option>
-
-                        <option value="36">
-                            36
-                        </option>
-
-                        <option value="37">
-                            37
-                        </option>
-
-                        <option value="38">
-                            38
-                        </option>
-
-                        <option value="39">
-                            39
-                        </option>
-
-                        <option value="40">
-                            40
-                        </option>
-
-                        <option value="41">
-                            41
-                        </option>
-
-                        <option value="42">
-                            42
-                        </option>
-
-                        <option value="43">
-                            43
-                        </option>
-
-                        <option value="44">
-                            44
-                        </option>
-
-                        <option value="45">
-                            45
-                        </option>
-
-                    </select>
-
-                </div>
-
-            `;
-        }
-
 
         box.innerHTML += `
 
-            <div class="product">
+        <div class="product">
 
-                <div class="product-image">
+        <div class="product-image">
 
-                    ${imageHTML}
+        ${imageHTML}
 
-                </div>
+        </div>
 
+        <h3>
+        ${escapeHTML(name)}
+        </h3>
 
-                <h3>
-                    ${escapeHTML(name)}
-                </h3>
+        <p class="description">
+        ${escapeHTML(description)}
+        </p>
 
+        <div class="price">
+        ${price.toLocaleString("fr-DZ")}
+        دج
+        </div>
 
-                <p class="description">
-                    ${escapeHTML(description)}
-                </p>
+        <div class="stock">
+        📦 المخزون: ${stock}
+        </div>
 
+        ${sizeHTML}
 
-                <div class="price">
+        <button
+        class="add"
+        onclick="addToCart(${id})"
+        ${stock <= 0 ? "disabled" : ""}>
 
-                    ${price.toLocaleString("fr-DZ")}
-                    دج
+        ${
+        stock <= 0
+        ? "غير متوفر"
+        : "🛒 أضف إلى السلة"
+        }
 
-                </div>
+        </button>
 
-
-                <div class="stock">
-
-                    📦 المخزون:
-                    ${stock}
-
-                </div>
-
-
-                ${sizeHTML}
-
-
-                <button
-                    class="add"
-                    onclick="addToCart(${Number(id)})"
-                    ${stock <= 0 ? "disabled" : ""}>
-
-                    ${
-                        stock <= 0
-                        ?
-                        "غير متوفر"
-                        :
-                        "🛒 أضف إلى السلة"
-                    }
-
-                </button>
-
-            </div>
+        </div>
 
         `;
     });
 }
 
 
-/* =========================================
-   CATEGORY BUTTON
-========================================= */
+function setCategory(category,button){
 
-function setCategory(
-    category,
-    button
-){
-
-    selectedCategory =
-    category;
-
+    selectedCategory = category;
 
     document
-    .querySelectorAll(
-        ".category"
-    )
+    .querySelectorAll(".category")
     .forEach(btn=>{
-
-        btn.classList.remove(
-            "active"
-        );
-
+        btn.classList.remove("active");
     });
 
-
-    if(button){
-
-        button.classList.add(
-            "active"
-        );
-
-    }
-
+    button.classList.add("active");
 
     filterProducts();
 }
 
 
-/* =========================================
-   FILTER
-========================================= */
-
 function filterProducts(){
 
-    const searchElement =
-    document.getElementById(
-        "search"
-    );
-
-
     const search =
-    searchElement
-    ?
-    searchElement.value
+    document
+    .getElementById("search")
+    .value
     .trim()
-    .toLowerCase()
-    :
-    "";
-
+    .toLowerCase();
 
     const result =
     products.filter(product=>{
 
         const category =
-        getCategory(
-            product.category
-        );
-
+        getCategory(product.category);
 
         const name =
-        String(
-            product.name || ""
-        ).toLowerCase();
-
+        String(product.name || "")
+        .toLowerCase();
 
         const description =
-        String(
-            product.description || ""
-        ).toLowerCase();
-
+        String(product.description || "")
+        .toLowerCase();
 
         return (
-
-            (
-                selectedCategory ===
-                "all"
-                ||
-                category ===
-                selectedCategory
-            )
-
-            &&
-
-            (
-                name.includes(
-                    search
-                )
-                ||
-                description.includes(
-                    search
-                )
-            )
-
+        (
+        selectedCategory === "all" ||
+        category === selectedCategory
+        )
+        &&
+        (
+        name.includes(search) ||
+        description.includes(search)
+        )
         );
-
     });
-
 
     showProducts(result);
 }
 
 
-/* =========================================
-   SEARCH
-========================================= */
-
-function setupSearch(){
-
-    const search =
-    document.getElementById(
-        "search"
-    );
+document
+.getElementById("search")
+.addEventListener(
+"input",
+filterProducts
+);
 
 
-    if(!search){
-        return;
-    }
-
-
-    search.addEventListener(
-        "input",
-        filterProducts
-    );
-}
-
-
-/* =========================================
-   ADD TO CART
-========================================= */
+/* السلة */
 
 function addToCart(id){
 
     const product =
     products.find(
-        p =>
-        Number(p.id) ===
-        Number(id)
+    p => Number(p.id) === Number(id)
     );
 
-
-    if(!product){
-
-        alert(
-            "المنتج غير موجود"
-        );
-
-        return;
-    }
-
+    if(!product) return;
 
     const category =
-    getCategory(
-        product.category
-    );
-
+    getCategory(product.category);
 
     let size = "";
 
-
-    if(
-        category === "shoes"
-    ){
+    if(category === "shoes"){
 
         const select =
         document.getElementById(
-            "size-" + id
+        "size-"+id
         );
 
-
-        if(
-            !select ||
-            !select.value
-        ){
+        if(!select || !select.value){
 
             alert(
-                "اختر مقاس الحذاء أولاً"
+            "اختر مقاس الحذاء أولاً"
             );
 
             return;
         }
 
-
-        size =
-        select.value;
+        size = select.value;
     }
 
-
     const existing =
-    cart.find(item=>
-
-        Number(item.id) ===
-        Number(id)
-
-        &&
-
-        item.size === size
-
+    cart.find(item =>
+    Number(item.id) === Number(id)
+    &&
+    item.size === size
     );
-
 
     if(existing){
 
         if(
-            existing.quantity >=
-            Number(product.stock)
+        existing.quantity >=
+        Number(product.stock)
         ){
 
             alert(
-                "وصلت للكمية المتوفرة"
+            "وصلت للكمية المتوفرة"
             );
 
             return;
         }
 
-
         existing.quantity++;
 
-    }
-    else{
+    }else{
 
         cart.push({
 
-            id:id,
+        id:id,
 
-            name:
-            product.name ||
-            "منتج",
+        name:
+        product.name || "منتج",
 
-            price:
-            Number(product.price) ||
-            0,
+        price:
+        Number(product.price) || 0,
 
-            stock:
-            Number(product.stock) ||
-            0,
+        stock:
+        Number(product.stock) || 0,
 
-            size:size,
+        size:size,
 
-            quantity:1
+        quantity:1
 
         });
-
     }
-
 
     updateCart();
 
@@ -760,335 +435,138 @@ function addToCart(id){
 }
 
 
-/* =========================================
-   DELIVERY PRICE
-========================================= */
-
-function getDeliveryPrice(){
-
-    const delivery =
-    document.getElementById(
-        "delivery"
-    );
-
-
-    const price =
-    document.getElementById(
-        "deliveryPrice"
-    );
-
-
-    if(
-        !delivery ||
-        !price ||
-        !delivery.value
-    ){
-
-        return 0;
-    }
-
-
-    return Math.max(
-        0,
-        Number(
-            price.value
-        ) || 0
-    );
-}
-
-
-/* =========================================
-   UPDATE CART
-========================================= */
-
 function updateCart(){
 
     const list =
-    document.getElementById(
-        "cartList"
-    );
-
+    document.getElementById("cartList");
 
     const count =
-    document.getElementById(
-        "cartCount"
-    );
-
+    document.getElementById("cartCount");
 
     const totalBox =
-    document.getElementById(
-        "total"
-    );
+    document.getElementById("total");
 
-
-    if(
-        !list ||
-        !count ||
-        !totalBox
-    ){
-
-        return;
-    }
-
+    if(!list) return;
 
     list.innerHTML = "";
 
+    let total = 0;
+    let countItems = 0;
 
-    let subtotal = 0;
+    cart.forEach((item,index)=>{
 
-    let itemCount = 0;
+        const subtotal =
+        item.price * item.quantity;
 
-
-    cart.forEach(
-    (item,index)=>{
-
-        const itemSubtotal =
-        item.price *
-        item.quantity;
-
-
-        subtotal +=
-        itemSubtotal;
-
-
-        itemCount +=
-        item.quantity;
-
+        total += subtotal;
+        countItems += item.quantity;
 
         list.innerHTML += `
 
-            <div class="cart-item">
+        <div class="cart-item">
 
-                <div class="cart-item-name">
+        <div class="cart-item-name">
+        ${escapeHTML(item.name)}
+        </div>
 
-                    ${escapeHTML(
-                        item.name
-                    )}
+        ${
+        item.size
+        ?
+        `<div>📏 المقاس: ${item.size}</div>`
+        :
+        ""
+        }
 
-                </div>
+        <div class="cart-item-price">
+        ${item.price.toLocaleString("fr-DZ")}
+        دج
+        </div>
 
+        <div class="quantity">
 
-                ${
-                    item.size
-                    ?
-                    `
-                    <div>
-                        📏 المقاس:
-                        ${escapeHTML(
-                            item.size
-                        )}
-                    </div>
-                    `
-                    :
-                    ""
-                }
+        <button
+        onclick="changeQuantity(${index},-1)">
+        −
+        </button>
 
+        <span>
+        ${item.quantity}
+        </span>
 
-                <div class="cart-item-price">
+        <button
+        onclick="changeQuantity(${index},1)">
+        +
+        </button>
 
-                    ${item.price.toLocaleString("fr-DZ")}
-                    دج
+        <button
+        class="remove"
+        onclick="removeItem(${index})">
+        🗑️
+        </button>
 
-                </div>
+        </div>
 
-
-                <div class="quantity">
-
-                    <button
-                        onclick="
-                        changeQuantity(
-                            ${index},
-                            -1
-                        )">
-
-                        −
-
-                    </button>
-
-
-                    <span>
-                        ${item.quantity}
-                    </span>
-
-
-                    <button
-                        onclick="
-                        changeQuantity(
-                            ${index},
-                            1
-                        )">
-
-                        +
-
-                    </button>
-
-
-                    <button
-                        class="remove"
-                        onclick="
-                        removeItem(
-                            ${index}
-                        )">
-
-                        🗑️
-
-                    </button>
-
-                </div>
-
-            </div>
-
+        </div>
         `;
     });
 
-
-    if(
-        cart.length === 0
-    ){
+    if(!cart.length){
 
         list.innerHTML = `
-
-            <div style="
-                text-align:center;
-                padding:40px;
-                color:#777;">
-
-                السلة فارغة 🛒
-
-            </div>
-
-        `;
+        <div style="
+        text-align:center;
+        padding:40px;">
+        السلة فارغة 🛒
+        </div>`;
     }
 
-
-    const delivery =
-    getDeliveryPrice();
-
-
-    const finalTotal =
-    subtotal +
-    delivery;
-
-
-    count.innerText =
-    itemCount;
-
-
-    const subtotalBox =
-    document.getElementById(
-        "subtotal"
-    );
-
-
-    const deliveryBox =
-    document.getElementById(
-        "deliveryTotal"
-    );
-
-
-    if(subtotalBox){
-
-        subtotalBox.innerText =
-        "المنتجات: " +
-        subtotal.toLocaleString(
-            "fr-DZ"
-        ) +
-        " دج";
-    }
-
-
-    if(deliveryBox){
-
-        deliveryBox.innerText =
-        "التوصيل: " +
-        delivery.toLocaleString(
-            "fr-DZ"
-        ) +
-        " دج";
-    }
-
+    count.innerText = countItems;
 
     totalBox.innerText =
-    "المجموع النهائي: " +
-    finalTotal.toLocaleString(
-        "fr-DZ"
-    ) +
+    "المجموع: " +
+    total.toLocaleString("fr-DZ") +
     " دج";
 }
 
 
-/* =========================================
-   QUANTITY
-========================================= */
+function changeQuantity(index,change){
 
-function changeQuantity(
-    index,
-    change
-){
+    const item = cart[index];
 
-    const item =
-    cart[index];
+    if(!item) return;
 
+    const quantity =
+    item.quantity + change;
 
-    if(!item){
-        return;
-    }
-
-
-    const newQuantity =
-    item.quantity +
-    change;
-
-
-    if(
-        newQuantity <= 0
-    ){
+    if(quantity <= 0){
 
         removeItem(index);
 
         return;
     }
 
-
-    if(
-        newQuantity >
-        item.stock
-    ){
+    if(quantity > item.stock){
 
         alert(
-            "لا توجد كمية كافية في المخزون"
+        "لا توجد كمية كافية في المخزون"
         );
 
         return;
     }
 
-
-    item.quantity =
-    newQuantity;
-
+    item.quantity = quantity;
 
     updateCart();
 }
 
-
-/* =========================================
-   REMOVE
-========================================= */
 
 function removeItem(index){
 
-    cart.splice(
-        index,
-        1
-    );
+    cart.splice(index,1);
 
     updateCart();
 }
 
-
-/* =========================================
-   CLEAR
-========================================= */
 
 function clearCart(){
 
@@ -1098,215 +576,164 @@ function clearCart(){
 }
 
 
-/* =========================================
-   OPEN CART
-========================================= */
-
 function openCart(){
 
-    const panel =
-    document.getElementById(
-        "cartPanel"
-    );
+    document
+    .getElementById("cartPanel")
+    .classList.add("open");
 
-
-    const overlay =
-    document.getElementById(
-        "overlay"
-    );
-
-
-    if(panel){
-
-        panel.classList.add(
-            "open"
-        );
-    }
-
-
-    if(overlay){
-
-        overlay.classList.add(
-            "show"
-        );
-    }
+    document
+    .getElementById("overlay")
+    .classList.add("show");
 }
 
-
-/* =========================================
-   CLOSE CART
-========================================= */
 
 function closeCart(){
 
-    const panel =
-    document.getElementById(
-        "cartPanel"
-    );
+    document
+    .getElementById("cartPanel")
+    .classList.remove("open");
 
-
-    const overlay =
-    document.getElementById(
-        "overlay"
-    );
-
-
-    if(panel){
-
-        panel.classList.remove(
-            "open"
-        );
-    }
-
-
-    if(overlay){
-
-        overlay.classList.remove(
-            "show"
-        );
-    }
+    document
+    .getElementById("overlay")
+    .classList.remove("show");
 }
 
 
-/* =========================================
-   SEND ORDER
-========================================= */
+/* WhatsApp */
 
 function sendOrder(){
 
-    if(
-        cart.length === 0
-    ){
+    if(!cart.length){
 
-        alert(
-            "السلة فارغة"
-        );
+        alert("السلة فارغة");
 
         return;
     }
 
-
-    const getValue =
-    id => {
-
-        const element =
-        document.getElementById(
-            id
-        );
-
-        return element
-        ?
-        element.value.trim()
-        :
-        "";
-
-    };
-
-
     const name =
-    getValue(
-        "customerName"
-    );
-
+    document.getElementById(
+    "customerName"
+    ).value.trim();
 
     const phone =
-    getValue(
-        "customerPhone"
-    );
-
+    document.getElementById(
+    "customerPhone"
+    ).value.trim();
 
     const wilaya =
-    getValue(
-        "wilaya"
-    );
-
+    document.getElementById(
+    "wilaya"
+    ).value.trim();
 
     const city =
-    getValue(
-        "city"
-    );
-
+    document.getElementById(
+    "city"
+    ).value.trim();
 
     const address =
-    getValue(
-        "address"
-    );
-
+    document.getElementById(
+    "address"
+    ).value.trim();
 
     const note =
-    getValue(
-        "note"
-    );
-
-
-    const deliveryElement =
     document.getElementById(
-        "delivery"
-    );
-
-
-    const delivery =
-    deliveryElement
-    ?
-    deliveryElement.value
-    :
-    "";
-
+    "note"
+    ).value.trim();
 
     if(!name){
 
-        alert(
-            "اكتب اسم الزبون"
-        );
-
+        alert("اكتب اسم الزبون");
         return;
     }
-
 
     if(!phone){
 
-        alert(
-            "اكتب رقم الهاتف"
-        );
-
+        alert("اكتب رقم الهاتف");
         return;
     }
-
 
     if(!wilaya){
 
-        alert(
-            "اختر الولاية"
-        );
-
+        alert("اختر الولاية");
         return;
     }
-
 
     if(!city){
 
-        alert(
-            "اختر المدينة / البلدية"
-        );
-
+        alert("اكتب المدينة");
         return;
     }
-
 
     if(!address){
 
-        alert(
-            "اكتب العنوان"
-        );
-
+        alert("اكتب العنوان");
         return;
     }
 
+    let total = 0;
 
-    if(!delivery){
+    let message =
+    "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
 
-        alert(
-            "اختر طريقة التوصيل"
-        );
+    message +=
+    "👤 الاسم: "+name+"\n";
 
-        
+    message +=
+    "📞 الهاتف: "+phone+"\n";
+
+    message +=
+    "📍 الولاية: "+wilaya+"\n";
+
+    message +=
+    "🏙️ المدينة: "+city+"\n";
+
+    message +=
+    "🏠 العنوان: "+address+"\n";
+
+    if(note){
+
+        message +=
+        "📝 ملاحظة: "+note+"\n";
+    }
+
+    message +=
+    "\n🛍️ المنتجات:\n";
+
+    cart.forEach(item=>{
+
+        const subtotal =
+        item.price * item.quantity;
+
+        total += subtotal;
+
+        message +=
+        "• "+item.name+
+        " × "+item.quantity;
+
+        if(item.size){
+
+            message +=
+            " | المقاس: "+item.size;
+        }
+
+        message +=
+        " = "+subtotal+" دج\n";
+    });
+
+    message +=
+    "\n💰 المجموع: "+total+" دج";
+
+    const url =
+    "https://wa.me/213675996957?text="+
+    encodeURIComponent(message);
+
+    window.open(url,"_blank");
+}
+
+
+/* تشغيل */
+
+loadProducts();
+
+updateCart();
