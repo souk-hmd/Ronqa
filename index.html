@@ -25,7 +25,6 @@
     header h1 {
         font-size: 45px;
         color: #d4af37;
-        letter-spacing: 2px;
     }
 
     header p {
@@ -71,17 +70,8 @@
     .product-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         display: block;
-    }
-
-    .no-image {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 55px;
     }
 
     .product h3 {
@@ -144,7 +134,6 @@
         padding: 30px 20px;
         border-radius: 15px;
         text-align: center;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     }
 
     .payment-method {
@@ -153,10 +142,6 @@
         max-width: 500px;
         border-radius: 10px;
         background: #f3f3f3;
-    }
-
-    .payment-method h3 {
-        margin-bottom: 8px;
     }
 
     .demo {
@@ -208,7 +193,7 @@
     }
 
     .error {
-        color: #c00;
+        color: red;
     }
 </style>
 
@@ -321,20 +306,21 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
 .then(response => {
 
     if (!response.ok) {
-        throw new Error("HTTP Error: " + response.status);
+        throw new Error("HTTP " + response.status);
     }
 
     return response.json();
+
 })
 .then(products => {
 
-    console.log("Products:", products);
-
     productsContainer.innerHTML = "";
 
-    if (!products || products.length === 0) {
+    if (!products.length) {
+
         productsContainer.innerHTML =
-            '<div class="loading">لا توجد منتجات.</div>';
+            "<div class='loading'>لا توجد منتجات.</div>";
+
         return;
     }
 
@@ -343,32 +329,41 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
         const name = product.name || "منتج";
         const description = product.description || "";
         const price = product.price || 0;
-        const image = product.image || "";
 
-        const whatsappMessage =
-            `السلام عليكم، أريد طلب ${name} بسعر ${price} دج`;
+        /*
+         الصورة تأتي مباشرة من عمود image في Supabase
+        */
+        const image = product.image;
 
-        let imageHTML = "";
+        let imageHTML;
 
-        if (image && image.startsWith("http")) {
+        if (image && image.trim() !== "") {
 
             imageHTML = `
                 <img
                     src="${image}"
                     alt="${name}"
-                    loading="lazy"
-                    onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>🛍️</div>';"
+                    onerror="this.style.display='none';"
                 >
             `;
 
         } else {
 
             imageHTML = `
-                <div class="no-image">
+                <div style="
+                    width:100%;
+                    height:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:55px;">
                     🛍️
                 </div>
             `;
         }
+
+        const message =
+            `السلام عليكم، أريد طلب ${name} بسعر ${price} دج`;
 
         productsContainer.innerHTML += `
 
@@ -388,7 +383,7 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
 
                 <a
                     class="order-btn"
-                    href="https://wa.me/213675996957?text=${encodeURIComponent(whatsappMessage)}"
+                    href="https://wa.me/213675996957?text=${encodeURIComponent(message)}"
                     target="_blank">
                     اطلب الآن
                 </a>
@@ -396,16 +391,17 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
             </div>
 
         `;
+
     });
 
 })
 .catch(error => {
 
-    console.error("Supabase Error:", error);
+    console.error(error);
 
     productsContainer.innerHTML = `
         <div class="error">
-            حدث خطأ في تحميل المنتجات.
+            حدث خطأ في تحميل المنتجات
             <br>
             ${error.message}
         </div>
@@ -414,4 +410,4 @@ fetch(`${SUPABASE_URL}/rest/v1/Products?select=*`, {
 });
 
 </script></body>
-</html>
+    </html>
