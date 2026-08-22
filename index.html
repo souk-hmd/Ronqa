@@ -10,92 +10,104 @@ content="width=device-width, initial-scale=1.0">
 
 <title>RONQA</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
+
 <body>
 
-<header>
 
-<div class="header">
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
 
 <div class="logo">
 RONQA
 </div>
 
-<button
-class="cart-button"
+<div class="cart-button"
 onclick="openCart()">
 
 🛒 السلة
-(<span id="cartCount">0</span>)
 
-</button>
+<span id="cartCount">
+0
+</span>
 
 </div>
 
 </header>
 
 
-<section class="hero">
+<!-- =========================
+     SEARCH
+========================= -->
 
-<h1>RONQA</h1>
+<section class="search-section">
 
-<p>
-منتجات مميزة بأسعار مناسبة
-</p>
+<input
+type="text"
+id="search"
+placeholder="🔎 ابحث عن منتج..."
+>
 
 </section>
 
 
-<div class="container">
+<!-- =========================
+     CATEGORIES
+========================= -->
 
-
-<div class="search">
-
-<input
-id="search"
-type="text"
-placeholder="🔎 ابحث عن منتج..."
->
-
-</div>
-
-
-<div class="categories">
+<section class="categories">
 
 <button
 class="category active"
 onclick="setCategory('all',this)">
+
 الكل
+
 </button>
+
 
 <button
 class="category"
 onclick="setCategory('bags',this)">
+
 👜 حقائب
+
 </button>
+
 
 <button
 class="category"
 onclick="setCategory('shoes',this)">
+
 👟 أحذية
+
 </button>
+
 
 <button
 class="category"
 onclick="setCategory('accessories',this)">
-⌚ إكسسوارات
+
+💎 إكسسوارات
+
 </button>
 
-</div>
+
+</section>
 
 
-<h2 class="title">
-🛍️ منتجاتنا
-</h2>
+<!-- =========================
+     PRODUCTS
+========================= -->
 
+<main>
 
 <div
 id="products"
@@ -104,7 +116,7 @@ class="products">
 <div style="
 grid-column:1/-1;
 text-align:center;
-padding:40px;">
+padding:50px;">
 
 جاري تحميل المنتجات...
 
@@ -112,8 +124,12 @@ padding:40px;">
 
 </div>
 
-</div>
+</main>
 
+
+<!-- =========================
+     OVERLAY
+========================= -->
 
 <div
 id="overlay"
@@ -122,186 +138,455 @@ onclick="closeCart()">
 </div>
 
 
-<div
+<!-- =========================
+     CART PANEL
+========================= -->
+
+<aside
 id="cartPanel"
 class="cart-panel">
 
 
 <div class="cart-header">
 
-<h2>🛒 السلة</h2>
+<h2>
+🛒 سلة المشتريات
+</h2>
+
 
 <button
-class="close-cart"
 onclick="closeCart()">
-×
+
+✕
+
 </button>
 
 </div>
 
 
+<!-- CART ITEMS -->
+
 <div
 id="cartList"
 class="cart-list">
+
+<div style="
+text-align:center;
+padding:30px;
+color:#777;">
+
+السلة فارغة 🛒
+
 </div>
-
-
-<div class="customer-form">
-
-<h3>
-📋 معلومات الطلب
-</h3>
-
-
-<input
-id="customerName"
-type="text"
-placeholder="👤 اسم الزبون"
->
-
-
-<input
-id="customerPhone"
-type="tel"
-placeholder="📞 رقم الهاتف"
->
-
-
-<select id="wilaya">
-
-<option value="">
-📍 اختر الولاية
-</option>
-
-<option>أدرار</option>
-<option>الشلف</option>
-<option>الأغواط</option>
-<option>أم البواقي</option>
-<option>باتنة</option>
-<option>بجاية</option>
-<option>بسكرة</option>
-<option>بشار</option>
-<option>البليدة</option>
-<option>البويرة</option>
-<option>تمنراست</option>
-<option>تبسة</option>
-<option>تلمسان</option>
-<option>تيارت</option>
-<option>تيزي وزو</option>
-<option>الجزائر</option>
-<option>الجلفة</option>
-<option>جيجل</option>
-<option>سطيف</option>
-<option>سعيدة</option>
-<option>سكيكدة</option>
-<option>سيدي بلعباس</option>
-<option>عنابة</option>
-<option>قالمة</option>
-<option>قسنطينة</option>
-<option>المدية</option>
-<option>مستغانم</option>
-<option>المسيلة</option>
-<option>معسكر</option>
-<option>ورقلة</option>
-<option>وهران</option>
-<option>البيض</option>
-<option>إليزي</option>
-<option>برج بوعريريج</option>
-<option>بومرداس</option>
-<option>الطارف</option>
-<option>تندوف</option>
-<option>تيسمسيلت</option>
-<option>الوادي</option>
-<option>خنشلة</option>
-<option>سوق أهراس</option>
-<option>تيبازة</option>
-<option>ميلة</option>
-<option>عين الدفلى</option>
-<option>النعامة</option>
-<option>عين تموشنت</option>
-<option>غرداية</option>
-<option>غليزان</option>
-<option>تيميمون</option>
-<option>برج باجي مختار</option>
-<option>أولاد جلال</option>
-<option>بني عباس</option>
-<option>عين صالح</option>
-<option>عين قزام</option>
-<option>تقرت</option>
-<option>جانت</option>
-<option>المغير</option>
-<option>المنيعة</option>
-
-</select>
-
-
-<select id="city">
-
-<option value="">
-🏙️ اختر المدينة / البلدية
-</option>
-
-</select>
-
-
-<input
-id="address"
-type="text"
-placeholder="🏠 العنوان"
->
-
-
-<textarea
-id="note"
-placeholder="📝 ملاحظة اختيارية">
-</textarea>
 
 </div>
 
 
-<div class="cart-bottom">
+<!-- =========================
+     TOTAL
+========================= -->
 
 <div
 id="total"
 class="total">
 
-المجموع: 0 دج
+
+<div style="
+margin-bottom:10px;">
+
+🛍️ مجموع المنتجات:
+
+<strong id="productsTotal">
+
+0 دج
+
+</strong>
 
 </div>
 
 
+<div style="
+margin-bottom:10px;">
+
+🚚 التوصيل:
+
+<strong id="deliveryPrice">
+
+اختر الولاية
+
+</strong>
+
+</div>
+
+
+<div style="
+font-size:22px;
+margin-top:12px;">
+
+💰 المجموع النهائي:
+
+<strong id="finalTotal">
+
+0 دج
+
+</strong>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     CUSTOMER FORM
+========================= -->
+
+<div class="order-form">
+
+
+<h3>
+📦 معلومات التوصيل
+</h3>
+
+
+<!-- NAME -->
+
+<input
+type="text"
+id="customerName"
+placeholder="👤 الاسم واللقب"
+>
+
+
+<!-- PHONE -->
+
+<input
+type="tel"
+id="customerPhone"
+placeholder="📞 رقم الهاتف"
+>
+
+
+<!-- WILAYA -->
+
+<select id="wilaya">
+
+<option value="">
+
+📍 اختر الولاية
+
+</option>
+
+
+<option value="أدرار">
+أدرار
+</option>
+
+<option value="الشلف">
+الشلف
+</option>
+
+<option value="الأغواط">
+الأغواط
+</option>
+
+<option value="أم البواقي">
+أم البواقي
+</option>
+
+<option value="باتنة">
+باتنة
+</option>
+
+<option value="بجاية">
+بجاية
+</option>
+
+<option value="بسكرة">
+بسكرة
+</option>
+
+<option value="بشار">
+بشار
+</option>
+
+<option value="البليدة">
+البليدة
+</option>
+
+<option value="البويرة">
+البويرة
+</option>
+
+<option value="تمنراست">
+تمنراست
+</option>
+
+<option value="تبسة">
+تبسة
+</option>
+
+<option value="تلمسان">
+تلمسان
+</option>
+
+<option value="تيارت">
+تيارت
+</option>
+
+<option value="تيزي وزو">
+تيزي وزو
+</option>
+
+<option value="الجزائر">
+الجزائر
+</option>
+
+<option value="الجلفة">
+الجلفة
+</option>
+
+<option value="جيجل">
+جيجل
+</option>
+
+<option value="سطيف">
+سطيف
+</option>
+
+<option value="سعيدة">
+سعيدة
+</option>
+
+<option value="سكيكدة">
+سكيكدة
+</option>
+
+<option value="سيدي بلعباس">
+سيدي بلعباس
+</option>
+
+<option value="عنابة">
+عنابة
+</option>
+
+<option value="قالمة">
+قالمة
+</option>
+
+<option value="قسنطينة">
+قسنطينة
+</option>
+
+<option value="المدية">
+المدية
+</option>
+
+<option value="مستغانم">
+مستغانم
+</option>
+
+<option value="المسيلة">
+المسيلة
+</option>
+
+<option value="معسكر">
+معسكر
+</option>
+
+<option value="ورقلة">
+ورقلة
+</option>
+
+<option value="وهران">
+وهران
+</option>
+
+<option value="البيض">
+البيض
+</option>
+
+<option value="إليزي">
+إليزي
+</option>
+
+<option value="برج بوعريريج">
+برج بوعريريج
+</option>
+
+<option value="بومرداس">
+بومرداس
+</option>
+
+<option value="الطارف">
+الطارف
+</option>
+
+<option value="تندوف">
+تندوف
+</option>
+
+<option value="تيسمسيلت">
+تيسمسيلت
+</option>
+
+<option value="الوادي">
+الوادي
+</option>
+
+<option value="خنشلة">
+خنشلة
+</option>
+
+<option value="سوق أهراس">
+سوق أهراس
+</option>
+
+<option value="تيبازة">
+تيبازة
+</option>
+
+<option value="ميلة">
+ميلة
+</option>
+
+<option value="عين الدفلى">
+عين الدفلى
+</option>
+
+<option value="النعامة">
+النعامة
+</option>
+
+<option value="عين تموشنت">
+عين تموشنت
+</option>
+
+<option value="غرداية">
+غرداية
+</option>
+
+<option value="غليزان">
+غليزان
+</option>
+
+<option value="تيميمون">
+تيميمون
+</option>
+
+<option value="برج باجي مختار">
+برج باجي مختار
+</option>
+
+<option value="أولاد جلال">
+أولاد جلال
+</option>
+
+<option value="بني عباس">
+بني عباس
+</option>
+
+<option value="إن صالح">
+إن صالح
+</option>
+
+<option value="إن قزام">
+إن قزام
+</option>
+
+<option value="تقرت">
+تقرت
+</option>
+
+<option value="جانت">
+جانت
+</option>
+
+<option value="المغير">
+المغير
+</option>
+
+<option value="المنيعة">
+المنيعة
+</option>
+
+
+</select>
+
+
+<!-- CITY -->
+
+<select id="city">
+
+<option value="">
+
+🏙️ اختر المدينة / البلدية
+
+</option>
+
+</select>
+
+
+<!-- ADDRESS -->
+
+<input
+type="text"
+id="address"
+placeholder="🏠 العنوان بالتفصيل"
+>
+
+
+<!-- NOTE -->
+
+<textarea
+id="note"
+placeholder="📝 ملاحظة (اختياري)"
+rows="3">
+</textarea>
+
+
+<!-- SEND -->
+
 <button
-class="whatsapp"
+class="send-order"
 onclick="sendOrder()">
 
-💬 إرسال الطلب عبر WhatsApp
+📲 تأكيد الطلب عبر WhatsApp
 
 </button>
 
+
+<!-- CLEAR -->
 
 <button
-class="clear"
+class="clear-cart"
 onclick="clearCart()">
 
-🗑️ تفريغ السلة
+🗑️ إفراغ السلة
 
 </button>
 
-</div>
 
 </div>
 
 
-<footer>
+</aside>
 
-© 2026 RONQA
 
-</footer>
-
+<!-- =========================
+     DATA
+========================= -->
 
 <script src="data.js"></script>
+
+
+<!-- =========================
+     APP
+========================= -->
+
 <script src="app.js"></script>
+
 
 </body>
 
-    </html>
+</html>
