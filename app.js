@@ -61,6 +61,51 @@ return String(text || "")
 
 
 /* =========================
+   DELIVERY
+========================= */
+
+function getDeliveryPrice(){
+
+const wilaya =
+document.getElementById("wilaya")?.value.trim() || "";
+
+const city =
+document.getElementById("city")?.value.trim() || "";
+
+
+/* حاسي مسعود مجانا */
+
+if(city === "حاسي مسعود"){
+
+return 0;
+
+}
+
+
+/* ورقلة */
+
+if(wilaya === "ورقلة"){
+
+return 400;
+
+}
+
+
+/* باقي الولايات */
+
+if(wilaya){
+
+return 700;
+
+}
+
+
+return 0;
+
+}
+
+
+/* =========================
    WILAYA → CITY
 ========================= */
 
@@ -88,22 +133,23 @@ citySelect.innerHTML = `
 
 `;
 
-
 if(
 typeof ALGERIA_DATA === "undefined"
 ){
+updateCart();
 return;
 }
-
 
 const cities =
 ALGERIA_DATA[wilaya];
 
-
 if(!cities){
-return;
-}
 
+updateCart();
+
+return;
+
+}
 
 cities.forEach(city=>{
 
@@ -114,11 +160,25 @@ option.value = city;
 
 option.textContent = city;
 
-citySelect.appendChild(
-option
-);
+citySelect.appendChild(option);
 
 });
+
+updateCart();
+
+}
+);
+
+}
+
+
+if(citySelect){
+
+citySelect.addEventListener(
+"change",
+function(){
+
+updateCart();
 
 }
 );
@@ -148,16 +208,13 @@ method:"GET",
 
 headers:{
 "apikey":SUPABASE_KEY,
-
 "Authorization":
-"Bearer " +
-SUPABASE_KEY
+"Bearer " + SUPABASE_KEY
 }
 
 }
 
 );
-
 
 if(!response.ok){
 
@@ -173,16 +230,13 @@ errorText
 
 }
 
-
 products =
 await response.json();
-
 
 console.log(
 "Products loaded:",
 products
 );
-
 
 showProducts(products);
 
@@ -194,7 +248,6 @@ console.error(
 "Load products error:",
 error
 );
-
 
 box.innerHTML = `
 
@@ -213,9 +266,7 @@ display:block;
 word-break:break-word;
 color:#c00;">
 
-${escapeHTML(
-error.message
-)}
+${escapeHTML(error.message)}
 
 </small>
 
@@ -235,12 +286,9 @@ error.message
 function showProducts(list){
 
 const box =
-document.getElementById(
-"products"
-);
+document.getElementById("products");
 
 box.innerHTML = "";
-
 
 if(
 !list ||
@@ -263,7 +311,6 @@ padding:40px;">
 return;
 
 }
-
 
 list.forEach(product=>{
 
@@ -292,13 +339,9 @@ product.image_url || ""
 ).trim();
 
 const category =
-getCategory(
-product.category
-);
-
+getCategory(product.category);
 
 let imageHTML = "";
-
 
 if(image){
 
@@ -338,17 +381,13 @@ imageHTML = `
 
 let sizeHTML = "";
 
-
-if(
-category === "shoes"
-){
+if(category === "shoes"){
 
 sizeHTML = `
 
 <div class="size-box">
 
-<select
-id="size-${id}">
+<select id="size-${id}">
 
 <option value="">
 اختر المقاس
@@ -384,35 +423,20 @@ ${imageHTML}
 
 </div>
 
-
 <h3>
-
-${escapeHTML(
-name
-)}
-
+${escapeHTML(name)}
 </h3>
 
-
 <p class="description">
-
-${escapeHTML(
-description
-)}
-
+${escapeHTML(description)}
 </p>
-
 
 <div class="price">
 
-${price.toLocaleString(
-"fr-DZ"
-)}
-
+${price.toLocaleString("fr-DZ")}
 دج
 
 </div>
-
 
 <div class="stock">
 
@@ -421,9 +445,7 @@ ${stock}
 
 </div>
 
-
 ${sizeHTML}
-
 
 <button
 class="add"
@@ -438,7 +460,6 @@ stock <= 0
 
 </button>
 
-
 </div>
 
 `;
@@ -449,7 +470,7 @@ stock <= 0
 
 
 /* =========================
-   CATEGORY FILTER
+   CATEGORY
 ========================= */
 
 function setCategory(
@@ -460,24 +481,15 @@ button
 selectedCategory =
 category;
 
-
 document
-.querySelectorAll(
-".category"
-)
+.querySelectorAll(".category")
 .forEach(btn=>{
 
-btn.classList.remove(
-"active"
-);
+btn.classList.remove("active");
 
 });
 
-
-button.classList.add(
-"active"
-);
-
+button.classList.add("active");
 
 filterProducts();
 
@@ -497,15 +509,11 @@ document
 .trim()
 .toLowerCase();
 
-
 const result =
-products.filter(
-product=>{
+products.filter(product=>{
 
 const category =
-getCategory(
-product.category
-);
+getCategory(product.category);
 
 const name =
 String(
@@ -516,7 +524,6 @@ const description =
 String(
 product.description || ""
 ).toLowerCase();
-
 
 return (
 
@@ -534,9 +541,7 @@ description.includes(search)
 
 );
 
-}
-);
-
+});
 
 showProducts(result);
 
@@ -547,12 +552,17 @@ showProducts(result);
    SEARCH
 ========================= */
 
-document
-.getElementById("search")
-.addEventListener(
+const searchInput =
+document.getElementById("search");
+
+if(searchInput){
+
+searchInput.addEventListener(
 "input",
 filterProducts
 );
+
+}
 
 
 /* =========================
@@ -564,34 +574,24 @@ function addToCart(id){
 const product =
 products.find(
 p =>
-Number(p.id) ===
-Number(id)
+Number(p.id) === Number(id)
 );
-
 
 if(!product){
 return;
 }
 
-
 const category =
-getCategory(
-product.category
-);
-
+getCategory(product.category);
 
 let size = "";
 
-
-if(
-category === "shoes"
-){
+if(category === "shoes"){
 
 const select =
 document.getElementById(
 "size-" + id
 );
-
 
 if(
 !select ||
@@ -606,7 +606,6 @@ return;
 
 }
 
-
 size =
 select.value;
 
@@ -614,15 +613,12 @@ select.value;
 
 
 const existing =
-cart.find(
-item =>
+cart.find(item=>
 
-Number(item.id) ===
-Number(id)
-
+Number(item.id) === Number(id)
 &&
-
 item.size === size
+
 );
 
 
@@ -641,7 +637,6 @@ return;
 
 }
 
-
 existing.quantity++;
 
 }else{
@@ -651,16 +646,13 @@ cart.push({
 id:id,
 
 name:
-product.name ||
-"منتج",
+product.name || "منتج",
 
 price:
-Number(product.price) ||
-0,
+Number(product.price) || 0,
 
 stock:
-Number(product.stock) ||
-0,
+Number(product.stock) || 0,
 
 size:size,
 
@@ -669,7 +661,6 @@ quantity:1
 });
 
 }
-
 
 updateCart();
 
@@ -685,30 +676,21 @@ openCart();
 function updateCart(){
 
 const list =
-document.getElementById(
-"cartList"
-);
+document.getElementById("cartList");
 
 const count =
-document.getElementById(
-"cartCount"
-);
+document.getElementById("cartCount");
 
 const totalBox =
-document.getElementById(
-"total"
-);
-
+document.getElementById("total");
 
 if(!list){
 return;
 }
 
-
 list.innerHTML = "";
 
-
-let total = 0;
+let productsTotal = 0;
 
 let itemCount = 0;
 
@@ -720,8 +702,7 @@ const subtotal =
 item.price *
 item.quantity;
 
-
-total += subtotal;
+productsTotal += subtotal;
 
 itemCount +=
 item.quantity;
@@ -733,12 +714,9 @@ list.innerHTML += `
 
 <div class="cart-item-name">
 
-${escapeHTML(
-item.name
-)}
+${escapeHTML(item.name)}
 
 </div>
-
 
 ${
 item.size
@@ -746,40 +724,28 @@ item.size
 `
 <div>
 📏 المقاس:
-${escapeHTML(
-item.size
-)}
+${escapeHTML(item.size)}
 </div>
 `
 :
 ""
 }
 
-
 <div class="cart-item-price">
 
-${item.price.toLocaleString(
-"fr-DZ"
-)}
-
+${item.price.toLocaleString("fr-DZ")}
 دج
 
 </div>
 
-
 <div class="quantity">
 
 <button
-onclick="
-changeQuantity(
-${index},
--1
-)">
+onclick="changeQuantity(${index},-1)">
 
 −
 
 </button>
-
 
 <span>
 
@@ -787,25 +753,16 @@ ${item.quantity}
 
 </span>
 
-
 <button
-onclick="
-changeQuantity(
-${index},
-1
-)">
+onclick="changeQuantity(${index},1)">
 
 +
 
 </button>
 
-
 <button
 class="remove"
-onclick="
-removeItem(
-${index}
-)">
+onclick="removeItem(${index})">
 
 🗑️
 
@@ -817,13 +774,10 @@ ${index}
 
 `;
 
-}
-);
+});
 
 
-if(
-cart.length === 0
-){
+if(cart.length === 0){
 
 list.innerHTML = `
 
@@ -841,16 +795,64 @@ color:#777;">
 }
 
 
+const delivery =
+getDeliveryPrice();
+
+const finalTotal =
+productsTotal + delivery;
+
+
 count.innerText =
 itemCount;
 
 
-totalBox.innerText =
-"المجموع: " +
-total.toLocaleString(
-"fr-DZ"
-) +
-" دج";
+totalBox.innerHTML = `
+
+<div style="
+font-size:16px;
+margin-bottom:7px;">
+
+🛍️ مجموع المنتجات:
+<strong>
+${productsTotal.toLocaleString("fr-DZ")} دج
+</strong>
+
+</div>
+
+<div style="
+font-size:16px;
+margin-bottom:7px;">
+
+🚚 التوصيل:
+<strong>
+
+${
+delivery === 0
+?
+"مجاني"
+:
+delivery.toLocaleString("fr-DZ") +
+" دج"
+}
+
+</strong>
+
+</div>
+
+<div style="
+font-size:22px;
+color:#b08b00;">
+
+💰 المجموع النهائي:
+<strong>
+
+${finalTotal.toLocaleString("fr-DZ")} دج
+
+</strong>
+
+</div>
+
+`;
 
 }
 
@@ -867,20 +869,14 @@ change
 const item =
 cart[index];
 
-
 if(!item){
 return;
 }
 
-
 const newQuantity =
-item.quantity +
-change;
+item.quantity + change;
 
-
-if(
-newQuantity <= 0
-){
+if(newQuantity <= 0){
 
 removeItem(index);
 
@@ -888,10 +884,8 @@ return;
 
 }
 
-
 if(
-newQuantity >
-item.stock
+newQuantity > item.stock
 ){
 
 alert(
@@ -902,10 +896,8 @@ return;
 
 }
 
-
 item.quantity =
 newQuantity;
-
 
 updateCart();
 
@@ -929,7 +921,7 @@ updateCart();
 
 
 /* =========================
-   CLEAR CART
+   CLEAR
 ========================= */
 
 function clearCart(){
@@ -948,21 +940,12 @@ updateCart();
 function openCart(){
 
 document
-.getElementById(
-"cartPanel"
-)
-.classList.add(
-"open"
-);
-
+.getElementById("cartPanel")
+.classList.add("open");
 
 document
-.getElementById(
-"overlay"
-)
-.classList.add(
-"show"
-);
+.getElementById("overlay")
+.classList.add("show");
 
 }
 
@@ -974,21 +957,12 @@ document
 function closeCart(){
 
 document
-.getElementById(
-"cartPanel"
-)
-.classList.remove(
-"open"
-);
-
+.getElementById("cartPanel")
+.classList.remove("open");
 
 document
-.getElementById(
-"overlay"
-)
-.classList.remove(
-"show"
-);
+.getElementById("overlay")
+.classList.remove("show");
 
 }
 
@@ -999,9 +973,7 @@ document
 
 function sendOrder(){
 
-if(
-cart.length === 0
-){
+if(cart.length === 0){
 
 alert(
 "السلة فارغة"
@@ -1014,114 +986,83 @@ return;
 
 const name =
 document
-.getElementById(
-"customerName"
-)
+.getElementById("customerName")
 .value
 .trim();
-
 
 const phone =
 document
-.getElementById(
-"customerPhone"
-)
+.getElementById("customerPhone")
 .value
 .trim();
-
 
 const wilaya =
 document
-.getElementById(
-"wilaya"
-)
+.getElementById("wilaya")
 .value
 .trim();
-
 
 const city =
 document
-.getElementById(
-"city"
-)
+.getElementById("city")
 .value
 .trim();
-
 
 const address =
 document
-.getElementById(
-"address"
-)
+.getElementById("address")
 .value
 .trim();
 
-
 const note =
 document
-.getElementById(
-"note"
-)
+.getElementById("note")
 .value
 .trim();
 
 
 if(!name){
 
-alert(
-"اكتب اسم الزبون"
-);
+alert("اكتب اسم الزبون");
 
 return;
 
 }
-
 
 if(!phone){
 
-alert(
-"اكتب رقم الهاتف"
-);
+alert("اكتب رقم الهاتف");
 
 return;
 
 }
-
 
 if(!wilaya){
 
-alert(
-"اختر الولاية"
-);
+alert("اختر الولاية");
 
 return;
 
 }
-
 
 if(!city){
 
-alert(
-"اختر المدينة / البلدية"
-);
+alert("اختر المدينة / البلدية");
 
 return;
 
 }
-
 
 if(!address){
 
-alert(
-"اكتب العنوان"
-);
+alert("اكتب العنوان");
 
 return;
 
 }
 
 
-let total = 0;
+let productsTotal = 0;
 
 
 let message =
@@ -1133,24 +1074,20 @@ message +=
 name +
 "\n";
 
-
 message +=
 "📞 الهاتف: " +
 phone +
 "\n";
-
 
 message +=
 "📍 الولاية: " +
 wilaya +
 "\n";
 
-
 message +=
 "🏙️ المدينة / البلدية: " +
 city +
 "\n";
-
 
 message +=
 "🏠 العنوان: " +
@@ -1172,15 +1109,13 @@ message +=
 "\n🛍️ المنتجات:\n";
 
 
-cart.forEach(
-item=>{
+cart.forEach(item=>{
 
 const subtotal =
 item.price *
 item.quantity;
 
-
-total += subtotal;
+productsTotal += subtotal;
 
 
 message +=
@@ -1201,16 +1136,40 @@ item.size;
 
 message +=
 " = " +
-subtotal +
+subtotal.toLocaleString("fr-DZ") +
 " دج\n";
 
-}
+});
+
+
+const delivery =
+getDeliveryPrice();
+
+const finalTotal =
+productsTotal + delivery;
+
+
+message +=
+"\n🛍️ مجموع المنتجات: " +
+productsTotal.toLocaleString("fr-DZ") +
+" دج";
+
+
+message +=
+"\n🚚 التوصيل: " +
+(
+delivery === 0
+?
+"مجاني"
+:
+delivery.toLocaleString("fr-DZ") +
+" دج"
 );
 
 
 message +=
-"\n💰 المجموع: " +
-total +
+"\n💰 المجموع النهائي: " +
+finalTotal.toLocaleString("fr-DZ") +
 " دج";
 
 
@@ -1222,9 +1181,7 @@ const url =
 "https://wa.me/" +
 STORE_WHATSAPP +
 "?text=" +
-encodeURIComponent(
-message
-);
+encodeURIComponent(message);
 
 
 window.open(
