@@ -16,7 +16,6 @@ content="width=device-width, initial-scale=1.0">
 
 <body>
 
-
 <header>
 
 <div class="header">
@@ -41,9 +40,7 @@ onclick="openCart()">
 
 <section class="hero">
 
-<h1>
-RONQA
-</h1>
+<h1>RONQA</h1>
 
 <p>
 منتجات مميزة بأسعار مناسبة
@@ -68,50 +65,35 @@ placeholder="🔎 ابحث عن منتج..."
 
 <div class="categories">
 
-
 <button
 class="category active"
 onclick="setCategory('all',this)">
-
 الكل
-
 </button>
-
 
 <button
 class="category"
 onclick="setCategory('bags',this)">
-
 👜 حقائب
-
 </button>
-
 
 <button
 class="category"
 onclick="setCategory('shoes',this)">
-
 👟 أحذية
-
 </button>
-
 
 <button
 class="category"
 onclick="setCategory('accessories',this)">
-
 ⌚ إكسسوارات
-
 </button>
-
 
 </div>
 
 
 <h2 class="title">
-
 🛍️ منتجاتنا
-
 </h2>
 
 
@@ -130,7 +112,6 @@ padding:40px;">
 
 </div>
 
-
 </div>
 
 
@@ -148,14 +129,11 @@ class="cart-panel">
 
 <div class="cart-header">
 
-<h2>
-🛒 السلة
-</h2>
+<h2>🛒 السلة</h2>
 
 <button
 class="close-cart"
 onclick="closeCart()">
-
 ×
 </button>
 
@@ -257,11 +235,13 @@ placeholder="📞 رقم الهاتف"
 </select>
 
 
-<input
-id="city"
-type="text"
-placeholder="🏙️ المدينة / البلدية"
->
+<select id="city">
+
+<option value="">
+🏙️ اختر المدينة / البلدية
+</option>
+
+</select>
 
 
 <input
@@ -275,7 +255,6 @@ placeholder="🏠 العنوان"
 id="note"
 placeholder="📝 ملاحظة اختيارية">
 </textarea>
-
 
 </div>
 
@@ -310,7 +289,6 @@ onclick="clearCart()">
 
 </div>
 
-
 </div>
 
 
@@ -321,6 +299,7 @@ onclick="clearCart()">
 </footer>
 
 
+<script src="data.js"></script>
 <script src="app.js"></script>
 
 </body>
