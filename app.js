@@ -61,16 +61,26 @@ return String(text || "")
 
 
 /* =========================
-   DELIVERY
+   DELIVERY PRICE
 ========================= */
 
 function getDeliveryPrice(){
 
+const wilayaElement =
+document.getElementById("wilaya");
+
+const cityElement =
+document.getElementById("city");
+
 const wilaya =
-document.getElementById("wilaya")?.value.trim() || "";
+wilayaElement
+? wilayaElement.value.trim()
+: "";
 
 const city =
-document.getElementById("city")?.value.trim() || "";
+cityElement
+? cityElement.value.trim()
+: "";
 
 
 /* حاسي مسعود مجانا */
@@ -82,7 +92,7 @@ return 0;
 }
 
 
-/* ورقلة */
+/* ورقلة = 400 دج */
 
 if(wilaya === "ورقلة"){
 
@@ -91,16 +101,71 @@ return 400;
 }
 
 
-/* باقي الولايات */
+/* باقي الولايات = 700 دج */
 
-if(wilaya){
+if(wilaya !== ""){
 
 return 700;
 
 }
 
 
+/* لم يختر الولاية بعد */
+
 return 0;
+
+}
+
+
+/* =========================
+   UPDATE DELIVERY DISPLAY
+========================= */
+
+function updateDelivery(){
+
+const delivery =
+getDeliveryPrice();
+
+const deliveryBox =
+document.getElementById(
+"deliveryPrice"
+);
+
+if(!deliveryBox){
+return;
+}
+
+
+const wilaya =
+document.getElementById(
+"wilaya"
+)?.value.trim() || "";
+
+
+if(!wilaya){
+
+deliveryBox.innerText =
+"اختر الولاية";
+
+return;
+
+}
+
+
+if(delivery === 0){
+
+deliveryBox.innerText =
+"مجاني";
+
+}else{
+
+deliveryBox.innerText =
+delivery.toLocaleString(
+"fr-DZ"
+) +
+" دج";
+
+}
 
 }
 
@@ -133,37 +198,52 @@ citySelect.innerHTML = `
 
 `;
 
+
 if(
 typeof ALGERIA_DATA === "undefined"
 ){
+
+updateDelivery();
 updateCart();
+
 return;
+
 }
+
 
 const cities =
 ALGERIA_DATA[wilaya];
 
+
 if(!cities){
 
+updateDelivery();
 updateCart();
 
 return;
 
 }
+
 
 cities.forEach(city=>{
 
 const option =
 document.createElement("option");
 
-option.value = city;
+option.value =
+city;
 
-option.textContent = city;
+option.textContent =
+city;
 
-citySelect.appendChild(option);
+citySelect.appendChild(
+option
+);
 
 });
 
+
+updateDelivery();
 updateCart();
 
 }
@@ -172,11 +252,17 @@ updateCart();
 }
 
 
+/* =========================
+   CITY CHANGE
+========================= */
+
 if(citySelect){
 
 citySelect.addEventListener(
 "change",
 function(){
+
+updateDelivery();
 
 updateCart();
 
@@ -193,7 +279,9 @@ updateCart();
 async function loadProducts(){
 
 const box =
-document.getElementById("products");
+document.getElementById(
+"products"
+);
 
 try{
 
@@ -207,14 +295,20 @@ SUPABASE_URL +
 method:"GET",
 
 headers:{
-"apikey":SUPABASE_KEY,
+
+"apikey":
+SUPABASE_KEY,
+
 "Authorization":
-"Bearer " + SUPABASE_KEY
+"Bearer " +
+SUPABASE_KEY
+
 }
 
 }
 
 );
+
 
 if(!response.ok){
 
@@ -230,13 +324,16 @@ errorText
 
 }
 
+
 products =
 await response.json();
+
 
 console.log(
 "Products loaded:",
 products
 );
+
 
 showProducts(products);
 
@@ -248,6 +345,7 @@ console.error(
 "Load products error:",
 error
 );
+
 
 box.innerHTML = `
 
@@ -266,7 +364,9 @@ display:block;
 word-break:break-word;
 color:#c00;">
 
-${escapeHTML(error.message)}
+${escapeHTML(
+error.message
+)}
 
 </small>
 
@@ -286,9 +386,12 @@ ${escapeHTML(error.message)}
 function showProducts(list){
 
 const box =
-document.getElementById("products");
+document.getElementById(
+"products"
+);
 
 box.innerHTML = "";
+
 
 if(
 !list ||
@@ -311,6 +414,7 @@ padding:40px;">
 return;
 
 }
+
 
 list.forEach(product=>{
 
@@ -339,9 +443,13 @@ product.image_url || ""
 ).trim();
 
 const category =
-getCategory(product.category);
+getCategory(
+product.category
+);
+
 
 let imageHTML = "";
+
 
 if(image){
 
@@ -381,13 +489,17 @@ imageHTML = `
 
 let sizeHTML = "";
 
-if(category === "shoes"){
+
+if(
+category === "shoes"
+){
 
 sizeHTML = `
 
 <div class="size-box">
 
-<select id="size-${id}">
+<select
+id="size-${id}">
 
 <option value="">
 اختر المقاس
@@ -423,20 +535,31 @@ ${imageHTML}
 
 </div>
 
+
 <h3>
+
 ${escapeHTML(name)}
+
 </h3>
 
+
 <p class="description">
+
 ${escapeHTML(description)}
+
 </p>
+
 
 <div class="price">
 
-${price.toLocaleString("fr-DZ")}
+${price.toLocaleString(
+"fr-DZ"
+)}
+
 دج
 
 </div>
+
 
 <div class="stock">
 
@@ -445,7 +568,9 @@ ${stock}
 
 </div>
 
+
 ${sizeHTML}
+
 
 <button
 class="add"
@@ -460,6 +585,7 @@ stock <= 0
 
 </button>
 
+
 </div>
 
 `;
@@ -470,7 +596,7 @@ stock <= 0
 
 
 /* =========================
-   CATEGORY
+   CATEGORY FILTER
 ========================= */
 
 function setCategory(
@@ -481,15 +607,24 @@ button
 selectedCategory =
 category;
 
+
 document
-.querySelectorAll(".category")
+.querySelectorAll(
+".category"
+)
 .forEach(btn=>{
 
-btn.classList.remove("active");
+btn.classList.remove(
+"active"
+);
 
 });
 
-button.classList.add("active");
+
+button.classList.add(
+"active"
+);
+
 
 filterProducts();
 
@@ -509,11 +644,15 @@ document
 .trim()
 .toLowerCase();
 
+
 const result =
-products.filter(product=>{
+products.filter(
+product=>{
 
 const category =
-getCategory(product.category);
+getCategory(
+product.category
+);
 
 const name =
 String(
@@ -524,6 +663,7 @@ const description =
 String(
 product.description || ""
 ).toLowerCase();
+
 
 return (
 
@@ -541,7 +681,9 @@ description.includes(search)
 
 );
 
-});
+}
+);
+
 
 showProducts(result);
 
@@ -553,7 +695,9 @@ showProducts(result);
 ========================= */
 
 const searchInput =
-document.getElementById("search");
+document.getElementById(
+"search"
+);
 
 if(searchInput){
 
@@ -574,24 +718,34 @@ function addToCart(id){
 const product =
 products.find(
 p =>
-Number(p.id) === Number(id)
+Number(p.id) ===
+Number(id)
 );
+
 
 if(!product){
 return;
 }
 
+
 const category =
-getCategory(product.category);
+getCategory(
+product.category
+);
+
 
 let size = "";
 
-if(category === "shoes"){
+
+if(
+category === "shoes"
+){
 
 const select =
 document.getElementById(
 "size-" + id
 );
+
 
 if(
 !select ||
@@ -606,6 +760,7 @@ return;
 
 }
 
+
 size =
 select.value;
 
@@ -613,12 +768,15 @@ select.value;
 
 
 const existing =
-cart.find(item=>
+cart.find(
+item =>
 
-Number(item.id) === Number(id)
+Number(item.id) ===
+Number(id)
+
 &&
-item.size === size
 
+item.size === size
 );
 
 
@@ -637,6 +795,7 @@ return;
 
 }
 
+
 existing.quantity++;
 
 }else{
@@ -646,13 +805,16 @@ cart.push({
 id:id,
 
 name:
-product.name || "منتج",
+product.name ||
+"منتج",
 
 price:
-Number(product.price) || 0,
+Number(product.price) ||
+0,
 
 stock:
-Number(product.stock) || 0,
+Number(product.stock) ||
+0,
 
 size:size,
 
@@ -661,6 +823,7 @@ quantity:1
 });
 
 }
+
 
 updateCart();
 
@@ -676,19 +839,28 @@ openCart();
 function updateCart(){
 
 const list =
-document.getElementById("cartList");
+document.getElementById(
+"cartList"
+);
 
 const count =
-document.getElementById("cartCount");
+document.getElementById(
+"cartCount"
+);
 
 const totalBox =
-document.getElementById("total");
+document.getElementById(
+"total"
+);
+
 
 if(!list){
 return;
 }
 
+
 list.innerHTML = "";
+
 
 let productsTotal = 0;
 
@@ -702,7 +874,9 @@ const subtotal =
 item.price *
 item.quantity;
 
-productsTotal += subtotal;
+
+productsTotal +=
+subtotal;
 
 itemCount +=
 item.quantity;
@@ -714,9 +888,12 @@ list.innerHTML += `
 
 <div class="cart-item-name">
 
-${escapeHTML(item.name)}
+${escapeHTML(
+item.name
+)}
 
 </div>
+
 
 ${
 item.size
@@ -724,28 +901,40 @@ item.size
 `
 <div>
 📏 المقاس:
-${escapeHTML(item.size)}
+${escapeHTML(
+item.size
+)}
 </div>
 `
 :
 ""
 }
 
+
 <div class="cart-item-price">
 
-${item.price.toLocaleString("fr-DZ")}
+${item.price.toLocaleString(
+"fr-DZ"
+)}
+
 دج
 
 </div>
 
+
 <div class="quantity">
 
 <button
-onclick="changeQuantity(${index},-1)">
+onclick="
+changeQuantity(
+${index},
+-1
+)">
 
 −
 
 </button>
+
 
 <span>
 
@@ -753,16 +942,25 @@ ${item.quantity}
 
 </span>
 
+
 <button
-onclick="changeQuantity(${index},1)">
+onclick="
+changeQuantity(
+${index},
+1
+)">
 
 +
 
 </button>
 
+
 <button
 class="remove"
-onclick="removeItem(${index})">
+onclick="
+removeItem(
+${index}
+)">
 
 🗑️
 
@@ -774,10 +972,13 @@ onclick="removeItem(${index})">
 
 `;
 
-});
+}
+);
 
 
-if(cart.length === 0){
+if(
+cart.length === 0
+){
 
 list.innerHTML = `
 
@@ -799,60 +1000,104 @@ const delivery =
 getDeliveryPrice();
 
 const finalTotal =
-productsTotal + delivery;
+productsTotal +
+delivery;
 
 
 count.innerText =
 itemCount;
 
 
-totalBox.innerHTML = `
+/* مجموع المنتجات */
 
-<div style="
-font-size:16px;
-margin-bottom:7px;">
+const productsTotalBox =
+document.getElementById(
+"productsTotal"
+);
 
-🛍️ مجموع المنتجات:
-<strong>
-${productsTotal.toLocaleString("fr-DZ")} دج
-</strong>
+if(productsTotalBox){
 
-</div>
+productsTotalBox.innerText =
+productsTotal.toLocaleString(
+"fr-DZ"
+) +
+" دج";
 
-<div style="
-font-size:16px;
-margin-bottom:7px;">
-
-🚚 التوصيل:
-<strong>
-
-${
-delivery === 0
-?
-"مجاني"
-:
-delivery.toLocaleString("fr-DZ") +
-" دج"
 }
 
-</strong>
 
-</div>
+/* سعر التوصيل */
 
-<div style="
-font-size:22px;
-color:#b08b00;">
+const deliveryBox =
+document.getElementById(
+"deliveryPrice"
+);
 
-💰 المجموع النهائي:
-<strong>
+if(deliveryBox){
 
-${finalTotal.toLocaleString("fr-DZ")} دج
+const wilaya =
+document.getElementById(
+"wilaya"
+)?.value.trim() || "";
 
-</strong>
+if(!wilaya){
 
-</div>
+deliveryBox.innerText =
+"اختر الولاية";
 
-`;
+}else if(delivery === 0){
+
+deliveryBox.innerText =
+"مجاني";
+
+}else{
+
+deliveryBox.innerText =
+delivery.toLocaleString(
+"fr-DZ"
+) +
+" دج";
+
+}
+
+}
+
+
+/* المجموع النهائي */
+
+const finalTotalBox =
+document.getElementById(
+"finalTotal"
+);
+
+if(finalTotalBox){
+
+finalTotalBox.innerText =
+finalTotal.toLocaleString(
+"fr-DZ"
+) +
+" دج";
+
+}
+
+
+/* إذا كان عنصر total موجود */
+
+if(
+totalBox &&
+!document.getElementById(
+"productsTotal"
+)
+){
+
+totalBox.innerText =
+"المجموع: " +
+finalTotal.toLocaleString(
+"fr-DZ"
+) +
+" دج";
+
+}
 
 }
 
@@ -869,14 +1114,20 @@ change
 const item =
 cart[index];
 
+
 if(!item){
 return;
 }
 
-const newQuantity =
-item.quantity + change;
 
-if(newQuantity <= 0){
+const newQuantity =
+item.quantity +
+change;
+
+
+if(
+newQuantity <= 0
+){
 
 removeItem(index);
 
@@ -884,8 +1135,10 @@ return;
 
 }
 
+
 if(
-newQuantity > item.stock
+newQuantity >
+item.stock
 ){
 
 alert(
@@ -896,8 +1149,10 @@ return;
 
 }
 
+
 item.quantity =
 newQuantity;
+
 
 updateCart();
 
@@ -921,7 +1176,7 @@ updateCart();
 
 
 /* =========================
-   CLEAR
+   CLEAR CART
 ========================= */
 
 function clearCart(){
@@ -940,12 +1195,21 @@ updateCart();
 function openCart(){
 
 document
-.getElementById("cartPanel")
-.classList.add("open");
+.getElementById(
+"cartPanel"
+)
+.classList.add(
+"open"
+);
+
 
 document
-.getElementById("overlay")
-.classList.add("show");
+.getElementById(
+"overlay"
+)
+.classList.add(
+"show"
+);
 
 }
 
@@ -957,12 +1221,21 @@ document
 function closeCart(){
 
 document
-.getElementById("cartPanel")
-.classList.remove("open");
+.getElementById(
+"cartPanel"
+)
+.classList.remove(
+"open"
+);
+
 
 document
-.getElementById("overlay")
-.classList.remove("show");
+.getElementById(
+"overlay"
+)
+.classList.remove(
+"show"
+);
 
 }
 
@@ -973,7 +1246,9 @@ document
 
 function sendOrder(){
 
-if(cart.length === 0){
+if(
+cart.length === 0
+){
 
 alert(
 "السلة فارغة"
@@ -986,76 +1261,107 @@ return;
 
 const name =
 document
-.getElementById("customerName")
+.getElementById(
+"customerName"
+)
 .value
 .trim();
+
 
 const phone =
 document
-.getElementById("customerPhone")
+.getElementById(
+"customerPhone"
+)
 .value
 .trim();
+
 
 const wilaya =
 document
-.getElementById("wilaya")
+.getElementById(
+"wilaya"
+)
 .value
 .trim();
+
 
 const city =
 document
-.getElementById("city")
+.getElementById(
+"city"
+)
 .value
 .trim();
+
 
 const address =
 document
-.getElementById("address")
+.getElementById(
+"address"
+)
 .value
 .trim();
 
+
 const note =
 document
-.getElementById("note")
+.getElementById(
+"note"
+)
 .value
 .trim();
 
 
 if(!name){
 
-alert("اكتب اسم الزبون");
+alert(
+"اكتب اسم الزبون"
+);
 
 return;
 
 }
+
 
 if(!phone){
 
-alert("اكتب رقم الهاتف");
+alert(
+"اكتب رقم الهاتف"
+);
 
 return;
 
 }
+
 
 if(!wilaya){
 
-alert("اختر الولاية");
+alert(
+"اختر الولاية"
+);
 
 return;
 
 }
+
 
 if(!city){
 
-alert("اختر المدينة / البلدية");
+alert(
+"اختر المدينة / البلدية"
+);
 
 return;
 
 }
 
+
 if(!address){
 
-alert("اكتب العنوان");
+alert(
+"اكتب العنوان"
+);
 
 return;
 
@@ -1074,20 +1380,24 @@ message +=
 name +
 "\n";
 
+
 message +=
 "📞 الهاتف: " +
 phone +
 "\n";
+
 
 message +=
 "📍 الولاية: " +
 wilaya +
 "\n";
 
+
 message +=
 "🏙️ المدينة / البلدية: " +
 city +
 "\n";
+
 
 message +=
 "🏠 العنوان: " +
@@ -1109,13 +1419,16 @@ message +=
 "\n🛍️ المنتجات:\n";
 
 
-cart.forEach(item=>{
+cart.forEach(
+item=>{
 
 const subtotal =
 item.price *
 item.quantity;
 
-productsTotal += subtotal;
+
+productsTotal +=
+subtotal;
 
 
 message +=
@@ -1136,22 +1449,29 @@ item.size;
 
 message +=
 " = " +
-subtotal.toLocaleString("fr-DZ") +
+subtotal.toLocaleString(
+"fr-DZ"
+) +
 " دج\n";
 
-});
+}
+);
 
 
 const delivery =
 getDeliveryPrice();
 
+
 const finalTotal =
-productsTotal + delivery;
+productsTotal +
+delivery;
 
 
 message +=
 "\n🛍️ مجموع المنتجات: " +
-productsTotal.toLocaleString("fr-DZ") +
+productsTotal.toLocaleString(
+"fr-DZ"
+) +
 " دج";
 
 
@@ -1162,14 +1482,18 @@ delivery === 0
 ?
 "مجاني"
 :
-delivery.toLocaleString("fr-DZ") +
+delivery.toLocaleString(
+"fr-DZ"
+) +
 " دج"
 );
 
 
 message +=
 "\n💰 المجموع النهائي: " +
-finalTotal.toLocaleString("fr-DZ") +
+finalTotal.toLocaleString(
+"fr-DZ"
+) +
 " دج";
 
 
@@ -1181,7 +1505,9 @@ const url =
 "https://wa.me/" +
 STORE_WHATSAPP +
 "?text=" +
-encodeURIComponent(message);
+encodeURIComponent(
+message
+);
 
 
 window.open(
@@ -1199,3 +1525,5 @@ url,
 loadProducts();
 
 updateCart();
+
+updateDelivery();
