@@ -2,428 +2,279 @@
 <html lang="ar" dir="rtl">
 
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
 
-<meta name="theme-color" content="#111111">
+    <meta name="description"
+          content="RONQA dz STORE - متجر إلكتروني لبيع المنتجات في الجزائر">
 
-<meta name="description"
-content="Souk HMD - متجر إلكتروني لبيع المنتجات">
+    <title>RONQA dz STORE</title>
 
-<title>Souk HMD | RONQA</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
 
-<div class="logo">
-RONQA
-</div>
+    <div class="logo">
+        RONQA
+        <small>dz STORE</small>
+    </div>
 
-<div class="cart-button"
-onclick="openCart()"
-aria-label="فتح سلة المشتريات">
+    <button
+        type="button"
+        class="cart-button"
+        onclick="openCart()"
+        aria-label="فتح سلة المشتريات">
 
-🛒 السلة
+        🛒 السلة
 
-<span id="cartCount">
-0
-</span>
+        <span id="cartCount">0</span>
 
-</div>
+    </button>
 
 </header>
 
 
-<!-- =========================
-     SEARCH
-========================= -->
-
 <section class="search-section">
 
-<input
-type="search"
-id="search"
-placeholder="🔎 ابحث عن منتج..."
-autocomplete="off"
->
+    <input
+        type="search"
+        id="search"
+        placeholder="🔎 ابحث عن منتج..."
+        autocomplete="off">
 
 </section>
 
-
-<!-- =========================
-     CATEGORIES
-========================= -->
 
 <section
-class="categories"
-aria-label="تصنيفات المنتجات">
+    class="categories"
+    aria-label="تصنيفات المنتجات">
 
-<button
-type="button"
-class="category active"
-onclick="setCategory('all',this)">
+    <button
+        type="button"
+        class="category active"
+        onclick="setCategory('all', this)">
 
-الكل
+        الكل
 
-</button>
+    </button>
 
-<button
-type="button"
-class="category"
-onclick="setCategory('bags',this)">
+    <button
+        type="button"
+        class="category"
+        onclick="setCategory('bags', this)">
 
-👜 حقائب
+        👜 حقائب
 
-</button>
+    </button>
 
-<button
-type="button"
-class="category"
-onclick="setCategory('shoes',this)">
+    <button
+        type="button"
+        class="category"
+        onclick="setCategory('shoes', this)">
 
-👟 أحذية
+        👟 أحذية
 
-</button>
+    </button>
 
-<button
-type="button"
-class="category"
-onclick="setCategory('accessories',this)">
+    <button
+        type="button"
+        class="category"
+        onclick="setCategory('accessories', this)">
 
-💎 إكسسوارات
+        💎 إكسسوارات
 
-</button>
+    </button>
 
 </section>
 
-
-<!-- =========================
-     PRODUCTS
-========================= -->
 
 <main>
 
-<div
-id="products"
-class="products">
+    <div id="products" class="products">
 
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:50px;">
+        <div class="loading">
 
-⏳ جاري تحميل المنتجات...
+            ⏳ جاري تحميل المنتجات...
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </main>
 
 
-<!-- =========================
-     OVERLAY
-========================= -->
-
 <div
-id="overlay"
-class="overlay"
-onclick="closeCart()">
+    id="overlay"
+    class="overlay"
+    onclick="closeCart()">
 </div>
 
-
-<!-- =========================
-     CART PANEL
-========================= -->
 
 <aside
-id="cartPanel"
-class="cart-panel"
-aria-label="سلة المشتريات">
+    id="cartPanel"
+    class="cart-panel"
+    aria-label="سلة المشتريات">
 
+    <div class="cart-header">
 
-<!-- CART HEADER -->
+        <h2>
+            🛒 سلة المشتريات
+        </h2>
 
-<div class="cart-header">
+        <button
+            type="button"
+            onclick="closeCart()"
+            aria-label="إغلاق السلة">
 
-<h2>
-🛒 سلة المشتريات
-</h2>
+            ✕
 
-<button
-type="button"
-onclick="closeCart()"
-aria-label="إغلاق السلة">
+        </button>
 
-✕
+    </div>
 
-</button>
 
-</div>
+    <div
+        id="cartList"
+        class="cart-list">
 
+        <div class="empty-cart">
 
-<!-- CART ITEMS -->
+            السلة فارغة 🛒
 
-<div
-id="cartList"
-class="cart-list">
+        </div>
 
-<div
-style="
-text-align:center;
-padding:30px;
-color:#777;">
+    </div>
 
-السلة فارغة 🛒
 
-</div>
+    <div id="total" class="total">
 
-</div>
+        <div>
 
+            <span>
+                🛍️ مجموع المنتجات
+            </span>
 
-<!-- =========================
-     TOTAL
-========================= -->
+            <strong id="productsTotal">
+                0 دج
+            </strong>
 
-<div
-id="total"
-class="total">
+        </div>
 
 
-<div>
+        <div>
 
-<span>
-🛍️ مجموع المنتجات
-</span>
+            <span>
+                🚚 التوصيل
+            </span>
 
-<strong id="productsTotal">
-0 دج
-</strong>
+            <strong id="deliveryPrice">
+                اختر الولاية
+            </strong>
 
-</div>
+        </div>
 
 
-<div>
+        <div class="final-row">
 
-<span>
-🚚 التوصيل
-</span>
+            <span>
+                💰 المجموع النهائي
+            </span>
 
-<strong id="deliveryPrice">
-اختر الولاية
-</strong>
+            <strong id="finalTotal">
+                0 دج
+            </strong>
 
-</div>
+        </div>
 
+    </div>
 
-<div>
 
-<span>
-💰 المجموع النهائي
-</span>
+    <div class="order-form">
 
-<strong id="finalTotal">
-0 دج
-</strong>
+        <h3>
+            📦 معلومات التوصيل
+        </h3>
 
-</div>
 
+        <input
+            type="text"
+            id="customerName"
+            placeholder="👤 الاسم واللقب"
+            autocomplete="name">
 
-</div>
 
+        <input
+            type="tel"
+            id="customerPhone"
+            placeholder="📞 رقم الهاتف"
+            autocomplete="tel"
+            inputmode="tel">
 
-<!-- =========================
-     CUSTOMER FORM
-========================= -->
 
-<div class="order-form">
+        <select id="wilaya">
 
+            <option value="">
+                📍 اختر الولاية
+            </option>
 
-<h3>
-📦 معلومات التوصيل
-</h3>
-
-
-<!-- NAME -->
-
-<input
-type="text"
-id="customerName"
-placeholder="👤 الاسم واللقب"
-autocomplete="name"
->
-
-
-<!-- PHONE -->
-
-<input
-type="tel"
-id="customerPhone"
-placeholder="📞 رقم الهاتف"
-autocomplete="tel"
-inputmode="tel"
->
-
-
-<!-- WILAYA -->
-
-<select
-id="wilaya">
-
-<option value="">
-📍 اختر الولاية
-</option>
-
-<option value="أدرار">أدرار</option>
-<option value="الشلف">الشلف</option>
-<option value="الأغواط">الأغواط</option>
-<option value="أم البواقي">أم البواقي</option>
-<option value="باتنة">باتنة</option>
-<option value="بجاية">بجاية</option>
-<option value="بسكرة">بسكرة</option>
-<option value="بشار">بشار</option>
-<option value="البليدة">البليدة</option>
-<option value="البويرة">البويرة</option>
-<option value="تمنراست">تمنراست</option>
-<option value="تبسة">تبسة</option>
-<option value="تلمسان">تلمسان</option>
-<option value="تيارت">تيارت</option>
-<option value="تيزي وزو">تيزي وزو</option>
-<option value="الجزائر">الجزائر</option>
-<option value="الجلفة">الجلفة</option>
-<option value="جيجل">جيجل</option>
-<option value="سطيف">سطيف</option>
-<option value="سعيدة">سعيدة</option>
-<option value="سكيكدة">سكيكدة</option>
-<option value="سيدي بلعباس">سيدي بلعباس</option>
-<option value="عنابة">عنابة</option>
-<option value="قالمة">قالمة</option>
-<option value="قسنطينة">قسنطينة</option>
-<option value="المدية">المدية</option>
-<option value="مستغانم">مستغانم</option>
-<option value="المسيلة">المسيلة</option>
-<option value="معسكر">معسكر</option>
-<option value="ورقلة">ورقلة</option>
-<option value="وهران">وهران</option>
-<option value="البيض">البيض</option>
-<option value="إليزي">إليزي</option>
-<option value="برج بوعريريج">برج بوعريريج</option>
-<option value="بومرداس">بومرداس</option>
-<option value="الطارف">الطارف</option>
-<option value="تندوف">تندوف</option>
-<option value="تيسمسيلت">تيسمسيلت</option>
-<option value="الوادي">الوادي</option>
-<option value="خنشلة">خنشلة</option>
-<option value="سوق أهراس">سوق أهراس</option>
-<option value="تيبازة">تيبازة</option>
-<option value="ميلة">ميلة</option>
-<option value="عين الدفلى">عين الدفلى</option>
-<option value="النعامة">النعامة</option>
-<option value="عين تموشنت">عين تموشنت</option>
-<option value="غرداية">غرداية</option>
-<option value="غليزان">غليزان</option>
-
-<option value="تيميمون">تيميمون</option>
-<option value="برج باجي مختار">برج باجي مختار</option>
-<option value="أولاد جلال">أولاد جلال</option>
-<option value="بني عباس">بني عباس</option>
-<option value="إن صالح">إن صالح</option>
-<option value="إن قزام">إن قزام</option>
-<option value="تقرت">تقرت</option>
-<option value="جانت">جانت</option>
-<option value="المغير">المغير</option>
-<option value="المنيعة">المنيعة</option>
-
-</select>
-
-
-<!-- CITY -->
-
-<select
-id="city">
-
-<option value="">
-🏙️ اختر المدينة / البلدية
-</option>
-
-</select>
-
-
-<!-- ADDRESS -->
-
-<input
-type="text"
-id="address"
-placeholder="🏠 العنوان بالتفصيل"
-autocomplete="street-address"
->
-
-
-<!-- NOTE -->
-
-<textarea
-id="note"
-placeholder="📝 ملاحظة (اختياري)"
-rows="3">
-</textarea>
-
-
-<!-- SEND ORDER -->
-
-<button
-type="button"
-class="send-order"
-onclick="sendOrder()">
-
-📲 تأكيد الطلب عبر WhatsApp
-
-</button>
-
-
-<!-- CLEAR CART -->
-
-<button
-type="button"
-class="clear-cart"
-onclick="clearCart()">
-
-🗑️ إفراغ السلة
-
-</button>
-
-
-</div>
+        </select>
+
+
+        <select id="city" disabled>
+
+            <option value="">
+                🏙️ اختر المدينة / البلدية
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="address"
+            placeholder="🏠 العنوان بالتفصيل"
+            autocomplete="street-address">
+
+
+        <textarea
+            id="note"
+            placeholder="📝 ملاحظة (اختياري)"
+            rows="3"></textarea>
+
+
+        <button
+            type="button"
+            class="send-order"
+            onclick="sendOrder()">
+
+            📲 تأكيد الطلب عبر WhatsApp
+
+        </button>
+
+
+        <button
+            type="button"
+            class="clear-cart"
+            onclick="clearCart()">
+
+            🗑️ إفراغ السلة
+
+        </button>
+
+    </div>
 
 </aside>
 
 
-<!-- =========================
-     DATA
-========================= -->
-
 <script src="data.js"></script>
-
-
-<!-- =========================
-     APP
-========================= -->
-
 <script src="app.js"></script>
 
-
 </body>
-
 </html>

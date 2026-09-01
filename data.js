@@ -1,7 +1,7 @@
 /* =========================================
-   SOUK HMD / RONQA
+   RONQA dz STORE
    DATA.JS
-   69 WILAYAS + 1541 COMMUNES
+   تحميل الولايات والبلديات الجزائرية
 ========================================= */
 
 const ALGERIA_DATA = {};
@@ -10,7 +10,119 @@ let algeriaDataReady = false;
 
 
 /* =========================================
-   LOAD ALGERIA DATA
+   مصادر البيانات
+========================================= */
+
+const WILAYAS_URL =
+"https://mohamed-gp.github.io/algeria_69_wilayas/main.json";
+
+const COMMUNES_URL =
+"https://mohamed-gp.github.io/algeria_69_wilayas/communes.json";
+
+
+/* =========================================
+   إنشاء قائمة الولايات
+========================================= */
+
+const ALGERIA_WILAYAS = [
+    "أدرار",
+    "الشلف",
+    "الأغواط",
+    "أم البواقي",
+    "باتنة",
+    "بجاية",
+    "بسكرة",
+    "بشار",
+    "البليدة",
+    "البويرة",
+    "تمنراست",
+    "تبسة",
+    "تلمسان",
+    "تيارت",
+    "تيزي وزو",
+    "الجزائر",
+    "الجلفة",
+    "جيجل",
+    "سطيف",
+    "سعيدة",
+    "سكيكدة",
+    "سيدي بلعباس",
+    "عنابة",
+    "قالمة",
+    "قسنطينة",
+    "المدية",
+    "مستغانم",
+    "المسيلة",
+    "معسكر",
+    "ورقلة",
+    "وهران",
+    "البيض",
+    "إليزي",
+    "برج بوعريريج",
+    "بومرداس",
+    "الطارف",
+    "تندوف",
+    "تيسمسيلت",
+    "الوادي",
+    "خنشلة",
+    "سوق أهراس",
+    "تيبازة",
+    "ميلة",
+    "عين الدفلى",
+    "النعامة",
+    "عين تموشنت",
+    "غرداية",
+    "غليزان",
+
+    "تيميمون",
+    "برج باجي مختار",
+    "أولاد جلال",
+    "بني عباس",
+    "إن صالح",
+    "إن قزام",
+    "تقرت",
+    "جانت",
+    "المغير",
+    "المنيعة"
+];
+
+
+/* =========================================
+   ملء قائمة الولايات
+========================================= */
+
+function populateWilayas(){
+
+    const select =
+        document.getElementById("wilaya");
+
+    if(!select){
+        return;
+    }
+
+    select.innerHTML = `
+        <option value="">
+            📍 اختر الولاية
+        </option>
+    `;
+
+    ALGERIA_WILAYAS.forEach(wilaya => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = wilaya;
+        option.textContent = wilaya;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================================
+   تحميل البيانات
 ========================================= */
 
 async function loadAlgeriaData(){
@@ -22,30 +134,31 @@ async function loadAlgeriaData(){
         );
 
 
-        /*
-         * تحميل الملفين:
-         * main.json = الولايات
-         * communes.json = البلديات
-         */
+        const responses =
+            await Promise.all([
 
-        const [wilayasResponse, communesResponse] =
-        await Promise.all([
+                fetch(
+                    WILAYAS_URL,
+                    {
+                        cache:"no-cache"
+                    }
+                ),
 
-            fetch(
-                "https://mohamed-gp.github.io/algeria_69_wilayas/main.json",
-                {
-                    cache:"no-cache"
-                }
-            ),
+                fetch(
+                    COMMUNES_URL,
+                    {
+                        cache:"no-cache"
+                    }
+                )
 
-            fetch(
-                "https://mohamed-gp.github.io/algeria_69_wilayas/communes.json",
-                {
-                    cache:"no-cache"
-                }
-            )
+            ]);
 
-        ]);
+
+        const wilayasResponse =
+            responses[0];
+
+        const communesResponse =
+            responses[1];
 
 
         if(!wilayasResponse.ok){
@@ -69,22 +182,16 @@ async function loadAlgeriaData(){
 
 
         const wilayasData =
-        await wilayasResponse.json();
+            await wilayasResponse.json();
 
 
         const communesData =
-        await communesResponse.json();
+            await communesResponse.json();
 
-
-        /* =====================================
-           التحقق من البيانات
-        ===================================== */
 
         if(
             !wilayasData ||
-            !Array.isArray(
-                wilayasData.wilayas
-            )
+            !Array.isArray(wilayasData.wilayas)
         ){
 
             throw new Error(
@@ -96,9 +203,7 @@ async function loadAlgeriaData(){
 
         if(
             !communesData ||
-            !Array.isArray(
-                communesData.communes
-            )
+            !Array.isArray(communesData.communes)
         ){
 
             throw new Error(
@@ -108,151 +213,98 @@ async function loadAlgeriaData(){
         }
 
 
-        /* =====================================
-           تفريغ البيانات القديمة
-        ===================================== */
-
         Object.keys(ALGERIA_DATA)
-        .forEach(
-            key => {
+            .forEach(key => {
 
                 delete ALGERIA_DATA[key];
 
-            }
-        );
+            });
 
-
-        /* =====================================
-           إنشاء خريطة ID → اسم الولاية
-        ===================================== */
 
         const wilayaMap = {};
 
 
-        wilayasData.wilayas.forEach(
-            wilaya => {
+        wilayasData.wilayas.forEach(wilaya => {
 
-                if(
-                    wilaya &&
-                    wilaya.id &&
-                    wilaya.name_ar
-                ){
+            if(
+                wilaya &&
+                wilaya.id &&
+                wilaya.name_ar
+            ){
 
-                    wilayaMap[
-                        Number(wilaya.id)
-                    ] =
+                wilayaMap[
+                    Number(wilaya.id)
+                ] =
                     wilaya.name_ar;
 
-                }
-
             }
-        );
 
+        });
 
-        console.log(
-            "عدد الولايات:",
-            Object.keys(wilayaMap).length
-        );
-
-
-        /* =====================================
-           إنشاء الولايات داخل ALGERIA_DATA
-        ===================================== */
 
         Object.values(wilayaMap)
-        .forEach(
-            wilayaName => {
+            .forEach(wilayaName => {
 
                 ALGERIA_DATA[
                     wilayaName
                 ] = [];
 
+            });
+
+
+        communesData.communes.forEach(commune => {
+
+            if(!commune){
+                return;
             }
-        );
 
 
-        /* =====================================
-           إضافة البلديات
-        ===================================== */
-
-        communesData.communes.forEach(
-            commune => {
-
-                if(!commune){
-
-                    return;
-
-                }
+            const wilayaId =
+                Number(commune.wilaya_id);
 
 
-                const wilayaId =
-                Number(
-                    commune.wilaya_id
-                );
+            const wilayaName =
+                wilayaMap[wilayaId];
 
 
-                const wilayaName =
-                wilayaMap[
-                    wilayaId
-                ];
-
-
-                if(!wilayaName){
-
-                    return;
-
-                }
-
-
-                if(
-                    commune.name_ar
-                ){
-
-                    ALGERIA_DATA[
-                        wilayaName
-                    ].push(
-                        commune.name_ar
-                    );
-
-                }
-
+            if(!wilayaName){
+                return;
             }
-        );
 
 
-        /* =====================================
-           حذف التكرار + ترتيب
-        ===================================== */
-
-        Object.keys(ALGERIA_DATA)
-        .forEach(
-            wilayaName => {
+            if(commune.name_ar){
 
                 ALGERIA_DATA[
                     wilayaName
-                ] =
-                [
-                    ...new Set(
-                        ALGERIA_DATA[
-                            wilayaName
-                        ]
-                    )
-                ]
-                .sort(
-                    (a,b) =>
-                    a.localeCompare(
-                        b,
-                        "ar"
-                    )
+                ].push(
+                    commune.name_ar
                 );
 
             }
-        );
+
+        });
 
 
-        /* =====================================
-           الحالة النهائية
-        ===================================== */
+        Object.keys(ALGERIA_DATA)
+            .forEach(wilayaName => {
+
+                ALGERIA_DATA[wilayaName] =
+                    [
+                        ...new Set(
+                            ALGERIA_DATA[
+                                wilayaName
+                            ]
+                        )
+                    ].sort(
+                        (a,b) =>
+                            a.localeCompare(
+                                b,
+                                "ar"
+                            )
+                    );
+
+            });
+
 
         algeriaDataReady = true;
 
@@ -264,26 +316,19 @@ async function loadAlgeriaData(){
 
         console.log(
             "🏛️ الولايات:",
-            Object.keys(
-                ALGERIA_DATA
-            ).length
+            Object.keys(ALGERIA_DATA).length
         );
 
 
         let totalCities = 0;
 
 
-        Object.values(
-            ALGERIA_DATA
-        )
-        .forEach(
-            cities => {
+        Object.values(ALGERIA_DATA)
+            .forEach(cities => {
 
-                totalCities +=
-                cities.length;
+                totalCities += cities.length;
 
-            }
-        );
+            });
 
 
         console.log(
@@ -291,32 +336,6 @@ async function loadAlgeriaData(){
             totalCities
         );
 
-
-        /*
-         * مثال للتأكد
-         */
-
-        console.log(
-            "بلديات ورقلة:",
-            ALGERIA_DATA["ورقلة"]
-        );
-
-
-        console.log(
-            "بلديات تقرت:",
-            ALGERIA_DATA["تقرت"]
-        );
-
-
-        console.log(
-            "بلديات حاسي مسعود:",
-            ALGERIA_DATA["ورقلة"]
-        );
-
-
-        /* =====================================
-           إرسال حدث جاهزية البيانات
-        ===================================== */
 
         document.dispatchEvent(
             new CustomEvent(
@@ -328,7 +347,6 @@ async function loadAlgeriaData(){
         return ALGERIA_DATA;
 
     }
-
 
     catch(error){
 
@@ -359,32 +377,22 @@ async function loadAlgeriaData(){
 
 
 /* =========================================
-   GET CITIES
+   الحصول على البلديات
 ========================================= */
 
-function getCitiesByWilaya(
-    wilaya
-){
+function getCitiesByWilaya(wilaya){
 
     if(!wilaya){
-
         return [];
-
     }
 
-
-    return (
-        ALGERIA_DATA[
-            wilaya
-        ] ||
-        []
-    );
+    return ALGERIA_DATA[wilaya] || [];
 
 }
 
 
 /* =========================================
-   CHECK READY
+   حالة البيانات
 ========================================= */
 
 function isAlgeriaDataReady(){
@@ -398,4 +406,13 @@ function isAlgeriaDataReady(){
    START
 ========================================= */
 
-loadAlgeriaData();
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        populateWilayas();
+
+        loadAlgeriaData();
+
+    }
+);

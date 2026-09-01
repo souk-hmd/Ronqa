@@ -1,5 +1,5 @@
 /* =========================================
-   SOUK HMD / RONQA
+   RONQA dz STORE
    APP.JS
 ========================================= */
 
@@ -16,7 +16,7 @@ const SUPABASE_KEY =
 
 
 /* =========================================
-   STORE
+   WHATSAPP
 ========================================= */
 
 const STORE_WHATSAPP =
@@ -24,7 +24,7 @@ const STORE_WHATSAPP =
 
 
 /* =========================================
-   GLOBAL VARIABLES
+   GLOBAL
 ========================================= */
 
 let products = [];
@@ -35,7 +35,7 @@ let selectedCategory = "all";
 
 
 /* =========================================
-   LOAD CART FROM STORAGE
+   LOAD CART
 ========================================= */
 
 function loadSavedCart(){
@@ -43,16 +43,14 @@ function loadSavedCart(){
     try{
 
         const saved =
-        localStorage.getItem(
-            "soukHMD_cart"
-        );
-
+            localStorage.getItem(
+                "soukHMD_cart"
+            );
 
         if(saved){
 
             const parsed =
-            JSON.parse(saved);
-
+                JSON.parse(saved);
 
             if(Array.isArray(parsed)){
 
@@ -74,7 +72,6 @@ function loadSavedCart(){
         cart = [];
 
     }
-
 }
 
 
@@ -101,7 +98,6 @@ function saveCart(){
         );
 
     }
-
 }
 
 
@@ -112,9 +108,9 @@ function saveCart(){
 function getCategory(value){
 
     const text =
-    String(value || "")
-    .trim()
-    .toLowerCase();
+        String(value || "")
+        .trim()
+        .toLowerCase();
 
 
     if(
@@ -152,7 +148,6 @@ function getCategory(value){
 
 
     return "other";
-
 }
 
 
@@ -163,12 +158,11 @@ function getCategory(value){
 function escapeHTML(text){
 
     return String(text || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
@@ -179,54 +173,43 @@ function escapeHTML(text){
 function formatPrice(price){
 
     return Number(price || 0)
-    .toLocaleString("fr-DZ");
-
+        .toLocaleString("fr-DZ");
 }
 
 
 /* =========================================
-   DELIVERY PRICE
+   DELIVERY
 ========================================= */
 
 function getDeliveryPrice(){
 
     const wilaya =
-    document
-    .getElementById("wilaya")
-    ?.value
-    .trim() || "";
+        document
+        .getElementById("wilaya")
+        ?.value
+        .trim() || "";
 
 
     const city =
-    document
-    .getElementById("city")
-    ?.value
-    .trim() || "";
+        document
+        .getElementById("city")
+        ?.value
+        .trim() || "";
 
 
-    /* حاسي مسعود مجانا */
-
-    if(
-        city === "حاسي مسعود"
-    ){
+    if(city === "حاسي مسعود"){
 
         return 0;
 
     }
 
 
-    /* ورقلة */
-
-    if(
-        wilaya === "ورقلة"
-    ){
+    if(wilaya === "ورقلة"){
 
         return 400;
 
     }
 
-
-    /* باقي الولايات */
 
     if(wilaya !== ""){
 
@@ -236,7 +219,6 @@ function getDeliveryPrice(){
 
 
     return 0;
-
 }
 
 
@@ -246,55 +228,43 @@ function getDeliveryPrice(){
 
 function updateDelivery(){
 
-    const deliveryBox =
-    document.getElementById(
-        "deliveryPrice"
-    );
+    const box =
+        document.getElementById(
+            "deliveryPrice"
+        );
 
-
-    if(!deliveryBox){
-
+    if(!box){
         return;
-
     }
 
 
     const wilaya =
-    document
-    .getElementById("wilaya")
-    ?.value
-    .trim() || "";
+        document
+        .getElementById("wilaya")
+        ?.value
+        .trim() || "";
 
 
     const delivery =
-    getDeliveryPrice();
+        getDeliveryPrice();
 
 
     if(!wilaya){
 
-        deliveryBox.innerText =
-        "اختر الولاية";
+        box.innerText =
+            "اختر الولاية";
 
         return;
 
     }
 
 
-    if(delivery === 0){
-
-        deliveryBox.innerText =
-        "مجاني";
-
-    }
-
-    else{
-
-        deliveryBox.innerText =
-        formatPrice(delivery) +
-        " دج";
-
-    }
-
+    box.innerText =
+        delivery === 0
+        ?
+        "مجاني"
+        :
+        formatPrice(delivery) + " دج";
 }
 
 
@@ -305,24 +275,20 @@ function updateDelivery(){
 function populateCities(wilaya){
 
     const citySelect =
-    document.getElementById(
-        "city"
-    );
+        document.getElementById(
+            "city"
+        );
 
 
     if(!citySelect){
-
         return;
-
     }
 
 
     citySelect.innerHTML = `
-
         <option value="">
             🏙️ اختر المدينة / البلدية
         </option>
-
     `;
 
 
@@ -331,15 +297,11 @@ function populateCities(wilaya){
         citySelect.disabled = true;
 
         updateDelivery();
-
         updateCart();
 
         return;
-
     }
 
-
-    /* إذا لم تنته البيانات بعد */
 
     if(
         typeof isAlgeriaDataReady ===
@@ -350,25 +312,22 @@ function populateCities(wilaya){
         citySelect.disabled = true;
 
         citySelect.innerHTML = `
-
             <option value="">
                 ⏳ جاري تحميل البلديات...
             </option>
-
         `;
 
         return;
-
     }
 
 
     const cities =
-    typeof getCitiesByWilaya ===
-    "function"
-    ?
-    getCitiesByWilaya(wilaya)
-    :
-    [];
+        typeof getCitiesByWilaya ===
+        "function"
+        ?
+        getCitiesByWilaya(wilaya)
+        :
+        [];
 
 
     if(!cities.length){
@@ -376,19 +335,15 @@ function populateCities(wilaya){
         citySelect.disabled = true;
 
         citySelect.innerHTML = `
-
             <option value="">
                 ⚠️ لم يتم العثور على البلديات
             </option>
-
         `;
 
         updateDelivery();
-
         updateCart();
 
         return;
-
     }
 
 
@@ -398,54 +353,45 @@ function populateCities(wilaya){
     cities.forEach(city => {
 
         const option =
-        document.createElement(
-            "option"
-        );
+            document.createElement(
+                "option"
+            );
 
+        option.value = city;
 
-        option.value =
-        city;
+        option.textContent = city;
 
-
-        option.textContent =
-        city;
-
-
-        citySelect.appendChild(
-            option
-        );
+        citySelect.appendChild(option);
 
     });
 
 
     updateDelivery();
-
     updateCart();
-
 }
 
 
 /* =========================================
-   WILAYA CHANGE
+   LOCATION EVENTS
 ========================================= */
 
 function setupLocationEvents(){
 
-    const wilayaSelect =
-    document.getElementById(
-        "wilaya"
-    );
+    const wilaya =
+        document.getElementById(
+            "wilaya"
+        );
 
 
-    const citySelect =
-    document.getElementById(
-        "city"
-    );
+    const city =
+        document.getElementById(
+            "city"
+        );
 
 
-    if(wilayaSelect){
+    if(wilaya){
 
-        wilayaSelect.addEventListener(
+        wilaya.addEventListener(
             "change",
             function(){
 
@@ -459,21 +405,19 @@ function setupLocationEvents(){
     }
 
 
-    if(citySelect){
+    if(city){
 
-        citySelect.addEventListener(
+        city.addEventListener(
             "change",
             function(){
 
                 updateDelivery();
-
                 updateCart();
 
             }
         );
 
     }
-
 }
 
 
@@ -484,68 +428,58 @@ function setupLocationEvents(){
 async function loadProducts(){
 
     const box =
-    document.getElementById(
-        "products"
-    );
+        document.getElementById(
+            "products"
+        );
 
 
     if(!box){
-
         return;
-
     }
 
 
     try{
 
         box.innerHTML = `
-
-            <div style="
-            grid-column:1/-1;
-            text-align:center;
-            padding:50px;">
-
+            <div class="loading">
                 ⏳ جاري تحميل المنتجات...
-
             </div>
-
         `;
 
 
         const response =
-        await fetch(
+            await fetch(
 
-            SUPABASE_URL +
-            "/rest/v1/Products?select=*",
+                SUPABASE_URL +
+                "/rest/v1/Products?select=*",
 
-            {
+                {
 
-                method:"GET",
+                    method:"GET",
 
-                headers:{
+                    headers:{
 
-                    "apikey":
-                    SUPABASE_KEY,
+                        "apikey":
+                            SUPABASE_KEY,
 
-                    "Authorization":
-                    "Bearer " +
-                    SUPABASE_KEY,
+                        "Authorization":
+                            "Bearer " +
+                            SUPABASE_KEY,
 
-                    "Content-Type":
-                    "application/json"
+                        "Content-Type":
+                            "application/json"
+
+                    }
 
                 }
 
-            }
-
-        );
+            );
 
 
         if(!response.ok){
 
             const errorText =
-            await response.text();
-
+                await response.text();
 
             throw new Error(
                 "HTTP " +
@@ -553,12 +487,11 @@ async function loadProducts(){
                 " - " +
                 errorText
             );
-
         }
 
 
         products =
-        await response.json();
+            await response.json();
 
 
         console.log(
@@ -567,40 +500,33 @@ async function loadProducts(){
         );
 
 
-        /*
-         * تنظيف العناصر القديمة
-         * إذا تم حذف منتج من Supabase
-         */
-
         cart =
-        cart.filter(item => {
+            cart.filter(item => {
 
-            const product =
-            products.find(
-                p =>
-                Number(p.id) ===
-                Number(item.id)
-            );
-
-
-            if(!product){
-
-                return false;
-
-            }
+                const product =
+                    products.find(
+                        p =>
+                        Number(p.id) ===
+                        Number(item.id)
+                    );
 
 
-            item.stock =
-            Number(product.stock) || 0;
+                if(!product){
+                    return false;
+                }
 
 
-            item.price =
-            Number(product.price) || 0;
+                item.stock =
+                    Number(product.stock) || 0;
 
 
-            return true;
+                item.price =
+                    Number(product.price) || 0;
 
-        });
+
+                return true;
+
+            });
 
 
         saveCart();
@@ -615,7 +541,6 @@ async function loadProducts(){
 
     }
 
-
     catch(error){
 
         console.error(
@@ -626,33 +551,22 @@ async function loadProducts(){
 
         box.innerHTML = `
 
-            <div style="
-            grid-column:1/-1;
-            text-align:center;
-            padding:45px;">
+            <div class="empty-products">
 
                 ❌ حدث خطأ في تحميل المنتجات
 
                 <br><br>
 
-                <small style="
-                direction:ltr;
-                display:block;
-                word-break:break-word;
-                color:#c00;">
-
+                <small>
                     ${escapeHTML(
                         error.message
                     )}
-
                 </small>
 
             </div>
 
         `;
-
     }
-
 }
 
 
@@ -663,15 +577,13 @@ async function loadProducts(){
 function showProducts(list){
 
     const box =
-    document.getElementById(
-        "products"
-    );
+        document.getElementById(
+            "products"
+        );
 
 
     if(!box){
-
         return;
-
     }
 
 
@@ -684,60 +596,43 @@ function showProducts(list){
     ){
 
         box.innerHTML = `
-
-            <div style="
-            grid-column:1/-1;
-            text-align:center;
-            padding:50px;
-            color:#777;">
-
+            <div class="empty-products">
                 🛍️ لا توجد منتجات حالياً
-
             </div>
-
         `;
 
         return;
-
     }
 
 
     list.forEach(product => {
 
         const id =
-        product.id;
-
+            product.id;
 
         const name =
-        product.name ||
-        "منتج";
-
+            product.name ||
+            "منتج";
 
         const description =
-        product.description ||
-        "";
-
+            product.description ||
+            "";
 
         const price =
-        Number(product.price) ||
-        0;
-
+            Number(product.price) || 0;
 
         const stock =
-        Number(product.stock) ||
-        0;
-
+            Number(product.stock) || 0;
 
         const image =
-        String(
-            product.image_url || ""
-        ).trim();
-
+            String(
+                product.image_url || ""
+            ).trim();
 
         const category =
-        getCategory(
-            product.category
-        );
+            getCategory(
+                product.category
+            );
 
 
         let imageHTML = "";
@@ -748,22 +643,21 @@ function showProducts(list){
             imageHTML = `
 
                 <img
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(name)}"
-                loading="lazy"
-                onerror="
-                this.style.display='none';
-                this.nextElementSibling.style.display='flex';
-                ">
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(name)}"
+                    loading="lazy"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    ">
 
                 <div
-                class="no-image"
-                style="display:none">
+                    class="no-image"
+                    style="display:none">
 
                     🛍️
 
                 </div>
-
             `;
 
         }
@@ -771,13 +665,9 @@ function showProducts(list){
         else{
 
             imageHTML = `
-
                 <div class="no-image">
-
                     🛍️
-
                 </div>
-
             `;
 
         }
@@ -786,16 +676,14 @@ function showProducts(list){
         let sizeHTML = "";
 
 
-        if(
-            category === "shoes"
-        ){
+        if(category === "shoes"){
 
             sizeHTML = `
 
                 <div class="size-box">
 
                     <select
-                    id="size-${id}">
+                        id="size-${id}">
 
                         <option value="">
                             اختر المقاس
@@ -815,18 +703,16 @@ function showProducts(list){
                     </select>
 
                 </div>
-
             `;
-
         }
 
 
         const stockText =
-        stock <= 0
-        ?
-        "غير متوفر"
-        :
-        `📦 المخزون: ${stock}`;
+            stock <= 0
+            ?
+            "❌ غير متوفر"
+            :
+            `📦 المخزون: ${stock}`;
 
 
         box.innerHTML += `
@@ -841,33 +727,22 @@ function showProducts(list){
 
 
                 <h3>
-
                     ${escapeHTML(name)}
-
                 </h3>
 
 
                 <p class="description">
-
-                    ${escapeHTML(
-                        description
-                    )}
-
+                    ${escapeHTML(description)}
                 </p>
 
 
                 <div class="price">
-
-                    ${formatPrice(price)}
-                    دج
-
+                    ${formatPrice(price)} دج
                 </div>
 
 
                 <div class="stock">
-
                     ${stockText}
-
                 </div>
 
 
@@ -875,10 +750,10 @@ function showProducts(list){
 
 
                 <button
-                type="button"
-                class="add"
-                onclick="addToCart(${Number(id)})"
-                ${stock <= 0 ? "disabled" : ""}>
+                    type="button"
+                    class="add"
+                    onclick="addToCart(${Number(id)})"
+                    ${stock <= 0 ? "disabled" : ""}>
 
                     ${
                         stock <= 0
@@ -891,11 +766,8 @@ function showProducts(list){
                 </button>
 
             </article>
-
         `;
-
     });
-
 }
 
 
@@ -909,20 +781,20 @@ function setCategory(
 ){
 
     selectedCategory =
-    category;
+        category;
 
 
     document
-    .querySelectorAll(
-        ".category"
-    )
-    .forEach(btn => {
+        .querySelectorAll(
+            ".category"
+        )
+        .forEach(btn => {
 
-        btn.classList.remove(
-            "active"
-        );
+            btn.classList.remove(
+                "active"
+            );
 
-    });
+        });
 
 
     if(button){
@@ -935,7 +807,6 @@ function setCategory(
 
 
     filterProducts();
-
 }
 
 
@@ -946,43 +817,42 @@ function setCategory(
 function filterProducts(){
 
     const searchInput =
-    document.getElementById(
-        "search"
-    );
+        document.getElementById(
+            "search"
+        );
 
 
     const search =
-    searchInput
-    ?
-    searchInput.value
-    .trim()
-    .toLowerCase()
-    :
-    "";
+        searchInput
+        ?
+        searchInput.value
+            .trim()
+            .toLowerCase()
+        :
+        "";
 
 
     const result =
-    products.filter(
-        product => {
+        products.filter(product => {
 
             const category =
-            getCategory(
-                product.category
-            );
+                getCategory(
+                    product.category
+                );
 
 
             const name =
-            String(
-                product.name || ""
-            )
-            .toLowerCase();
+                String(
+                    product.name || ""
+                )
+                .toLowerCase();
 
 
             const description =
-            String(
-                product.description || ""
-            )
-            .toLowerCase();
+                String(
+                    product.description || ""
+                )
+                .toLowerCase();
 
 
             return (
@@ -998,27 +868,18 @@ function filterProducts(){
                 &&
 
                 (
-                    name.includes(
-                        search
-                    )
+                    name.includes(search) ||
 
-                    ||
+                    description.includes(search)
 
-                    description.includes(
-                        search
-                    )
                 )
 
             );
 
-        }
-    );
+        });
 
 
-    showProducts(
-        result
-    );
-
+    showProducts(result);
 }
 
 
@@ -1028,24 +889,21 @@ function filterProducts(){
 
 function setupSearch(){
 
-    const searchInput =
-    document.getElementById(
-        "search"
-    );
+    const input =
+        document.getElementById(
+            "search"
+        );
 
 
-    if(!searchInput){
-
+    if(!input){
         return;
-
     }
 
 
-    searchInput.addEventListener(
+    input.addEventListener(
         "input",
         filterProducts
     );
-
 }
 
 
@@ -1056,11 +914,11 @@ function setupSearch(){
 function addToCart(id){
 
     const product =
-    products.find(
-        p =>
-        Number(p.id) ===
-        Number(id)
-    );
+        products.find(
+            p =>
+            Number(p.id) ===
+            Number(id)
+        );
 
 
     if(!product){
@@ -1070,13 +928,11 @@ function addToCart(id){
         );
 
         return;
-
     }
 
 
     const stock =
-    Number(product.stock) ||
-    0;
+        Number(product.stock) || 0;
 
 
     if(stock <= 0){
@@ -1086,27 +942,24 @@ function addToCart(id){
         );
 
         return;
-
     }
 
 
     const category =
-    getCategory(
-        product.category
-    );
+        getCategory(
+            product.category
+        );
 
 
     let size = "";
 
 
-    if(
-        category === "shoes"
-    ){
+    if(category === "shoes"){
 
         const select =
-        document.getElementById(
-            "size-" + id
-        );
+            document.getElementById(
+                "size-" + id
+            );
 
 
         if(
@@ -1119,28 +972,26 @@ function addToCart(id){
             );
 
             return;
-
         }
 
 
         size =
-        select.value;
-
+            select.value;
     }
 
 
     const existing =
-    cart.find(
-        item =>
+        cart.find(
+            item =>
 
-        Number(item.id) ===
-        Number(id)
+            Number(item.id) ===
+            Number(id)
 
-        &&
+            &&
 
-        item.size ===
-        size
-    );
+            item.size ===
+            size
+        );
 
 
     if(existing){
@@ -1155,7 +1006,6 @@ function addToCart(id){
             );
 
             return;
-
         }
 
 
@@ -1170,12 +1020,12 @@ function addToCart(id){
             id:id,
 
             name:
-            product.name ||
-            "منتج",
+                product.name ||
+                "منتج",
 
             price:
-            Number(product.price) ||
-            0,
+                Number(product.price) ||
+                0,
 
             stock:stock,
 
@@ -1193,7 +1043,6 @@ function addToCart(id){
     updateCart();
 
     openCart();
-
 }
 
 
@@ -1204,21 +1053,19 @@ function addToCart(id){
 function updateCart(){
 
     const list =
-    document.getElementById(
-        "cartList"
-    );
+        document.getElementById(
+            "cartList"
+        );
 
 
     const count =
-    document.getElementById(
-        "cartCount"
-    );
+        document.getElementById(
+            "cartCount"
+        );
 
 
     if(!list){
-
         return;
-
     }
 
 
@@ -1234,16 +1081,16 @@ function updateCart(){
         (item,index) => {
 
             const subtotal =
-            Number(item.price) *
-            Number(item.quantity);
+                Number(item.price) *
+                Number(item.quantity);
 
 
             productsTotal +=
-            subtotal;
+                subtotal;
 
 
             itemCount +=
-            Number(item.quantity);
+                Number(item.quantity);
 
 
             list.innerHTML += `
@@ -1264,12 +1111,10 @@ function updateCart(){
                         ?
                         `
                         <div>
-
                             📏 المقاس:
                             ${escapeHTML(
                                 item.size
                             )}
-
                         </div>
                         `
                         :
@@ -1290,12 +1135,13 @@ function updateCart(){
                     <div class="quantity">
 
                         <button
-                        type="button"
-                        onclick="
-                        changeQuantity(
-                            ${index},
-                            -1
-                        )">
+                            type="button"
+                            onclick="
+                                changeQuantity(
+                                    ${index},
+                                    -1
+                                )
+                            ">
 
                             −
 
@@ -1303,19 +1149,18 @@ function updateCart(){
 
 
                         <span>
-
                             ${item.quantity}
-
                         </span>
 
 
                         <button
-                        type="button"
-                        onclick="
-                        changeQuantity(
-                            ${index},
-                            1
-                        )">
+                            type="button"
+                            onclick="
+                                changeQuantity(
+                                    ${index},
+                                    1
+                                )
+                            ">
 
                             +
 
@@ -1323,12 +1168,13 @@ function updateCart(){
 
 
                         <button
-                        type="button"
-                        class="remove"
-                        onclick="
-                        removeItem(
-                            ${index}
-                        )">
+                            type="button"
+                            class="remove"
+                            onclick="
+                                removeItem(
+                                    ${index}
+                                )
+                            ">
 
                             🗑️
 
@@ -1339,105 +1185,93 @@ function updateCart(){
                 </div>
 
             `;
-
         }
     );
 
 
-    if(
-        cart.length === 0
-    ){
+    if(cart.length === 0){
 
         list.innerHTML = `
-
-            <div style="
-            text-align:center;
-            padding:40px;
-            color:#777;">
-
+            <div class="empty-cart">
                 السلة فارغة 🛒
-
             </div>
-
         `;
 
     }
 
 
     const delivery =
-    getDeliveryPrice();
+        getDeliveryPrice();
 
 
     const finalTotal =
-    productsTotal +
-    delivery;
+        productsTotal +
+        delivery;
 
 
     if(count){
 
         count.innerText =
-        itemCount;
+            itemCount;
 
     }
 
 
     const productsTotalBox =
-    document.getElementById(
-        "productsTotal"
-    );
+        document.getElementById(
+            "productsTotal"
+        );
 
 
     if(productsTotalBox){
 
         productsTotalBox.innerText =
-        formatPrice(
-            productsTotal
-        ) +
-        " دج";
+            formatPrice(
+                productsTotal
+            ) +
+            " دج";
 
     }
 
 
     const deliveryBox =
-    document.getElementById(
-        "deliveryPrice"
-    );
+        document.getElementById(
+            "deliveryPrice"
+        );
 
 
     if(deliveryBox){
 
         const wilaya =
-        document
-        .getElementById(
-            "wilaya"
-        )
-        ?.value
-        .trim() || "";
+            document
+            .getElementById(
+                "wilaya"
+            )
+            ?.value
+            .trim() || "";
 
 
         if(!wilaya){
 
             deliveryBox.innerText =
-            "اختر الولاية";
+                "اختر الولاية";
 
         }
 
-        else if(
-            delivery === 0
-        ){
+        else if(delivery === 0){
 
             deliveryBox.innerText =
-            "مجاني";
+                "مجاني";
 
         }
 
         else{
 
             deliveryBox.innerText =
-            formatPrice(
-                delivery
-            ) +
-            " دج";
+                formatPrice(
+                    delivery
+                ) +
+                " دج";
 
         }
 
@@ -1445,29 +1279,28 @@ function updateCart(){
 
 
     const finalTotalBox =
-    document.getElementById(
-        "finalTotal"
-    );
+        document.getElementById(
+            "finalTotal"
+        );
 
 
     if(finalTotalBox){
 
         finalTotalBox.innerText =
-        formatPrice(
-            finalTotal
-        ) +
-        " دج";
+            formatPrice(
+                finalTotal
+            ) +
+            " دج";
 
     }
 
 
     saveCart();
-
 }
 
 
 /* =========================================
-   QUANTITY
+   CHANGE QUANTITY
 ========================================= */
 
 function changeQuantity(
@@ -1476,79 +1309,69 @@ function changeQuantity(
 ){
 
     const item =
-    cart[index];
+        cart[index];
 
 
     if(!item){
-
         return;
-
     }
 
 
     const product =
-    products.find(
-        p =>
-        Number(p.id) ===
-        Number(item.id)
-    );
+        products.find(
+            p =>
+            Number(p.id) ===
+            Number(item.id)
+        );
 
 
     const currentStock =
-    product
-    ?
-    Number(product.stock) || 0
-    :
-    Number(item.stock) || 0;
+        product
+        ?
+        Number(product.stock) || 0
+        :
+        Number(item.stock) || 0;
 
 
     const newQuantity =
-    Number(item.quantity) +
-    Number(change);
+        Number(item.quantity) +
+        Number(change);
 
 
-    if(
-        newQuantity <= 0
-    ){
+    if(newQuantity <= 0){
 
         removeItem(index);
 
         return;
-
     }
 
 
-    if(
-        newQuantity >
-        currentStock
-    ){
+    if(newQuantity > currentStock){
 
         alert(
             "⚠️ لا توجد كمية كافية في المخزون"
         );
 
         return;
-
     }
 
 
     item.stock =
-    currentStock;
+        currentStock;
 
 
     item.quantity =
-    newQuantity;
+        newQuantity;
 
 
     saveCart();
 
     updateCart();
-
 }
 
 
 /* =========================================
-   REMOVE ITEM
+   REMOVE
 ========================================= */
 
 function removeItem(index){
@@ -1559,7 +1382,6 @@ function removeItem(index){
     ){
 
         return;
-
     }
 
 
@@ -1572,45 +1394,35 @@ function removeItem(index){
     saveCart();
 
     updateCart();
-
 }
 
 
 /* =========================================
-   CLEAR CART
+   CLEAR
 ========================================= */
 
 function clearCart(){
 
-    if(
-        cart.length === 0
-    ){
-
+    if(cart.length === 0){
         return;
-
     }
 
 
-    const confirmed =
-    confirm(
-        "هل تريد إفراغ سلة المشتريات؟"
-    );
-
-
-    if(!confirmed){
+    if(
+        !confirm(
+            "هل تريد إفراغ سلة المشتريات؟"
+        )
+    ){
 
         return;
-
     }
 
 
     cart = [];
 
-
     saveCart();
 
     updateCart();
-
 }
 
 
@@ -1621,15 +1433,15 @@ function clearCart(){
 function openCart(){
 
     const panel =
-    document.getElementById(
-        "cartPanel"
-    );
+        document.getElementById(
+            "cartPanel"
+        );
 
 
     const overlay =
-    document.getElementById(
-        "overlay"
-    );
+        document.getElementById(
+            "overlay"
+        );
 
 
     if(panel){
@@ -1651,8 +1463,7 @@ function openCart(){
 
 
     document.body.style.overflow =
-    "hidden";
-
+        "hidden";
 }
 
 
@@ -1663,15 +1474,15 @@ function openCart(){
 function closeCart(){
 
     const panel =
-    document.getElementById(
-        "cartPanel"
-    );
+        document.getElementById(
+            "cartPanel"
+        );
 
 
     const overlay =
-    document.getElementById(
-        "overlay"
-    );
+        document.getElementById(
+            "overlay"
+        );
 
 
     if(panel){
@@ -1693,8 +1504,7 @@ function closeCart(){
 
 
     document.body.style.overflow =
-    "";
-
+        "";
 }
 
 
@@ -1704,71 +1514,68 @@ function closeCart(){
 
 function sendOrder(){
 
-    if(
-        cart.length === 0
-    ){
+    if(cart.length === 0){
 
         alert(
             "🛒 السلة فارغة"
         );
 
         return;
-
     }
 
 
     const name =
-    document
-    .getElementById(
-        "customerName"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "customerName"
+        )
+        .value
+        .trim();
 
 
     const phone =
-    document
-    .getElementById(
-        "customerPhone"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "customerPhone"
+        )
+        .value
+        .trim();
 
 
     const wilaya =
-    document
-    .getElementById(
-        "wilaya"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "wilaya"
+        )
+        .value
+        .trim();
 
 
     const city =
-    document
-    .getElementById(
-        "city"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "city"
+        )
+        .value
+        .trim();
 
 
     const address =
-    document
-    .getElementById(
-        "address"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "address"
+        )
+        .value
+        .trim();
 
 
     const note =
-    document
-    .getElementById(
-        "note"
-    )
-    .value
-    .trim();
+        document
+        .getElementById(
+            "note"
+        )
+        .value
+        .trim();
 
 
     if(!name){
@@ -1778,7 +1585,6 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
@@ -1789,19 +1595,14 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
-    /*
-     * التحقق من رقم الهاتف
-     */
-
     const phoneClean =
-    phone.replace(
-        /[\s\-]/g,
-        ""
-    );
+        phone.replace(
+            /[\s\-]/g,
+            ""
+        );
 
 
     if(
@@ -1815,7 +1616,6 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
@@ -1826,7 +1626,6 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
@@ -1837,7 +1636,6 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
@@ -1848,7 +1646,6 @@ function sendOrder(){
         );
 
         return;
-
     }
 
 
@@ -1856,153 +1653,149 @@ function sendOrder(){
 
 
     let message =
-    "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
+        "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
 
 
     message +=
-    "🧾 *معلومات الزبون*\n";
+        "🧾 *معلومات الزبون*\n";
 
 
     message +=
-    "👤 الاسم: " +
-    name +
-    "\n";
+        "👤 الاسم: " +
+        name +
+        "\n";
 
 
     message +=
-    "📞 الهاتف: " +
-    phone +
-    "\n";
+        "📞 الهاتف: " +
+        phone +
+        "\n";
 
 
     message +=
-    "📍 الولاية: " +
-    wilaya +
-    "\n";
+        "📍 الولاية: " +
+        wilaya +
+        "\n";
 
 
     message +=
-    "🏙️ المدينة / البلدية: " +
-    city +
-    "\n";
+        "🏙️ المدينة / البلدية: " +
+        city +
+        "\n";
 
 
     message +=
-    "🏠 العنوان: " +
-    address +
-    "\n";
+        "🏠 العنوان: " +
+        address +
+        "\n";
 
 
     if(note){
 
         message +=
-        "📝 ملاحظة: " +
-        note +
-        "\n";
-
+            "📝 ملاحظة: " +
+            note +
+            "\n";
     }
 
 
     message +=
-    "\n🛍️ *المنتجات*\n";
+        "\n🛍️ *المنتجات*\n";
 
 
-    cart.forEach(
-        item => {
+    cart.forEach(item => {
 
-            const subtotal =
+        const subtotal =
             Number(item.price) *
             Number(item.quantity);
 
 
-            productsTotal +=
+        productsTotal +=
             subtotal;
 
 
-            message +=
+        message +=
             "• " +
             item.name +
             " × " +
             item.quantity;
 
 
-            if(item.size){
+        if(item.size){
 
-                message +=
+            message +=
                 " | المقاس: " +
                 item.size;
 
-            }
+        }
 
 
-            message +=
+        message +=
             " = " +
             formatPrice(
                 subtotal
             ) +
             " دج\n";
 
-        }
-    );
+    });
 
 
     const delivery =
-    getDeliveryPrice();
+        getDeliveryPrice();
 
 
     const finalTotal =
-    productsTotal +
-    delivery;
+        productsTotal +
+        delivery;
 
 
     message +=
-    "\n🛍️ مجموع المنتجات: " +
-    formatPrice(
-        productsTotal
-    ) +
-    " دج";
-
-
-    message +=
-    "\n🚚 التوصيل: " +
-    (
-        delivery === 0
-        ?
-        "مجاني"
-        :
+        "\n🛍️ مجموع المنتجات: " +
         formatPrice(
-            delivery
+            productsTotal
         ) +
-        " دج"
-    );
+        " دج";
 
 
     message +=
-    "\n💰 *المجموع النهائي: " +
-    formatPrice(
-        finalTotal
-    ) +
-    " دج*";
+        "\n🚚 التوصيل: " +
+        (
+            delivery === 0
+            ?
+            "مجاني"
+            :
+            formatPrice(
+                delivery
+            ) +
+            " دج"
+        );
 
 
     message +=
-    "\n\nشكراً لثقتكم بـ RONQA ❤️";
+        "\n💰 *المجموع النهائي: " +
+        formatPrice(
+            finalTotal
+        ) +
+        " دج*";
+
+
+    message +=
+        "\n\nشكراً لثقتكم بـ RONQA dz STORE ❤️";
 
 
     const url =
-    "https://wa.me/" +
-    STORE_WHATSAPP +
-    "?text=" +
-    encodeURIComponent(
-        message
-    );
+        "https://wa.me/" +
+        STORE_WHATSAPP +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
 
 
     window.open(
         url,
         "_blank"
     );
-
 }
 
 
@@ -2027,12 +1820,11 @@ function setupKeyboard(){
 
         }
     );
-
 }
 
 
 /* =========================================
-   ALGERIA DATA READY
+   ALGERIA READY
 ========================================= */
 
 document.addEventListener(
@@ -2040,17 +1832,16 @@ document.addEventListener(
     function(){
 
         console.log(
-            "تم تجهيز بيانات البلديات"
+            "✅ تم تجهيز بيانات البلديات"
         );
 
-
         const wilaya =
-        document
-        .getElementById(
-            "wilaya"
-        )
-        ?.value
-        .trim() || "";
+            document
+            .getElementById(
+                "wilaya"
+            )
+            ?.value
+            .trim() || "";
 
 
         if(wilaya){
@@ -2066,7 +1857,7 @@ document.addEventListener(
 
 
 /* =========================================
-   ALGERIA DATA ERROR
+   ALGERIA ERROR
 ========================================= */
 
 document.addEventListener(
@@ -2079,26 +1870,22 @@ document.addEventListener(
         );
 
 
-        const citySelect =
-        document.getElementById(
-            "city"
-        );
+        const city =
+            document.getElementById(
+                "city"
+            );
 
 
-        if(citySelect){
+        if(city){
 
-            citySelect.disabled =
-            true;
+            city.disabled =
+                true;
 
-
-            citySelect.innerHTML = `
-
+            city.innerHTML = `
                 <option value="">
                     ⚠️ تعذر تحميل البلديات
                 </option>
-
             `;
-
         }
 
     }
@@ -2106,7 +1893,7 @@ document.addEventListener(
 
 
 /* =========================================
-   START APP
+   START
 ========================================= */
 
 document.addEventListener(
@@ -2114,27 +1901,21 @@ document.addEventListener(
     function(){
 
         console.log(
-            "RONQA started"
+            "🚀 RONQA dz STORE started"
         );
 
 
         loadSavedCart();
 
-
         setupLocationEvents();
-
 
         setupSearch();
 
-
         setupKeyboard();
-
 
         updateCart();
 
-
         updateDelivery();
-
 
         loadProducts();
 
