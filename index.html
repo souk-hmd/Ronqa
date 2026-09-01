@@ -2,29 +2,43 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#111111">
+    <meta name="theme-color"
+          content="#111111">
 
     <meta name="description"
           content="RONQA dz STORE - متجر إلكتروني لبيع المنتجات في الجزائر">
 
     <title>RONQA dz STORE</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
 
+
 <body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <header>
 
     <div class="logo">
+
         RONQA
+
         <small>dz STORE</small>
+
     </div>
+
 
     <button
         type="button"
@@ -34,12 +48,19 @@
 
         🛒 السلة
 
-        <span id="cartCount">0</span>
+        <span id="cartCount">
+            0
+        </span>
 
     </button>
 
 </header>
 
+
+
+<!-- ==================================================
+     SEARCH
+================================================== -->
 
 <section class="search-section">
 
@@ -52,9 +73,15 @@
 </section>
 
 
+
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
+
 <section
     class="categories"
     aria-label="تصنيفات المنتجات">
+
 
     <button
         type="button"
@@ -65,6 +92,7 @@
 
     </button>
 
+
     <button
         type="button"
         class="category"
@@ -73,6 +101,7 @@
         👜 حقائب
 
     </button>
+
 
     <button
         type="button"
@@ -83,6 +112,7 @@
 
     </button>
 
+
     <button
         type="button"
         class="category"
@@ -92,14 +122,28 @@
 
     </button>
 
+
 </section>
 
 
+
+<!-- ==================================================
+     PRODUCTS
+================================================== -->
+
 <main>
 
-    <div id="products" class="products">
+    <div
+        id="products"
+        class="products">
 
-        <div class="loading">
+        <div
+            class="loading"
+            style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:50px;
+            ">
 
             ⏳ جاري تحميل المنتجات...
 
@@ -110,6 +154,11 @@
 </main>
 
 
+
+<!-- ==================================================
+     OVERLAY
+================================================== -->
+
 <div
     id="overlay"
     class="overlay"
@@ -117,16 +166,25 @@
 </div>
 
 
+
+<!-- ==================================================
+     CART PANEL
+================================================== -->
+
 <aside
     id="cartPanel"
     class="cart-panel"
     aria-label="سلة المشتريات">
+
+
+    <!-- CART HEADER -->
 
     <div class="cart-header">
 
         <h2>
             🛒 سلة المشتريات
         </h2>
+
 
         <button
             type="button"
@@ -140,11 +198,20 @@
     </div>
 
 
+
+    <!-- CART LIST -->
+
     <div
         id="cartList"
         class="cart-list">
 
-        <div class="empty-cart">
+        <div
+            class="empty-cart"
+            style="
+                text-align:center;
+                padding:30px;
+                color:#777;
+            ">
 
             السلة فارغة 🛒
 
@@ -153,7 +220,15 @@
     </div>
 
 
-    <div id="total" class="total">
+
+    <!-- ==================================================
+         TOTAL
+    ================================================== -->
+
+    <div
+        id="total"
+        class="total">
+
 
         <div>
 
@@ -193,15 +268,25 @@
 
         </div>
 
+
     </div>
 
 
+
+    <!-- ==================================================
+         CUSTOMER FORM
+    ================================================== -->
+
     <div class="order-form">
+
 
         <h3>
             📦 معلومات التوصيل
         </h3>
 
+
+
+        <!-- NAME -->
 
         <input
             type="text"
@@ -210,13 +295,21 @@
             autocomplete="name">
 
 
+
+        <!-- PHONE -->
+
         <input
             type="tel"
             id="customerPhone"
-            placeholder="📞 رقم الهاتف"
+            placeholder="📞 رقم الهاتف: 0675996957"
             autocomplete="tel"
             inputmode="tel">
 
+
+
+        <!-- ==================================================
+             69 WILAYAS
+        ================================================== -->
 
         <select id="wilaya">
 
@@ -224,10 +317,228 @@
                 📍 اختر الولاية
             </option>
 
+
+            <!-- 01 - 10 -->
+
+            <option value="أدرار">01 - أدرار</option>
+
+            <option value="الشلف">02 - الشلف</option>
+
+            <option value="الأغواط">03 - الأغواط</option>
+
+            <option value="أم البواقي">04 - أم البواقي</option>
+
+            <option value="باتنة">05 - باتنة</option>
+
+            <option value="بجاية">06 - بجاية</option>
+
+            <option value="بسكرة">07 - بسكرة</option>
+
+            <option value="بشار">08 - بشار</option>
+
+            <option value="البليدة">09 - البليدة</option>
+
+            <option value="البويرة">10 - البويرة</option>
+
+
+            <!-- 11 - 20 -->
+
+            <option value="تمنراست">11 - تمنراست</option>
+
+            <option value="تبسة">12 - تبسة</option>
+
+            <option value="تلمسان">13 - تلمسان</option>
+
+            <option value="تيارت">14 - تيارت</option>
+
+            <option value="تيزي وزو">15 - تيزي وزو</option>
+
+            <option value="الجزائر">16 - الجزائر</option>
+
+            <option value="الجلفة">17 - الجلفة</option>
+
+            <option value="جيجل">18 - جيجل</option>
+
+            <option value="سطيف">19 - سطيف</option>
+
+            <option value="سعيدة">20 - سعيدة</option>
+
+
+            <!-- 21 - 30 -->
+
+            <option value="سكيكدة">21 - سكيكدة</option>
+
+            <option value="سيدي بلعباس">
+                22 - سيدي بلعباس
+            </option>
+
+            <option value="عنابة">23 - عنابة</option>
+
+            <option value="قالمة">24 - قالمة</option>
+
+            <option value="قسنطينة">25 - قسنطينة</option>
+
+            <option value="المدية">26 - المدية</option>
+
+            <option value="مستغانم">27 - مستغانم</option>
+
+            <option value="المسيلة">28 - المسيلة</option>
+
+            <option value="معسكر">29 - معسكر</option>
+
+            <option value="ورقلة">30 - ورقلة</option>
+
+
+            <!-- 31 - 40 -->
+
+            <option value="وهران">31 - وهران</option>
+
+            <option value="البيض">32 - البيض</option>
+
+            <option value="إليزي">33 - إليزي</option>
+
+            <option value="برج بوعريريج">
+                34 - برج بوعريريج
+            </option>
+
+            <option value="بومرداس">35 - بومرداس</option>
+
+            <option value="الطارف">36 - الطارف</option>
+
+            <option value="تندوف">37 - تندوف</option>
+
+            <option value="تيسمسيلت">38 - تيسمسيلت</option>
+
+            <option value="الوادي">39 - الوادي</option>
+
+            <option value="خنشلة">40 - خنشلة</option>
+
+
+            <!-- 41 - 50 -->
+
+            <option value="سوق أهراس">
+                41 - سوق أهراس
+            </option>
+
+            <option value="تيبازة">42 - تيبازة</option>
+
+            <option value="ميلة">43 - ميلة</option>
+
+            <option value="عين الدفلى">
+                44 - عين الدفلى
+            </option>
+
+            <option value="النعامة">45 - النعامة</option>
+
+            <option value="عين تموشنت">
+                46 - عين تموشنت
+            </option>
+
+            <option value="غرداية">47 - غرداية</option>
+
+            <option value="غليزان">48 - غليزان</option>
+
+            <option value="تيميمون">49 - تيميمون</option>
+
+            <option value="برج باجي مختار">
+                50 - برج باجي مختار
+            </option>
+
+
+            <!-- 51 - 58 -->
+
+            <option value="أولاد جلال">
+                51 - أولاد جلال
+            </option>
+
+            <option value="بني عباس">
+                52 - بني عباس
+            </option>
+
+            <option value="عين صالح">
+                53 - عين صالح
+            </option>
+
+            <option value="عين قزام">
+                54 - عين قزام
+            </option>
+
+            <option value="تقرت">
+                55 - تقرت
+            </option>
+
+            <option value="جانت">
+                56 - جانت
+            </option>
+
+            <option value="المغير">
+                57 - المغير
+            </option>
+
+            <option value="المنيعة">
+                58 - المنيعة
+            </option>
+
+
+            <!-- ==================================================
+                 NEW WILAYAS 59 - 69
+            ================================================== -->
+
+            <option value="أفلو">
+                59 - أفلو
+            </option>
+
+            <option value="بريكة">
+                60 - بريكة
+            </option>
+
+            <option value="القنطرة">
+                61 - القنطرة
+            </option>
+
+            <option value="بئر العاتر">
+                62 - بئر العاتر
+            </option>
+
+            <option value="العريشة">
+                63 - العريشة
+            </option>
+
+            <option value="قصر الشلالة">
+                64 - قصر الشلالة
+            </option>
+
+            <option value="عين وسارة">
+                65 - عين وسارة
+            </option>
+
+            <option value="مسعد">
+                66 - مسعد
+            </option>
+
+            <option value="قصر البخاري">
+                67 - قصر البخاري
+            </option>
+
+            <option value="بوسعادة">
+                68 - بوسعادة
+            </option>
+
+            <option value="الأبيض سيدي الشيخ">
+                69 - الأبيض سيدي الشيخ
+            </option>
+
         </select>
 
 
-        <select id="city" disabled>
+
+        <!-- ==================================================
+             CITY / COMMUNE
+        ================================================== -->
+
+        <select
+            id="city"
+            disabled>
 
             <option value="">
                 🏙️ اختر المدينة / البلدية
@@ -236,6 +547,9 @@
         </select>
 
 
+
+        <!-- ADDRESS -->
+
         <input
             type="text"
             id="address"
@@ -243,11 +557,17 @@
             autocomplete="street-address">
 
 
+
+        <!-- NOTE -->
+
         <textarea
             id="note"
             placeholder="📝 ملاحظة (اختياري)"
             rows="3"></textarea>
 
+
+
+        <!-- SEND -->
 
         <button
             type="button"
@@ -259,6 +579,9 @@
         </button>
 
 
+
+        <!-- CLEAR -->
+
         <button
             type="button"
             class="clear-cart"
@@ -268,13 +591,27 @@
 
         </button>
 
+
     </div>
 
 </aside>
 
 
+
+<!-- ==================================================
+     DATA
+================================================== -->
+
 <script src="data.js"></script>
+
+
+<!-- ==================================================
+     APP
+================================================== -->
+
 <script src="app.js"></script>
 
+
 </body>
+
 </html>
