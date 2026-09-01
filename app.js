@@ -1,6 +1,7 @@
 /* =========================================
-   RONQA dz STORE
+   RONQA / SOUK HMD
    APP.JS
+   VERSION - FIXED
 ========================================= */
 
 
@@ -16,15 +17,22 @@ const SUPABASE_KEY =
 
 
 /* =========================================
-   WHATSAPP
+   STORE WHATSAPP
 ========================================= */
+
+/*
+ * رقم المتجر:
+ * 0675996957
+ *
+ * نكتبه دولياً بدون + وبدون 0
+ */
 
 const STORE_WHATSAPP =
 "213675996957";
 
 
 /* =========================================
-   GLOBAL
+   GLOBAL VARIABLES
 ========================================= */
 
 let products = [];
@@ -43,14 +51,14 @@ function loadSavedCart(){
     try{
 
         const saved =
-            localStorage.getItem(
-                "soukHMD_cart"
-            );
+        localStorage.getItem(
+            "soukHMD_cart"
+        );
 
         if(saved){
 
             const parsed =
-                JSON.parse(saved);
+            JSON.parse(saved);
 
             if(Array.isArray(parsed)){
 
@@ -61,7 +69,6 @@ function loadSavedCart(){
         }
 
     }
-
     catch(error){
 
         console.error(
@@ -72,6 +79,7 @@ function loadSavedCart(){
         cart = [];
 
     }
+
 }
 
 
@@ -89,7 +97,6 @@ function saveCart(){
         );
 
     }
-
     catch(error){
 
         console.error(
@@ -98,6 +105,7 @@ function saveCart(){
         );
 
     }
+
 }
 
 
@@ -112,7 +120,6 @@ function getCategory(value){
         .trim()
         .toLowerCase();
 
-
     if(
         text.includes("حق") ||
         text.includes("bag")
@@ -121,7 +128,6 @@ function getCategory(value){
         return "bags";
 
     }
-
 
     if(
         text.includes("حذ") ||
@@ -134,7 +140,6 @@ function getCategory(value){
 
     }
 
-
     if(
         text.includes("كسسو") ||
         text.includes("اكسسو") ||
@@ -146,8 +151,8 @@ function getCategory(value){
 
     }
 
-
     return "other";
+
 }
 
 
@@ -163,6 +168,7 @@ function escapeHTML(text){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
 
@@ -174,11 +180,12 @@ function formatPrice(price){
 
     return Number(price || 0)
         .toLocaleString("fr-DZ");
+
 }
 
 
 /* =========================================
-   DELIVERY
+   DELIVERY PRICE
 ========================================= */
 
 function getDeliveryPrice(){
@@ -189,7 +196,6 @@ function getDeliveryPrice(){
         ?.value
         .trim() || "";
 
-
     const city =
         document
         .getElementById("city")
@@ -197,19 +203,36 @@ function getDeliveryPrice(){
         .trim() || "";
 
 
-    if(city === "حاسي مسعود"){
+    /*
+     * حاسي مسعود:
+     * توصيل مجاني
+     */
+
+    if(
+        city === "حاسي مسعود"
+    ){
 
         return 0;
 
     }
 
 
-    if(wilaya === "ورقلة"){
+    /*
+     * ولاية ورقلة
+     */
+
+    if(
+        wilaya === "ورقلة"
+    ){
 
         return 400;
 
     }
 
+
+    /*
+     * باقي الولايات
+     */
 
     if(wilaya !== ""){
 
@@ -219,6 +242,7 @@ function getDeliveryPrice(){
 
 
     return 0;
+
 }
 
 
@@ -228,15 +252,16 @@ function getDeliveryPrice(){
 
 function updateDelivery(){
 
-    const box =
+    const deliveryBox =
         document.getElementById(
             "deliveryPrice"
         );
 
-    if(!box){
-        return;
-    }
+    if(!deliveryBox){
 
+        return;
+
+    }
 
     const wilaya =
         document
@@ -244,14 +269,13 @@ function updateDelivery(){
         ?.value
         .trim() || "";
 
-
     const delivery =
         getDeliveryPrice();
 
 
     if(!wilaya){
 
-        box.innerText =
+        deliveryBox.innerText =
             "اختر الولاية";
 
         return;
@@ -259,12 +283,121 @@ function updateDelivery(){
     }
 
 
-    box.innerText =
-        delivery === 0
-        ?
-        "مجاني"
-        :
-        formatPrice(delivery) + " دج";
+    if(delivery === 0){
+
+        deliveryBox.innerText =
+            "مجاني";
+
+    }
+    else{
+
+        deliveryBox.innerText =
+            formatPrice(delivery) +
+            " دج";
+
+    }
+
+}
+
+
+/* =========================================
+   POPULATE WILAYAS
+========================================= */
+
+function populateWilayas(){
+
+    const wilayaSelect =
+        document.getElementById(
+            "wilaya"
+        );
+
+    if(!wilayaSelect){
+
+        return;
+
+    }
+
+
+    /*
+     * الاحتفاظ بالولاية المختارة
+     */
+
+    const currentValue =
+        wilayaSelect.value;
+
+
+    wilayaSelect.innerHTML = `
+
+        <option value="">
+            📍 اختر الولاية
+        </option>
+
+    `;
+
+
+    if(
+        typeof ALGERIA_DATA === "undefined" ||
+        !ALGERIA_DATA
+    ){
+
+        return;
+
+    }
+
+
+    const wilayas =
+        Object.keys(
+            ALGERIA_DATA
+        )
+        .sort(
+            (a,b) =>
+                a.localeCompare(
+                    b,
+                    "ar"
+                )
+        );
+
+
+    wilayas.forEach(
+        wilaya => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                wilaya;
+
+            option.textContent =
+                wilaya;
+
+            wilayaSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    /*
+     * إعادة الولاية السابقة
+     */
+
+    if(
+        currentValue &&
+        ALGERIA_DATA[currentValue]
+    ){
+
+        wilayaSelect.value =
+            currentValue;
+
+        populateCities(
+            currentValue
+        );
+
+    }
+
 }
 
 
@@ -279,29 +412,39 @@ function populateCities(wilaya){
             "city"
         );
 
-
     if(!citySelect){
+
         return;
+
     }
 
 
     citySelect.innerHTML = `
+
         <option value="">
             🏙️ اختر المدينة / البلدية
         </option>
+
     `;
 
 
     if(!wilaya){
 
-        citySelect.disabled = true;
+        citySelect.disabled =
+            true;
 
         updateDelivery();
+
         updateCart();
 
         return;
+
     }
 
+
+    /*
+     * البيانات لم تجهز بعد
+     */
 
     if(
         typeof isAlgeriaDataReady ===
@@ -309,15 +452,19 @@ function populateCities(wilaya){
         !isAlgeriaDataReady()
     ){
 
-        citySelect.disabled = true;
+        citySelect.disabled =
+            true;
 
         citySelect.innerHTML = `
+
             <option value="">
                 ⏳ جاري تحميل البلديات...
             </option>
+
         `;
 
         return;
+
     }
 
 
@@ -332,42 +479,56 @@ function populateCities(wilaya){
 
     if(!cities.length){
 
-        citySelect.disabled = true;
+        citySelect.disabled =
+            true;
 
         citySelect.innerHTML = `
+
             <option value="">
                 ⚠️ لم يتم العثور على البلديات
             </option>
+
         `;
 
         updateDelivery();
+
         updateCart();
 
         return;
+
     }
 
 
-    citySelect.disabled = false;
+    citySelect.disabled =
+        false;
 
 
-    cities.forEach(city => {
+    cities.forEach(
+        city => {
 
-        const option =
-            document.createElement(
-                "option"
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                city;
+
+            option.textContent =
+                city;
+
+            citySelect.appendChild(
+                option
             );
 
-        option.value = city;
-
-        option.textContent = city;
-
-        citySelect.appendChild(option);
-
-    });
+        }
+    );
 
 
     updateDelivery();
+
     updateCart();
+
 }
 
 
@@ -377,21 +538,20 @@ function populateCities(wilaya){
 
 function setupLocationEvents(){
 
-    const wilaya =
+    const wilayaSelect =
         document.getElementById(
             "wilaya"
         );
 
-
-    const city =
+    const citySelect =
         document.getElementById(
             "city"
         );
 
 
-    if(wilaya){
+    if(wilayaSelect){
 
-        wilaya.addEventListener(
+        wilayaSelect.addEventListener(
             "change",
             function(){
 
@@ -405,19 +565,21 @@ function setupLocationEvents(){
     }
 
 
-    if(city){
+    if(citySelect){
 
-        city.addEventListener(
+        citySelect.addEventListener(
             "change",
             function(){
 
                 updateDelivery();
+
                 updateCart();
 
             }
         );
 
     }
+
 }
 
 
@@ -432,18 +594,26 @@ async function loadProducts(){
             "products"
         );
 
-
     if(!box){
+
         return;
+
     }
 
 
     try{
 
         box.innerHTML = `
-            <div class="loading">
+
+            <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:50px;">
+
                 ⏳ جاري تحميل المنتجات...
+
             </div>
+
         `;
 
 
@@ -487,6 +657,7 @@ async function loadProducts(){
                 " - " +
                 errorText
             );
+
         }
 
 
@@ -500,33 +671,45 @@ async function loadProducts(){
         );
 
 
+        /*
+         * تحديث المنتجات الموجودة في السلة
+         */
+
         cart =
-            cart.filter(item => {
+            cart.filter(
+                item => {
 
-                const product =
-                    products.find(
-                        p =>
-                        Number(p.id) ===
-                        Number(item.id)
-                    );
+                    const product =
+                        products.find(
+                            p =>
+                            Number(p.id) ===
+                            Number(item.id)
+                        );
 
 
-                if(!product){
-                    return false;
+                    if(!product){
+
+                        return false;
+
+                    }
+
+
+                    item.stock =
+                        Number(
+                            product.stock
+                        ) || 0;
+
+
+                    item.price =
+                        Number(
+                            product.price
+                        ) || 0;
+
+
+                    return true;
+
                 }
-
-
-                item.stock =
-                    Number(product.stock) || 0;
-
-
-                item.price =
-                    Number(product.price) || 0;
-
-
-                return true;
-
-            });
+            );
 
 
         saveCart();
@@ -541,6 +724,7 @@ async function loadProducts(){
 
     }
 
+
     catch(error){
 
         console.error(
@@ -551,22 +735,33 @@ async function loadProducts(){
 
         box.innerHTML = `
 
-            <div class="empty-products">
+            <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:45px;">
 
                 ❌ حدث خطأ في تحميل المنتجات
 
                 <br><br>
 
-                <small>
+                <small style="
+                direction:ltr;
+                display:block;
+                word-break:break-word;
+                color:#c00;">
+
                     ${escapeHTML(
                         error.message
                     )}
+
                 </small>
 
             </div>
 
         `;
+
     }
+
 }
 
 
@@ -581,9 +776,10 @@ function showProducts(list){
             "products"
         );
 
-
     if(!box){
+
         return;
+
     }
 
 
@@ -596,178 +792,220 @@ function showProducts(list){
     ){
 
         box.innerHTML = `
-            <div class="empty-products">
+
+            <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:50px;
+            color:#777;">
+
                 🛍️ لا توجد منتجات حالياً
+
             </div>
+
         `;
 
         return;
+
     }
 
 
-    list.forEach(product => {
+    list.forEach(
+        product => {
 
-        const id =
-            product.id;
+            const id =
+                product.id;
 
-        const name =
-            product.name ||
-            "منتج";
+            const name =
+                product.name ||
+                "منتج";
 
-        const description =
-            product.description ||
-            "";
+            const description =
+                product.description ||
+                "";
 
-        const price =
-            Number(product.price) || 0;
+            const price =
+                Number(
+                    product.price
+                ) || 0;
 
-        const stock =
-            Number(product.stock) || 0;
+            const stock =
+                Number(
+                    product.stock
+                ) || 0;
 
-        const image =
-            String(
-                product.image_url || ""
-            ).trim();
+            const image =
+                String(
+                    product.image_url ||
+                    ""
+                ).trim();
 
-        const category =
-            getCategory(
-                product.category
-            );
-
-
-        let imageHTML = "";
+            const category =
+                getCategory(
+                    product.category
+                );
 
 
-        if(image){
+            let imageHTML = "";
 
-            imageHTML = `
 
-                <img
+            if(image){
+
+                imageHTML = `
+
+                    <img
                     src="${escapeHTML(image)}"
                     alt="${escapeHTML(name)}"
                     loading="lazy"
                     onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
+                    this.style.display='none';
+                    this.nextElementSibling.style.display='flex';
                     ">
 
-                <div
+                    <div
                     class="no-image"
                     style="display:none">
 
-                    🛍️
+                        🛍️
 
-                </div>
-            `;
+                    </div>
 
-        }
+                `;
 
-        else{
+            }
+            else{
 
-            imageHTML = `
-                <div class="no-image">
-                    🛍️
-                </div>
-            `;
+                imageHTML = `
 
-        }
+                    <div class="no-image">
+
+                        🛍️
+
+                    </div>
+
+                `;
+
+            }
 
 
-        let sizeHTML = "";
+            let sizeHTML = "";
 
 
-        if(category === "shoes"){
+            if(
+                category === "shoes"
+            ){
 
-            sizeHTML = `
+                sizeHTML = `
 
-                <div class="size-box">
+                    <div class="size-box">
 
-                    <select
+                        <select
                         id="size-${id}">
 
-                        <option value="">
-                            اختر المقاس
-                        </option>
+                            <option value="">
+                                اختر المقاس
+                            </option>
 
-                        <option value="36">36</option>
-                        <option value="37">37</option>
-                        <option value="38">38</option>
-                        <option value="39">39</option>
-                        <option value="40">40</option>
-                        <option value="41">41</option>
-                        <option value="42">42</option>
-                        <option value="43">43</option>
-                        <option value="44">44</option>
-                        <option value="45">45</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
 
-                    </select>
+                        </select>
 
-                </div>
-            `;
-        }
+                    </div>
 
+                `;
 
-        const stockText =
-            stock <= 0
-            ?
-            "❌ غير متوفر"
-            :
-            `📦 المخزون: ${stock}`;
+            }
 
 
-        box.innerHTML += `
-
-            <article class="product">
-
-                <div class="product-image">
-
-                    ${imageHTML}
-
-                </div>
+            const stockText =
+                stock <= 0
+                ?
+                "غير متوفر"
+                :
+                `📦 المخزون: ${stock}`;
 
 
-                <h3>
-                    ${escapeHTML(name)}
-                </h3>
+            box.innerHTML += `
+
+                <article class="product">
+
+                    <div class="product-image">
+
+                        ${imageHTML}
+
+                    </div>
 
 
-                <p class="description">
-                    ${escapeHTML(description)}
-                </p>
+                    <h3>
+
+                        ${escapeHTML(
+                            name
+                        )}
+
+                    </h3>
 
 
-                <div class="price">
-                    ${formatPrice(price)} دج
-                </div>
+                    <p class="description">
+
+                        ${escapeHTML(
+                            description
+                        )}
+
+                    </p>
 
 
-                <div class="stock">
-                    ${stockText}
-                </div>
+                    <div class="price">
+
+                        ${formatPrice(
+                            price
+                        )}
+                        دج
+
+                    </div>
 
 
-                ${sizeHTML}
+                    <div class="stock">
+
+                        ${stockText}
+
+                    </div>
 
 
-                <button
+                    ${sizeHTML}
+
+
+                    <button
                     type="button"
                     class="add"
                     onclick="addToCart(${Number(id)})"
                     ${stock <= 0 ? "disabled" : ""}>
 
-                    ${
-                        stock <= 0
-                        ?
-                        "غير متوفر"
-                        :
-                        "🛒 أضف إلى السلة"
-                    }
+                        ${
+                            stock <= 0
+                            ?
+                            "غير متوفر"
+                            :
+                            "🛒 أضف إلى السلة"
+                        }
 
-                </button>
+                    </button>
 
-            </article>
-        `;
-    });
+                </article>
+
+            `;
+
+        }
+    );
+
 }
 
 
@@ -788,13 +1026,15 @@ function setCategory(
         .querySelectorAll(
             ".category"
         )
-        .forEach(btn => {
+        .forEach(
+            btn => {
 
-            btn.classList.remove(
-                "active"
-            );
+                btn.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 
     if(button){
@@ -807,11 +1047,12 @@ function setCategory(
 
 
     filterProducts();
+
 }
 
 
 /* =========================================
-   FILTER
+   FILTER PRODUCTS
 ========================================= */
 
 function filterProducts(){
@@ -833,53 +1074,64 @@ function filterProducts(){
 
 
     const result =
-        products.filter(product => {
+        products.filter(
+            product => {
 
-            const category =
-                getCategory(
-                    product.category
+                const category =
+                    getCategory(
+                        product.category
+                    );
+
+
+                const name =
+                    String(
+                        product.name || ""
+                    )
+                    .toLowerCase();
+
+
+                const description =
+                    String(
+                        product.description || ""
+                    )
+                    .toLowerCase();
+
+
+                return (
+
+                    (
+                        selectedCategory ===
+                        "all" ||
+
+                        category ===
+                        selectedCategory
+                    )
+
+                    &&
+
+                    (
+                        name.includes(
+                            search
+                        )
+
+                        ||
+
+                        description.includes(
+                            search
+                        )
+
+                    )
+
                 );
 
-
-            const name =
-                String(
-                    product.name || ""
-                )
-                .toLowerCase();
+            }
+        );
 
 
-            const description =
-                String(
-                    product.description || ""
-                )
-                .toLowerCase();
+    showProducts(
+        result
+    );
 
-
-            return (
-
-                (
-                    selectedCategory ===
-                    "all" ||
-
-                    category ===
-                    selectedCategory
-                )
-
-                &&
-
-                (
-                    name.includes(search) ||
-
-                    description.includes(search)
-
-                )
-
-            );
-
-        });
-
-
-    showProducts(result);
 }
 
 
@@ -889,21 +1141,24 @@ function filterProducts(){
 
 function setupSearch(){
 
-    const input =
+    const searchInput =
         document.getElementById(
             "search"
         );
 
 
-    if(!input){
+    if(!searchInput){
+
         return;
+
     }
 
 
-    input.addEventListener(
+    searchInput.addEventListener(
         "input",
         filterProducts
     );
+
 }
 
 
@@ -928,11 +1183,14 @@ function addToCart(id){
         );
 
         return;
+
     }
 
 
     const stock =
-        Number(product.stock) || 0;
+        Number(
+            product.stock
+        ) || 0;
 
 
     if(stock <= 0){
@@ -942,6 +1200,7 @@ function addToCart(id){
         );
 
         return;
+
     }
 
 
@@ -954,7 +1213,9 @@ function addToCart(id){
     let size = "";
 
 
-    if(category === "shoes"){
+    if(
+        category === "shoes"
+    ){
 
         const select =
             document.getElementById(
@@ -972,11 +1233,13 @@ function addToCart(id){
             );
 
             return;
+
         }
 
 
         size =
             select.value;
+
     }
 
 
@@ -1006,13 +1269,13 @@ function addToCart(id){
             );
 
             return;
+
         }
 
 
         existing.quantity++;
 
     }
-
     else{
 
         cart.push({
@@ -1024,14 +1287,18 @@ function addToCart(id){
                 "منتج",
 
             price:
-                Number(product.price) ||
-                0,
+                Number(
+                    product.price
+                ) || 0,
 
-            stock:stock,
+            stock:
+                stock,
 
-            size:size,
+            size:
+                size,
 
-            quantity:1
+            quantity:
+                1
 
         });
 
@@ -1043,6 +1310,7 @@ function addToCart(id){
     updateCart();
 
     openCart();
+
 }
 
 
@@ -1065,7 +1333,9 @@ function updateCart(){
 
 
     if(!list){
+
         return;
+
     }
 
 
@@ -1111,10 +1381,12 @@ function updateCart(){
                         ?
                         `
                         <div>
+
                             📏 المقاس:
                             ${escapeHTML(
                                 item.size
                             )}
+
                         </div>
                         `
                         :
@@ -1135,13 +1407,12 @@ function updateCart(){
                     <div class="quantity">
 
                         <button
-                            type="button"
-                            onclick="
-                                changeQuantity(
-                                    ${index},
-                                    -1
-                                )
-                            ">
+                        type="button"
+                        onclick="
+                        changeQuantity(
+                            ${index},
+                            -1
+                        )">
 
                             −
 
@@ -1149,18 +1420,19 @@ function updateCart(){
 
 
                         <span>
+
                             ${item.quantity}
+
                         </span>
 
 
                         <button
-                            type="button"
-                            onclick="
-                                changeQuantity(
-                                    ${index},
-                                    1
-                                )
-                            ">
+                        type="button"
+                        onclick="
+                        changeQuantity(
+                            ${index},
+                            1
+                        )">
 
                             +
 
@@ -1168,13 +1440,12 @@ function updateCart(){
 
 
                         <button
-                            type="button"
-                            class="remove"
-                            onclick="
-                                removeItem(
-                                    ${index}
-                                )
-                            ">
+                        type="button"
+                        class="remove"
+                        onclick="
+                        removeItem(
+                            ${index}
+                        )">
 
                             🗑️
 
@@ -1185,16 +1456,26 @@ function updateCart(){
                 </div>
 
             `;
+
         }
     );
 
 
-    if(cart.length === 0){
+    if(
+        cart.length === 0
+    ){
 
         list.innerHTML = `
-            <div class="empty-cart">
+
+            <div style="
+            text-align:center;
+            padding:40px;
+            color:#777;">
+
                 السلة فارغة 🛒
+
             </div>
+
         `;
 
     }
@@ -1257,14 +1538,14 @@ function updateCart(){
                 "اختر الولاية";
 
         }
-
-        else if(delivery === 0){
+        else if(
+            delivery === 0
+        ){
 
             deliveryBox.innerText =
                 "مجاني";
 
         }
-
         else{
 
             deliveryBox.innerText =
@@ -1296,6 +1577,7 @@ function updateCart(){
 
 
     saveCart();
+
 }
 
 
@@ -1313,7 +1595,9 @@ function changeQuantity(
 
 
     if(!item){
+
         return;
+
     }
 
 
@@ -1328,31 +1612,46 @@ function changeQuantity(
     const currentStock =
         product
         ?
-        Number(product.stock) || 0
+        Number(
+            product.stock
+        ) || 0
         :
-        Number(item.stock) || 0;
+        Number(
+            item.stock
+        ) || 0;
 
 
     const newQuantity =
-        Number(item.quantity) +
-        Number(change);
+        Number(
+            item.quantity
+        ) +
+        Number(
+            change
+        );
 
 
-    if(newQuantity <= 0){
+    if(
+        newQuantity <= 0
+    ){
 
         removeItem(index);
 
         return;
+
     }
 
 
-    if(newQuantity > currentStock){
+    if(
+        newQuantity >
+        currentStock
+    ){
 
         alert(
             "⚠️ لا توجد كمية كافية في المخزون"
         );
 
         return;
+
     }
 
 
@@ -1367,11 +1666,12 @@ function changeQuantity(
     saveCart();
 
     updateCart();
+
 }
 
 
 /* =========================================
-   REMOVE
+   REMOVE ITEM
 ========================================= */
 
 function removeItem(index){
@@ -1382,6 +1682,7 @@ function removeItem(index){
     ){
 
         return;
+
     }
 
 
@@ -1394,35 +1695,45 @@ function removeItem(index){
     saveCart();
 
     updateCart();
+
 }
 
 
 /* =========================================
-   CLEAR
+   CLEAR CART
 ========================================= */
 
 function clearCart(){
 
-    if(cart.length === 0){
-        return;
-    }
-
-
     if(
-        !confirm(
-            "هل تريد إفراغ سلة المشتريات؟"
-        )
+        cart.length === 0
     ){
 
         return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "هل تريد إفراغ سلة المشتريات؟"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
     }
 
 
     cart = [];
 
+
     saveCart();
 
     updateCart();
+
 }
 
 
@@ -1464,6 +1775,7 @@ function openCart(){
 
     document.body.style.overflow =
         "hidden";
+
 }
 
 
@@ -1505,6 +1817,75 @@ function closeCart(){
 
     document.body.style.overflow =
         "";
+
+}
+
+
+/* =========================================
+   NORMALIZE ALGERIAN PHONE
+========================================= */
+
+function normalizeAlgerianPhone(phone){
+
+    let value =
+        String(phone || "")
+        .trim()
+        .replace(/[\s\-().]/g,"");
+
+
+    /*
+     * +213675996957
+     * ↓
+     * 213675996957
+     */
+
+    if(
+        value.startsWith("+")
+    ){
+
+        value =
+            value.substring(1);
+
+    }
+
+
+    /*
+     * 0675996957
+     * ↓
+     * 213675996957
+     */
+
+    if(
+        /^0[567]\d{8}$/.test(
+            value
+        )
+    ){
+
+        return (
+            "213" +
+            value.substring(1)
+        );
+
+    }
+
+
+    /*
+     * 213675996957
+     */
+
+    if(
+        /^213[567]\d{8}$/.test(
+            value
+        )
+    ){
+
+        return value;
+
+    }
+
+
+    return null;
+
 }
 
 
@@ -1514,13 +1895,16 @@ function closeCart(){
 
 function sendOrder(){
 
-    if(cart.length === 0){
+    if(
+        cart.length === 0
+    ){
 
         alert(
             "🛒 السلة فارغة"
         );
 
         return;
+
     }
 
 
@@ -1529,8 +1913,8 @@ function sendOrder(){
         .getElementById(
             "customerName"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     const phone =
@@ -1538,8 +1922,8 @@ function sendOrder(){
         .getElementById(
             "customerPhone"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     const wilaya =
@@ -1547,8 +1931,8 @@ function sendOrder(){
         .getElementById(
             "wilaya"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     const city =
@@ -1556,8 +1940,8 @@ function sendOrder(){
         .getElementById(
             "city"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     const address =
@@ -1565,8 +1949,8 @@ function sendOrder(){
         .getElementById(
             "address"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     const note =
@@ -1574,8 +1958,8 @@ function sendOrder(){
         .getElementById(
             "note"
         )
-        .value
-        .trim();
+        ?.value
+        .trim() || "";
 
 
     if(!name){
@@ -1585,6 +1969,7 @@ function sendOrder(){
         );
 
         return;
+
     }
 
 
@@ -1595,27 +1980,38 @@ function sendOrder(){
         );
 
         return;
+
     }
 
 
-    const phoneClean =
-        phone.replace(
-            /[\s\-]/g,
-            ""
+    /*
+     * قبول:
+     *
+     * 0675996957
+     * 213675996957
+     * +213675996957
+     */
+
+    const normalizedPhone =
+        normalizeAlgerianPhone(
+            phone
         );
 
 
-    if(
-        !/^0[567]\d{8}$/.test(
-            phoneClean
-        )
-    ){
+    if(!normalizedPhone){
 
         alert(
-            "📞 أدخل رقم هاتف جزائري صحيح"
+            "📞 أدخل رقم هاتف جزائري صحيح\n\n" +
+            "مثال:\n" +
+            "0675996957\n" +
+            "أو\n" +
+            "213675996957\n" +
+            "أو\n" +
+            "+213675996957"
         );
 
         return;
+
     }
 
 
@@ -1626,6 +2022,7 @@ function sendOrder(){
         );
 
         return;
+
     }
 
 
@@ -1636,6 +2033,7 @@ function sendOrder(){
         );
 
         return;
+
     }
 
 
@@ -1646,6 +2044,7 @@ function sendOrder(){
         );
 
         return;
+
     }
 
 
@@ -1696,6 +2095,7 @@ function sendOrder(){
             "📝 ملاحظة: " +
             note +
             "\n";
+
     }
 
 
@@ -1703,41 +2103,43 @@ function sendOrder(){
         "\n🛍️ *المنتجات*\n";
 
 
-    cart.forEach(item => {
+    cart.forEach(
+        item => {
 
-        const subtotal =
-            Number(item.price) *
-            Number(item.quantity);
-
-
-        productsTotal +=
-            subtotal;
+            const subtotal =
+                Number(item.price) *
+                Number(item.quantity);
 
 
-        message +=
-            "• " +
-            item.name +
-            " × " +
-            item.quantity;
+            productsTotal +=
+                subtotal;
 
-
-        if(item.size){
 
             message +=
-                " | المقاس: " +
-                item.size;
+                "• " +
+                item.name +
+                " × " +
+                item.quantity;
+
+
+            if(item.size){
+
+                message +=
+                    " | المقاس: " +
+                    item.size;
+
+            }
+
+
+            message +=
+                " = " +
+                formatPrice(
+                    subtotal
+                ) +
+                " دج\n";
 
         }
-
-
-        message +=
-            " = " +
-            formatPrice(
-                subtotal
-            ) +
-            " دج\n";
-
-    });
+    );
 
 
     const delivery =
@@ -1780,8 +2182,13 @@ function sendOrder(){
 
 
     message +=
-        "\n\nشكراً لثقتكم بـ RONQA dz STORE ❤️";
+        "\n\nشكراً لثقتكم بـ RONQA ❤️";
 
+
+    /*
+     * رقم المتجر ثابت
+     * بصيغة دولية
+     */
 
     const url =
         "https://wa.me/" +
@@ -1796,6 +2203,7 @@ function sendOrder(){
         url,
         "_blank"
     );
+
 }
 
 
@@ -1820,11 +2228,12 @@ function setupKeyboard(){
 
         }
     );
+
 }
 
 
 /* =========================================
-   ALGERIA READY
+   ALGERIA DATA READY
 ========================================= */
 
 document.addEventListener(
@@ -1832,8 +2241,20 @@ document.addEventListener(
     function(){
 
         console.log(
-            "✅ تم تجهيز بيانات البلديات"
+            "✅ تم تجهيز بيانات الولايات والبلديات"
         );
+
+
+        /*
+         * تعبئة الولايات
+         */
+
+        populateWilayas();
+
+
+        /*
+         * إذا كانت هناك ولاية مختارة
+         */
 
         const wilaya =
             document
@@ -1857,7 +2278,7 @@ document.addEventListener(
 
 
 /* =========================================
-   ALGERIA ERROR
+   ALGERIA DATA ERROR
 ========================================= */
 
 document.addEventListener(
@@ -1865,27 +2286,49 @@ document.addEventListener(
     function(event){
 
         console.error(
-            "فشل تحميل بيانات البلديات:",
+            "❌ فشل تحميل بيانات الجزائر:",
             event.detail
         );
 
 
-        const city =
+        const wilayaSelect =
+            document.getElementById(
+                "wilaya"
+            );
+
+
+        const citySelect =
             document.getElementById(
                 "city"
             );
 
 
-        if(city){
+        if(wilayaSelect){
 
-            city.disabled =
+            wilayaSelect.innerHTML = `
+
+                <option value="">
+                    ⚠️ تعذر تحميل الولايات
+                </option>
+
+            `;
+
+        }
+
+
+        if(citySelect){
+
+            citySelect.disabled =
                 true;
 
-            city.innerHTML = `
+            citySelect.innerHTML = `
+
                 <option value="">
                     ⚠️ تعذر تحميل البلديات
                 </option>
+
             `;
+
         }
 
     }
@@ -1893,7 +2336,7 @@ document.addEventListener(
 
 
 /* =========================================
-   START
+   START APP
 ========================================= */
 
 document.addEventListener(
@@ -1901,21 +2344,46 @@ document.addEventListener(
     function(){
 
         console.log(
-            "🚀 RONQA dz STORE started"
+            "🚀 RONQA started"
         );
 
 
         loadSavedCart();
 
+
         setupLocationEvents();
+
 
         setupSearch();
 
+
         setupKeyboard();
+
 
         updateCart();
 
+
         updateDelivery();
+
+
+        /*
+         * تحميل الولايات والبلديات
+         */
+
+        if(
+            typeof isAlgeriaDataReady ===
+            "function" &&
+            isAlgeriaDataReady()
+        ){
+
+            populateWilayas();
+
+        }
+
+
+        /*
+         * تحميل المنتجات
+         */
 
         loadProducts();
 
